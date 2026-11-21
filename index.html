@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="LOGO.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,37 +19,45 @@
       --ungu-aksen: #a855f7;
       --kuning-aksen: #facc15;
       --gelap-pill: #18181b;
-      --teks-utama: #18181b;
-      --teks-redup: #6b7280;
+      --teks-utama: #1f2328;
+      --teks-redup: #6e7781;
     }
 
     body {
-      font-family: "Plus Jakarta Sans", sans-serif;
-      background: linear-gradient(120deg, #f5f3ff 0%, #faf5ff 48%, #fefce8 100%);
+      font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(120deg, #f3f2f6 0%, #faf5ff 52%, #fdfbe9 100%);
       color: var(--teks-utama);
       min-height: 100vh;
       padding: 1.25rem 0 2.5rem;
+      -webkit-font-smoothing: antialiased;
     }
 
     .dashboard-shell {
       background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.92);
       border-radius: 28px;
       padding: 1.5rem;
       box-shadow: 0 20px 50px rgba(76, 29, 149, 0.08);
     }
 
+    .header-identity-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
     .brand-pill {
       background: #ffffff;
       border: 1px solid #e9d5ff;
       border-radius: 999px;
-      padding: 0.4rem 1rem 0.4rem 0.55rem;
-      font-weight: 800;
+      padding: 0.38rem 1rem 0.38rem 0.5rem;
+      font-weight: 600;
       color: var(--ungu-gelap);
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.55rem;
       text-decoration: none;
     }
 
@@ -58,6 +66,28 @@
       height: 32px;
       object-fit: contain;
       border-radius: 50%;
+    }
+
+    .admin-top-pill {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 999px;
+      padding: 0.28rem 0.85rem 0.28rem 0.32rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--teks-utama);
+    }
+
+    .admin-top-avatar {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 50%;
+      border: 1.5px solid var(--ungu-aksen);
     }
 
     .nav-pills-wrap {
@@ -72,8 +102,8 @@
 
     .nav-pills-wrap .nav-link {
       color: var(--teks-utama);
-      font-size: 0.875rem;
-      font-weight: 600;
+      font-size: 0.85rem;
+      font-weight: 500;
       padding: 0.45rem 1rem;
       border-radius: 999px;
       border: 0;
@@ -109,31 +139,68 @@
       height: 100%;
     }
 
-    .admin-profile-card {
+    .hero-banner-card {
       position: relative;
       border-radius: 22px;
       overflow: hidden;
-      min-height: 300px;
-      background: linear-gradient(180deg, rgba(24, 24, 27, 0.12) 0%, rgba(24, 24, 27, 0.35) 55%, rgba(24, 24, 27, 0.9) 100%),
-                  url("Foto.png") center top/cover no-repeat,
+      min-height: 290px;
+      background: linear-gradient(155deg, rgba(76, 29, 149, 0.86), rgba(126, 34, 206, 0.72)),
                   url("Beranda.jpg") center/cover no-repeat;
       color: #ffffff;
-      padding: 1.25rem;
+      padding: 1.35rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    .admin-badge-pill {
-      background: rgba(255, 255, 255, 0.92);
-      color: var(--ungu-gelap);
-      border-radius: 999px;
-      padding: 0.35rem 0.85rem;
-      font-size: 0.78rem;
-      font-weight: 700;
-      display: inline-flex;
+    .approval-item-card {
+      background: #fffdf5;
+      border: 1px solid #f3e8ff;
+      border-radius: 20px;
+      padding: 1rem;
+      text-align: center;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 0.4rem;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .approval-item-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(88, 28, 135, 0.08);
+    }
+
+    .ring-gauge-wrap {
+      position: relative;
+      width: 146px;
+      height: 146px;
+      margin: 0.4rem auto;
+    }
+
+    .ring-gauge-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      padding: 0 0.5rem;
+    }
+
+    .ring-gauge-value {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--teks-utama);
+      line-height: 1.15;
+    }
+
+    .ring-gauge-sub {
+      font-size: 0.72rem;
+      color: var(--teks-redup);
+      margin-top: 0.15rem;
     }
 
     .pill-meter-track {
@@ -152,7 +219,7 @@
       background: linear-gradient(90deg, var(--ungu-utama), var(--ungu-aksen));
       color: #ffffff;
       font-size: 0.78rem;
-      font-weight: 700;
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -161,17 +228,17 @@
     }
 
     .stat-big {
-      font-size: 2rem;
-      font-weight: 800;
+      font-size: 1.75rem;
+      font-weight: 600;
       letter-spacing: -0.02em;
-      line-height: 1.1;
+      line-height: 1.15;
     }
 
     .badge-status {
       background: var(--ungu-lembut);
       color: var(--ungu-utama);
       border: 1px solid #e9d5ff;
-      font-weight: 600;
+      font-weight: 500;
       border-radius: 999px;
       padding: 0.38rem 0.8rem;
       font-size: 0.76rem;
@@ -197,12 +264,19 @@
 <body>
   <div class="container">
     <div class="dashboard-shell">
-      <!-- Top Bar -->
+      <!-- Top Bar: Logo + Foto Admin di Atas Samping Logo -->
       <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
-        <a href="#" class="brand-pill">
-          <img src="LOGO.png" alt="Logo MANSAKAI" class="brand-logo" />
-          <span>MANSAKAI</span>
-        </a>
+        <div class="header-identity-group">
+          <a href="#" class="brand-pill">
+            <img src="LOGO.png" alt="Logo MANSAKAI" class="brand-logo" />
+            <span>MANSAKAI</span>
+          </a>
+
+          <div class="admin-top-pill">
+            <img src="Foto.png" alt="Foto Admin MANSAKAI" class="admin-top-avatar" />
+            <span>Admin Verifikasi</span>
+          </div>
+        </div>
 
         <!-- Navigasi Kategori Grafik -->
         <ul class="nav nav-pills-wrap" id="kategoriTab" role="tablist">
@@ -228,12 +302,12 @@
         </span>
       </div>
 
-      <!-- Greeting & Indikator Utama (Mengacu pada Grafik Approval) -->
+      <!-- Header & Indikator Utama (Mengacu Approval + Total Data Keseluruhan) -->
       <section class="row g-4 align-items-center mb-4">
-        <div class="col-lg-6">
-          <h1 class="fw-extrabold fs-2 mb-1">Dashboard Rekapitulasi MANSAKAI</h1>
-          <p class="text-muted mb-3">
-            Indikator utama mengacu pada capaian status <strong>Approval</strong> dari Rekap Mansakai.
+        <div class="col-lg-5">
+          <h1 class="fw-normal fs-2 mb-1" style="letter-spacing: -0.02em;">Dashboard Rekapitulasi MANSAKAI</h1>
+          <p class="text-muted small mb-3">
+            Indikator utama mengacu pada status <strong>Approval</strong> dan total rekap data keseluruhan.
           </p>
 
           <div class="row g-2 align-items-center">
@@ -254,19 +328,23 @@
           </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-7">
           <div class="row g-3 text-lg-end">
-            <div class="col-4">
+            <div class="col-6 col-sm-3">
               <div class="small text-muted">Total Approval</div>
               <div id="kpiTotalApproval" class="stat-big mt-1">...</div>
             </div>
-            <div class="col-4">
+            <div class="col-6 col-sm-3">
+              <div class="small text-muted">Status Terbanyak</div>
+              <div id="kpiStatusApprovalTerbanyak" class="fs-6 fw-semibold mt-2" style="color: var(--ungu-utama);">...</div>
+            </div>
+            <div class="col-6 col-sm-3">
               <div class="small text-muted">Jumlah Status</div>
               <div id="kpiJumlahStatusApproval" class="stat-big mt-1">...</div>
             </div>
-            <div class="col-4">
-              <div class="small text-muted">Status Terbanyak</div>
-              <div id="kpiStatusApprovalTerbanyak" class="fs-5 fw-bold mt-2" style="color: var(--ungu-utama);">...</div>
+            <div class="col-6 col-sm-3">
+              <div class="small text-muted">Total Data Keseluruhan</div>
+              <div id="kpiTotalKeseluruhan" class="stat-big mt-1" style="color: var(--ungu-gelap);">...</div>
             </div>
           </div>
         </div>
@@ -276,43 +354,41 @@
       <div class="tab-content" id="kategoriTabContent">
         <!-- ================= KATEGORI 1: KATEGORI UMUM ================= -->
         <div class="tab-pane fade show active" id="pane-umum" role="tabpanel" tabindex="0">
-          <!-- BARIS 1 (PALING ATAS): Foto Admin + Grafik 1 (Approval) + Ringkasan Gelap Approval -->
+          <!-- BARIS 1 (PALING ATAS): Banner + Grafik Cincin Setiap Item Approval + Ringkasan Gelap Approval -->
           <div class="row g-4 mb-4">
-            <!-- Kartu Profil Admin dengan Foto.png -->
             <div class="col-lg-3">
-              <div class="admin-profile-card">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="admin-badge-pill">
-                    <i class="fa-solid fa-user-shield"></i> Admin MANSAKAI
+              <div class="hero-banner-card">
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="badge bg-light text-dark px-3 py-2 rounded-pill fw-medium">
+                    Kategori Umum
                   </span>
-                  <img src="LOGO.png" alt="Logo MANSAKAI" style="width: 34px; height: 34px; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px;" />
+                  <img src="LOGO.png" alt="Logo" style="width: 34px; height: 34px; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px;" />
                 </div>
-
                 <div>
-                  <h2 class="h5 fw-bold mb-1">Verifikasi & Validasi</h2>
+                  <h2 class="h5 fw-semibold mb-1">Rekap Mansakai</h2>
                   <p class="small text-white-50 mb-2">
-                    Rekap status approval data terpadu secara otomatis.
+                    Visualisasi status approval per item serta sebaran data agregat.
                   </p>
-                  <span id="pillHighlightApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 700;">
+                  <span id="pillHighlightApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 600;">
                     Memuat Approval...
                   </span>
                 </div>
               </div>
             </div>
 
-            <!-- Grafik 1 (Paling Atas): Status Approval -->
+            <!-- Grafik Setiap Item Approval (Cincin Melingkar Seperti Gambar 2) -->
             <div class="col-lg-5">
               <div class="dash-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
                   <div>
-                    <span class="small text-muted fw-semibold">Grafik 1 • Prioritas Utama</span>
-                    <h2 class="h5 fw-bold mb-0">Status Approval Data</h2>
+                    <span class="small text-muted fw-medium">Grafik 1 • Prioritas Utama</span>
+                    <h2 class="h5 fw-semibold mb-0">Status Approval Per Item</h2>
                   </div>
                   <span id="statusApproval" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorApproval" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 250px;">
-                  <canvas id="chartApproval"></canvas>
+                <div id="gridApprovalItems" class="row g-3 flex-grow-1 align-items-stretch">
+                  <div class="col-12 text-center text-muted small py-4">Memuat grafik item approval...</div>
                 </div>
               </div>
             </div>
@@ -323,9 +399,9 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <div>
                     <div class="small text-white-50">Rincian Status</div>
-                    <h2 class="h5 fw-bold mb-0">Ringkasan Approval</h2>
+                    <h2 class="h5 fw-semibold mb-0">Ringkasan Approval</h2>
                   </div>
-                  <span id="badgeTotalApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 700;">
+                  <span id="badgeTotalApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 600;">
                     0 Data
                   </span>
                 </div>
@@ -336,15 +412,14 @@
             </div>
           </div>
 
-          <!-- BARIS 2: Grafik 2 (Sebaran Menurut Desil) + Grafik 3 (Sebaran Menurut Kecamatan - Terurut Terbanyak) -->
+          <!-- BARIS 2: Grafik Sebaran Menurut Desil + Grafik Sebaran Menurut Kecamatan (Terurut Terbanyak) -->
           <div class="row g-4 mb-4">
-            <!-- Grafik 2: Sebaran Menurut Desil -->
             <div class="col-lg-6">
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted fw-semibold">Grafik 2 • Kategori Umum</span>
-                    <h2 class="h5 fw-bold mb-0">Sebaran Menurut Desil</h2>
+                    <span class="small text-muted fw-medium">Grafik 2 • Kategori Umum</span>
+                    <h2 class="h5 fw-semibold mb-0">Sebaran Menurut Desil</h2>
                   </div>
                   <span id="statusDesil" class="badge-status">Memuat...</span>
                 </div>
@@ -355,13 +430,12 @@
               </div>
             </div>
 
-            <!-- Grafik 3: Sebaran Menurut Kecamatan (Diurutkan dari Terbanyak) -->
             <div class="col-lg-6">
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted fw-semibold">Grafik 3 • Urutan Terbanyak</span>
-                    <h2 class="h5 fw-bold mb-0">Sebaran Menurut Kecamatan</h2>
+                    <span class="small text-muted fw-medium">Grafik 3 • Urutan Terbanyak</span>
+                    <h2 class="h5 fw-semibold mb-0">Sebaran Menurut Kecamatan</h2>
                   </div>
                   <span id="statusKecamatan" class="badge-status">Memuat...</span>
                 </div>
@@ -373,15 +447,14 @@
             </div>
           </div>
 
-          <!-- BARIS 3: Grafik 4 (PBI Nasional) + Grafik 5 (PBI Pemda) -->
+          <!-- BARIS 3: Grafik PBI Nasional + Grafik PBI Pemda -->
           <div class="row g-4">
-            <!-- Grafik 4: Menurut PBI Nasional -->
             <div class="col-lg-6">
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted fw-semibold">Grafik 4 • Kategori Umum</span>
-                    <h2 class="h5 fw-bold mb-0">Sebaran Menurut PBI Nasional</h2>
+                    <span class="small text-muted fw-medium">Grafik 4 • Kategori Umum</span>
+                    <h2 class="h5 fw-semibold mb-0">Sebaran Menurut PBI Nasional</h2>
                   </div>
                   <span id="statusPbiNasional" class="badge-status">Memuat...</span>
                 </div>
@@ -397,13 +470,12 @@
               </div>
             </div>
 
-            <!-- Grafik 5: Menurut PBI Pemda -->
             <div class="col-lg-6">
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted fw-semibold">Grafik 5 • Kategori Umum</span>
-                    <h2 class="h5 fw-bold mb-0">Sebaran Menurut PBI Pemda</h2>
+                    <span class="small text-muted fw-medium">Grafik 5 • Kategori Umum</span>
+                    <h2 class="h5 fw-semibold mb-0">Sebaran Menurut PBI Pemda</h2>
                   </div>
                   <span id="statusPbiPemda" class="badge-status">Memuat...</span>
                 </div>
@@ -425,7 +497,7 @@
         <div class="tab-pane fade" id="pane-kategori-2" role="tabpanel" tabindex="0">
           <div class="placeholder-slot">
             <i class="fa-solid fa-chart-pie fs-2 mb-2"></i>
-            <h2 class="h5 fw-bold">Ruang Kategori Grafik Kedua</h2>
+            <h2 class="h5 fw-semibold">Ruang Kategori Grafik Kedua</h2>
             <p class="small text-muted mb-0">
               Siap diisi grafik tambahan begitu tautan CSV tab rekap berikutnya dipublikasikan dari Rekap Mansakai.
             </p>
@@ -436,7 +508,7 @@
         <div class="tab-pane fade" id="pane-kategori-3" role="tabpanel" tabindex="0">
           <div class="placeholder-slot">
             <i class="fa-solid fa-layer-group fs-2 mb-2"></i>
-            <h2 class="h5 fw-bold">Ruang Kategori Grafik Ketiga</h2>
+            <h2 class="h5 fw-semibold">Ruang Kategori Grafik Ketiga</h2>
             <p class="small text-muted mb-0">
               Siap digunakan untuk kelompok indikator atau program berikutnya tanpa mengubah struktur halaman.
             </p>
@@ -457,6 +529,7 @@
     };
 
     const chartInstances = {};
+    const totalPerSumber = {};
 
     function pecahBarisCSV(baris) {
       const hasil = [];
@@ -526,9 +599,48 @@
       chartInstances[key] = new Chart(ctx, config);
     }
 
-    // 1. GRAFIK APPROVAL & SEMUA INDIKATOR UTAMA DI ATAS
+    function perbaruiTotalKeseluruhan() {
+      const totalGabungan = Object.values(totalPerSumber).reduce((acc, n) => acc + (Number(n) || 0), 0);
+      document.getElementById("kpiTotalKeseluruhan").textContent = totalGabungan.toLocaleString("id-ID");
+    }
+
+    // Plugin garis tik putus-putus di sekeliling cincin (seperti gambar 2)
+    const tickRingPlugin = {
+      id: "tickRingPlugin",
+      beforeDraw(chart, args, opts) {
+        const { ctx, chartArea } = chart;
+        if (!chartArea) return;
+        const cx = (chartArea.left + chartArea.right) / 2;
+        const cy = (chartArea.top + chartArea.bottom) / 2;
+        const outerR = Math.min(chartArea.width, chartArea.height) / 2 - 4;
+        const innerR = outerR - (opts.tickLength || 7);
+        const totalTicks = opts.ticks || 36;
+
+        ctx.save();
+        ctx.strokeStyle = opts.color || "#9ca3af";
+        ctx.lineWidth = 1.5;
+
+        for (let i = 0; i < totalTicks; i++) {
+          const angle = (i / totalTicks) * Math.PI * 2;
+          const x1 = cx + Math.cos(angle) * innerR;
+          const y1 = cy + Math.sin(angle) * innerR;
+          const x2 = cx + Math.cos(angle) * outerR;
+          const y2 = cy + Math.sin(angle) * outerR;
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+    };
+
+    // 1. GRAFIK SETIAP ITEM APPROVAL (POLA CINCIN SEPERTI GAMBAR 2) & INDIKATOR ATAS
     function renderApproval(rows) {
       const totalData = rows.reduce((acc, r) => acc + r.jumlah, 0);
+      totalPerSumber.approval = totalData;
+      perbaruiTotalKeseluruhan();
+
       let maks = rows[0];
       rows.forEach((r) => {
         if (r.jumlah > maks.jumlah) maks = r;
@@ -536,7 +648,7 @@
 
       const persenMaks = totalData > 0 ? ((maks.jumlah / totalData) * 100).toFixed(1) : "0.0";
 
-      // Update seluruh indikator di bagian atas berdasarkan grafik Approval
+      // Update indikator utama yang mengacu pada Approval
       document.getElementById("kpiTotalApproval").textContent = totalData.toLocaleString("id-ID");
       document.getElementById("kpiJumlahStatusApproval").textContent = `${rows.length}`;
       document.getElementById("kpiStatusApprovalTerbanyak").textContent = `${maks.label} (${maks.jumlah.toLocaleString("id-ID")})`;
@@ -550,65 +662,107 @@
       document.getElementById("badgeTotalApproval").textContent = `${totalData.toLocaleString("id-ID")} Data`;
       document.getElementById("pillHighlightApproval").textContent = `${maks.label}: ${maks.jumlah.toLocaleString("id-ID")} (${persenMaks}%)`;
 
-      // Update kartu gelap rincian Approval
       document.getElementById("daftarRingkasApproval").innerHTML = rows
         .map((r) => {
           const pct = totalData > 0 ? ((r.jumlah / totalData) * 100).toFixed(1) : "0.0";
           return `
             <div class="dark-item-row d-flex justify-content-between align-items-center">
               <div>
-                <div class="fw-semibold small">${r.label}</div>
-                <div class="text-white-50" style="font-size: 0.75rem;">${pct}% dari total</div>
+                <div class="fw-medium small">${r.label}</div>
+                <div class="text-white-50" style="font-size: 0.75rem;">${pct}% dari total approval</div>
               </div>
-              <div class="fw-bold">${r.jumlah.toLocaleString("id-ID")}</div>
+              <div class="fw-semibold">${r.jumlah.toLocaleString("id-ID")}</div>
             </div>
           `;
         })
         .join("");
 
-      const paletApproval = ["#7e22ce", "#facc15", "#18181b", "#a855f7", "#d8b4fe"];
+      // Hancurkan chart item approval lama jika ada
+      Object.keys(chartInstances).forEach((k) => {
+        if (k.startsWith("approvalItem_")) {
+          chartInstances[k].destroy();
+          delete chartInstances[k];
+        }
+      });
 
-      buatAtauPerbaruiChart("approval", "chartApproval", {
-        type: "bar",
-        data: {
-          labels: rows.map((r) => r.label),
-          datasets: [{
-            label: "Jumlah Data",
-            data: rows.map((r) => r.jumlah),
-            backgroundColor: rows.map((_, i) => paletApproval[i % paletApproval.length]),
-            borderRadius: 10,
-            maxBarThickness: 56
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => {
-                  const val = Number(ctx.raw) || 0;
-                  const pct = totalData > 0 ? ((val / totalData) * 100).toFixed(1) : "0.0";
-                  return ` ${val.toLocaleString("id-ID")} (${pct}%)`;
+      const warnaCincin = ["#facc15", "#7e22ce", "#18181b", "#a855f7", "#eab308"];
+      const colClass = rows.length <= 2 ? "col-6" : "col-6 col-sm-6";
+
+      document.getElementById("gridApprovalItems").innerHTML = rows
+        .map((r, idx) => {
+          const pctNum = totalData > 0 ? (r.jumlah / totalData) * 100 : 0;
+          const pctText = pctNum.toFixed(1);
+          const canvasId = `gaugeApproval_${idx}`;
+          return `
+            <div class="${colClass}">
+              <div class="approval-item-card">
+                <div class="fw-medium small text-truncate w-100" title="${r.label}">${r.label}</div>
+                <div class="ring-gauge-wrap">
+                  <canvas id="${canvasId}"></canvas>
+                  <div class="ring-gauge-center">
+                    <span class="ring-gauge-value">${r.jumlah.toLocaleString("id-ID")}</span>
+                    <span class="ring-gauge-sub">${pctText}%</span>
+                  </div>
+                </div>
+                <div class="small text-muted">Dari ${totalData.toLocaleString("id-ID")}</div>
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+
+      rows.forEach((r, idx) => {
+        const pctNum = totalData > 0 ? Math.min(Math.max((r.jumlah / totalData) * 100, 0), 100) : 0;
+        const sisa = Math.max(100 - pctNum, 0);
+        const aktifWarna = warnaCincin[idx % warnaCincin.length];
+        const key = `approvalItem_${idx}`;
+        const canvasId = `gaugeApproval_${idx}`;
+
+        buatAtauPerbaruiChart(key, canvasId, {
+          type: "doughnut",
+          data: {
+            labels: [r.label, "Sisanya"],
+            datasets: [{
+              data: [pctNum, sisa],
+              backgroundColor: [aktifWarna, "#f3f4f6"],
+              borderWidth: 0,
+              borderRadius: 20
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "76%",
+            rotation: 0,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => {
+                    if (ctx.dataIndex === 0) {
+                      return ` ${r.label}: ${r.jumlah.toLocaleString("id-ID")} (${pctNum.toFixed(1)}%)`;
+                    }
+                    return ` Bagian lain: ${(100 - pctNum).toFixed(1)}%`;
+                  }
                 }
+              },
+              tickRingPlugin: {
+                ticks: 36,
+                tickLength: 6,
+                color: "#9ca3af"
               }
             }
           },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: { callback: (v) => Number(v).toLocaleString("id-ID") },
-              grid: { color: "#f3e8ff" }
-            },
-            x: { grid: { display: false } }
-          }
-        }
+          plugins: [tickRingPlugin]
+        });
       });
     }
 
     // 2. GRAFIK SEBARAN MENURUT DESIL
     function renderDesil(rows) {
+      totalPerSumber.desil = rows.reduce((acc, r) => acc + r.jumlah, 0);
+      perbaruiTotalKeseluruhan();
+
       buatAtauPerbaruiChart("desil", "chartDesil", {
         type: "bar",
         data: {
@@ -647,6 +801,9 @@
 
     // 3. GRAFIK SEBARAN MENURUT KECAMATAN (DIURUTKAN DARI TERBANYAK)
     function renderKecamatan(rows) {
+      totalPerSumber.kecamatan = rows.reduce((acc, r) => acc + r.jumlah, 0);
+      perbaruiTotalKeseluruhan();
+
       const sortedRows = [...rows].sort((a, b) => b.jumlah - a.jumlah);
 
       buatAtauPerbaruiChart("kecamatan", "chartKecamatan", {
@@ -689,6 +846,9 @@
     // 4 & 5. GRAFIK PBI NASIONAL & PBI PEMDA
     function renderDonutPBI(key, canvasId, ringkasId, rows) {
       const total = rows.reduce((acc, r) => acc + r.jumlah, 0);
+      totalPerSumber[key] = total;
+      perbaruiTotalKeseluruhan();
+
       const palet = ["#7e22ce", "#facc15", "#18181b", "#c084fc", "#a855f7"];
 
       document.getElementById(ringkasId).innerHTML = rows
