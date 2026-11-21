@@ -240,6 +240,30 @@
       text-align: center;
       color: var(--ungu-gelap);
     }
+
+    .legenda-baris-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem 0.85rem;
+      margin-top: 0.75rem;
+      padding-top: 0.65rem;
+      border-top: 1px dashed #ede9fe;
+      font-size: 0.75rem;
+    }
+
+    .legenda-baris-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+      color: var(--teks-utama);
+    }
+
+    .legenda-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -496,9 +520,10 @@
                   <span id="statusJenisLantai" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorJenisLantai" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 290px;">
+                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartJenisLantai"></canvas>
                 </div>
+                <div id="legendaJenisLantai" class="legenda-baris-box"></div>
               </div>
             </div>
           </div>
@@ -515,9 +540,10 @@
                   <span id="statusJenisAtap" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorJenisAtap" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 290px;">
+                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartJenisAtap"></canvas>
                 </div>
+                <div id="legendaJenisAtap" class="legenda-baris-box"></div>
               </div>
             </div>
 
@@ -531,9 +557,10 @@
                   <span id="statusJenisDinding" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorJenisDinding" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 290px;">
+                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartJenisDinding"></canvas>
                 </div>
+                <div id="legendaJenisDinding" class="legenda-baris-box"></div>
               </div>
             </div>
           </div>
@@ -713,6 +740,28 @@
       }
     };
 
+    // Plugin label angka di ujung tiap baris (horizontal bar) agar angka kecil tetap terlihat jelas
+    const nilaiDiUjungBarPlugin = {
+      id: "nilaiDiUjungBarPlugin",
+      afterDatasetsDraw(chart) {
+        const meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data) return;
+        const { ctx } = chart;
+
+        ctx.save();
+        ctx.font = '500 11px "Outfit", "DM Sans", sans-serif';
+        ctx.fillStyle = "#141416";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+
+        meta.data.forEach((barElement, idx) => {
+          const val = Number(chart.data.datasets[0].data[idx]) || 0;
+          ctx.fillText(val.toLocaleString("id-ID"), barElement.x + 6, barElement.y);
+        });
+        ctx.restore();
+      }
+    };
+
     function renderApproval(rows) {
       totalDataApproval = rows.reduce((acc, r) => acc + r.jumlah, 0);
       perbaruiPersentaseApprovalTerhadapTotal();
@@ -753,7 +802,6 @@
         }
       });
 
-      // Palet seperti gambar 3: ungu pekat, emas keemasan, dan ungu cerah
       const warnaCincin = ["#4a0e4e", "#eab308", "#7e22ce", "#facc15", "#a855f7"];
       const lebarKolomPersen = rows.length > 0 ? (100 / rows.length).toFixed(2) : 100;
 
@@ -978,8 +1026,26 @@
       });
     }
 
-    function renderBatangPerumahan(key, canvasId, rows) {
+    function renderBatangPerumahan(key, canvasId, legendaId, rows) {
       const sortedRows = [...rows].sort((a, b) => b.jumlah - a.jumlah);
+      const total = sortedRows.reduce((acc, r) => acc + r.jumlah, 0);
+      const paletLegenda = ["#eab308", "#4a0e4e", "#7e22ce", "#9333ea", "#a855f7", "#c084fc", "#ca8a04", "#6b21a8"];
+
+      const legendaEl = document.getElementById(legendaId);
+      if (legendaEl) {
+        legendaEl.innerHTML = sortedRows
+          .map((r, idx) => {
+            const pct = total > 0 ? ((r.jumlah / total) * 100).toFixed(1) : "0.0";
+            const warnaSwatch = paletLegenda[idx % paletLegenda.length];
+            return `
+              <span class="legenda-baris-item">
+                <span class="legenda-swatch" style="background: ${warnaSwatch};"></span>
+                <span>${r.label}: <strong>${r.jumlah.toLocaleString("id-ID")}</strong> (${pct}%)</span>
+              </span>
+            `;
+          })
+          .join("");
+      }
 
       buatAtauPerbaruiChart(key, canvasId, {
         type: "bar",
@@ -990,40 +1056,57 @@
             data: sortedRows.map((r) => r.jumlah),
             backgroundColor: (context) => {
               const { ctx, chartArea, dataIndex } = context.chart;
+              if (!chartArea) return "#4a0e4e";
+              const grad = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
               if (dataIndex === 0 && sortedRows.length > 1) {
-                return buatGradienEmas(ctx, chartArea);
+                grad.addColorStop(0, "#fef08a");
+                grad.addColorStop(0.55, "#eab308");
+                grad.addColorStop(1, "#ca8a04");
+                return grad;
               }
-              return buatGradienBatangUngu(ctx, chartArea);
+              grad.addColorStop(0, "#f3e8ff");
+              grad.addColorStop(0.35, "#7e22ce");
+              grad.addColorStop(1, "#4a0e4e");
+              return grad;
             },
-            borderColor: (context) => {
-              const { dataIndex } = context.chart;
-              return dataIndex === 0 && sortedRows.length > 1 ? "#ca8a04" : "#4a0e4e";
-            },
-            borderWidth: 1,
             borderRadius: 6,
-            maxBarThickness: 48
+            maxBarThickness: 22
           }]
         },
         options: {
+          indexAxis: "y",
           responsive: true,
           maintainAspectRatio: false,
+          layout: {
+            padding: { right: 48 }
+          },
           plugins: {
             legend: { display: false },
             tooltip: {
               callbacks: {
-                label: (ctx) => ` Jumlah: ${Number(ctx.raw).toLocaleString("id-ID")}`
+                label: (ctx) => {
+                  const val = Number(ctx.raw) || 0;
+                  const pct = total > 0 ? ((val / total) * 100).toFixed(1) : "0.0";
+                  return ` Jumlah: ${val.toLocaleString("id-ID")} (${pct}%)`;
+                }
               }
             }
           },
           scales: {
-            y: {
+            x: {
               beginAtZero: true,
               ticks: { callback: (v) => Number(v).toLocaleString("id-ID") },
               grid: { color: "#f3e8ff" }
             },
-            x: { grid: { display: false } }
+            y: {
+              grid: { display: false },
+              ticks: {
+                font: { size: 11 }
+              }
+            }
           }
-        }
+        },
+        plugins: [nilaiDiUjungBarPlugin]
       });
     }
 
@@ -1069,19 +1152,19 @@
           url: SUMBER_CSV.jenisLantai,
           statusId: "statusJenisLantai",
           errorId: "errorJenisLantai",
-          render: (rows) => renderBatangPerumahan("jenisLantai", "chartJenisLantai", rows)
+          render: (rows) => renderBatangPerumahan("jenisLantai", "chartJenisLantai", "legendaJenisLantai", rows)
         },
         {
           url: SUMBER_CSV.jenisAtap,
           statusId: "statusJenisAtap",
           errorId: "errorJenisAtap",
-          render: (rows) => renderBatangPerumahan("jenisAtap", "chartJenisAtap", rows)
+          render: (rows) => renderBatangPerumahan("jenisAtap", "chartJenisAtap", "legendaJenisAtap", rows)
         },
         {
           url: SUMBER_CSV.jenisDinding,
           statusId: "statusJenisDinding",
           errorId: "errorJenisDinding",
-          render: (rows) => renderBatangPerumahan("jenisDinding", "chartJenisDinding", rows)
+          render: (rows) => renderBatangPerumahan("jenisDinding", "chartJenisDinding", "legendaJenisDinding", rows)
         }
       ];
 
