@@ -7,29 +7,38 @@
   <link rel="icon" type="image/png" href="LOGO.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
       --ungu-utama: #7e22ce;
+      --ungu-pekat: #4a0e4e;
       --ungu-gelap: #4c1d95;
       --ungu-lembut: #f3e8ff;
       --ungu-aksen: #a855f7;
       --kuning-aksen: #facc15;
+      --emas-gelap: #ca8a04;
       --gelap-pill: #18181b;
-      --teks-utama: #1f2328;
+      --teks-utama: #141416;
       --teks-redup: #6e7781;
     }
 
     body {
-      font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Outfit", "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
       background: linear-gradient(120deg, #f3f2f6 0%, #faf5ff 52%, #fdfbe9 100%);
       color: var(--teks-utama);
       min-height: 100vh;
       padding: 1.25rem 0 2.5rem;
       -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, .stat-big, .ring-gauge-value {
+      font-family: "Outfit", "DM Sans", sans-serif;
+      font-weight: 400;
+      letter-spacing: -0.02em;
     }
 
     .dashboard-shell {
@@ -46,7 +55,7 @@
       border: 1px solid #e9d5ff;
       border-radius: 999px;
       padding: 0.38rem 1rem 0.38rem 0.5rem;
-      font-weight: 600;
+      font-weight: 500;
       color: var(--ungu-gelap);
       display: inline-flex;
       align-items: center;
@@ -74,7 +83,7 @@
     .nav-pills-wrap .nav-link {
       color: var(--teks-utama);
       font-size: 0.85rem;
-      font-weight: 500;
+      font-weight: 400;
       padding: 0.45rem 1rem;
       border-radius: 999px;
       border: 0;
@@ -115,11 +124,11 @@
       border-radius: 22px;
       overflow: hidden;
       min-height: 280px;
-      background: linear-gradient(180deg, rgba(24, 24, 27, 0) 45%, rgba(24, 24, 27, 0.55) 76%, rgba(24, 24, 27, 0.92) 100%),
-                  url("Foto.png") center 24%/cover no-repeat,
+      background: linear-gradient(180deg, rgba(24, 24, 27, 0.05) 45%, rgba(24, 24, 27, 0.55) 76%, rgba(24, 24, 27, 0.92) 100%),
+                  url("Foto.png") center 36%/cover no-repeat,
                   url("Beranda.jpg") center/cover no-repeat;
       color: #ffffff;
-      padding: 1.15rem;
+      padding: 1.45rem 1.15rem 1.15rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -163,14 +172,14 @@
     }
 
     .ring-gauge-value {
-      font-size: 0.92rem;
-      font-weight: 600;
+      font-size: 0.95rem;
+      font-weight: 500;
       color: var(--teks-utama);
       line-height: 1.1;
     }
 
     .ring-gauge-sub {
-      font-size: 0.66rem;
+      font-size: 0.68rem;
       color: var(--teks-redup);
       margin-top: 0.1rem;
     }
@@ -188,10 +197,10 @@
     .pill-meter-fill {
       height: 100%;
       border-radius: 999px;
-      background: linear-gradient(90deg, var(--ungu-utama), var(--ungu-aksen));
+      background: linear-gradient(90deg, var(--ungu-pekat), var(--ungu-utama));
       color: #ffffff;
       font-size: 0.78rem;
-      font-weight: 600;
+      font-weight: 500;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -200,8 +209,8 @@
     }
 
     .stat-big {
-      font-size: 1.75rem;
-      font-weight: 600;
+      font-size: 1.8rem;
+      font-weight: 400;
       letter-spacing: -0.02em;
       line-height: 1.15;
     }
@@ -210,7 +219,7 @@
       background: var(--ungu-lembut);
       color: var(--ungu-utama);
       border: 1px solid #e9d5ff;
-      font-weight: 500;
+      font-weight: 400;
       border-radius: 999px;
       padding: 0.38rem 0.8rem;
       font-size: 0.76rem;
@@ -270,7 +279,7 @@
       <!-- Header & Indikator Utama -->
       <section class="row g-4 align-items-center mb-4">
         <div class="col-lg-5">
-          <h1 class="fw-normal fs-2 mb-1" style="letter-spacing: -0.02em;">Dashboard Rekapitulasi MANSAKAI</h1>
+          <h1 class="fs-2 mb-1">Dashboard Rekapitulasi MANSAKAI</h1>
           <p class="text-muted small mb-3">
             Persentase approval mengacu pada <strong>Total Data</strong> keseluruhan menurut Desil.
           </p>
@@ -297,7 +306,7 @@
           <div class="row g-3 text-lg-end">
             <div class="col-6 col-sm-3">
               <div class="small text-muted">Total Data (Desil)</div>
-              <div id="kpiTotalData" class="stat-big mt-1" style="color: var(--ungu-gelap);">...</div>
+              <div id="kpiTotalData" class="stat-big mt-1" style="color: var(--ungu-pekat);">...</div>
             </div>
             <div class="col-6 col-sm-3">
               <div class="small text-muted">Total Approval</div>
@@ -309,7 +318,7 @@
             </div>
             <div class="col-6 col-sm-3">
               <div class="small text-muted">Status Terbanyak</div>
-              <div id="kpiStatusApprovalTerbanyak" class="fs-6 fw-semibold mt-2">...</div>
+              <div id="kpiStatusApprovalTerbanyak" class="fs-6 fw-normal mt-2">...</div>
             </div>
           </div>
         </div>
@@ -319,17 +328,16 @@
       <div class="tab-content" id="kategoriTabContent">
         <!-- ================= KATEGORI 1: KATEGORI UMUM ================= -->
         <div class="tab-pane fade show active" id="pane-umum" role="tabpanel" tabindex="0">
-          <!-- BARIS 1 (PALING ATAS): Foto Profil Bersih + Grafik Approval (1 baris) + Ringkasan Gelap Approval -->
+          <!-- BARIS 1 (PALING ATAS): Foto Profil + Grafik Approval (1 baris) + Ringkasan Gelap Approval -->
           <div class="row g-4 mb-4">
-            <!-- Kartu Foto Bersih (Posisi Foto Diturunkan Sedikit) -->
             <div class="col-lg-3">
               <div class="admin-profile-card">
                 <div>
-                  <h2 class="h5 fw-semibold mb-1">Verifikasi & Validasi</h2>
+                  <h2 class="h5 mb-1">Verifikasi & Validasi</h2>
                   <p class="small text-white-50 mb-2">
                     Rekap status approval data terpadu secara otomatis.
                   </p>
-                  <span id="pillHighlightApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 600;">
+                  <span id="pillHighlightApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 500;">
                     Memuat Approval...
                   </span>
                 </div>
@@ -341,8 +349,8 @@
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted fw-medium">Grafik 1 • Prioritas Utama</span>
-                    <h2 class="h5 fw-semibold mb-0">Status Approval</h2>
+                    <span class="small text-muted">Grafik 1 • Prioritas Utama</span>
+                    <h2 class="h5 mb-0">Status Approval</h2>
                   </div>
                   <span id="statusApproval" class="badge-status">Memuat...</span>
                 </div>
@@ -359,9 +367,9 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <div>
                     <div class="small text-white-50">Rincian Status</div>
-                    <h2 class="h5 fw-semibold mb-0">Ringkasan Approval</h2>
+                    <h2 class="h5 mb-0">Ringkasan Approval</h2>
                   </div>
-                  <span id="badgeTotalApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 600;">
+                  <span id="badgeTotalApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 500;">
                     0 Data
                   </span>
                 </div>
@@ -378,8 +386,8 @@
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted fw-medium">Grafik 2 • Kategori Umum</span>
-                    <h2 class="h5 fw-semibold mb-0">Sebaran Menurut Desil</h2>
+                    <span class="small text-muted">Grafik 2 • Kategori Umum</span>
+                    <h2 class="h5 mb-0">Sebaran Menurut Desil</h2>
                   </div>
                   <span id="statusDesil" class="badge-status">Memuat...</span>
                 </div>
@@ -394,8 +402,8 @@
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted fw-medium">Grafik 3 • Urutan Terbanyak</span>
-                    <h2 class="h5 fw-semibold mb-0">Sebaran Menurut Kecamatan</h2>
+                    <span class="small text-muted">Grafik 3 • Urutan Terbanyak</span>
+                    <h2 class="h5 mb-0">Sebaran Menurut Kecamatan</h2>
                   </div>
                   <span id="statusKecamatan" class="badge-status">Memuat...</span>
                 </div>
@@ -413,8 +421,8 @@
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted fw-medium">Grafik 4 • Kategori Umum</span>
-                    <h2 class="h5 fw-semibold mb-0">Sebaran Menurut PBI Nasional</h2>
+                    <span class="small text-muted">Grafik 4 • Kategori Umum</span>
+                    <h2 class="h5 mb-0">Sebaran Menurut PBI Nasional</h2>
                   </div>
                   <span id="statusPbiNasional" class="badge-status">Memuat...</span>
                 </div>
@@ -434,8 +442,8 @@
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted fw-medium">Grafik 5 • Kategori Umum</span>
-                    <h2 class="h5 fw-semibold mb-0">Sebaran Menurut PBI Pemda</h2>
+                    <span class="small text-muted">Grafik 5 • Kategori Umum</span>
+                    <h2 class="h5 mb-0">Sebaran Menurut PBI Pemda</h2>
                   </div>
                   <span id="statusPbiPemda" class="badge-status">Memuat...</span>
                 </div>
@@ -457,7 +465,7 @@
         <div class="tab-pane fade" id="pane-kategori-2" role="tabpanel" tabindex="0">
           <div class="placeholder-slot">
             <i class="fa-solid fa-chart-pie fs-2 mb-2"></i>
-            <h2 class="h5 fw-semibold">Ruang Kategori Grafik Kedua</h2>
+            <h2 class="h5">Ruang Kategori Grafik Kedua</h2>
             <p class="small text-muted mb-0">
               Siap diisi grafik tambahan begitu tautan CSV tab rekap berikutnya dipublikasikan dari Rekap Mansakai.
             </p>
@@ -468,7 +476,7 @@
         <div class="tab-pane fade" id="pane-kategori-3" role="tabpanel" tabindex="0">
           <div class="placeholder-slot">
             <i class="fa-solid fa-layer-group fs-2 mb-2"></i>
-            <h2 class="h5 fw-semibold">Ruang Kategori Grafik Ketiga</h2>
+            <h2 class="h5">Ruang Kategori Grafik Ketiga</h2>
             <p class="small text-muted mb-0">
               Siap digunakan untuk kelompok indikator atau program berikutnya tanpa mengubah struktur halaman.
             </p>
@@ -560,6 +568,26 @@
       chartInstances[key] = new Chart(ctx, config);
     }
 
+    // Gradien batang vertikal ungu-pekat ke ungu-pucat (gaya gambar 3)
+    function buatGradienBatangUngu(ctx, chartArea) {
+      if (!chartArea) return "#4a0e4e";
+      const grad = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+      grad.addColorStop(0, "#4a0e4e");
+      grad.addColorStop(0.68, "#7e22ce");
+      grad.addColorStop(1, "#f3e8ff");
+      return grad;
+    }
+
+    // Gradien batang sorotan kuning emas (gaya gambar 3)
+    function buatGradienEmas(ctx, chartArea) {
+      if (!chartArea) return "#eab308";
+      const grad = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+      grad.addColorStop(0, "#facc15");
+      grad.addColorStop(0.65, "#eab308");
+      grad.addColorStop(1, "#fef08a");
+      return grad;
+    }
+
     function perbaruiPersentaseApprovalTerhadapTotal() {
       const persenTerhadapTotal = totalDataDesil > 0
         ? ((totalDataApproval / totalDataDesil) * 100).toFixed(1)
@@ -575,7 +603,6 @@
       barEl.textContent = `${persenTerhadapTotal}%`;
     }
 
-    // Plugin garis tik kecil permanen pada bagian sisa cincin
     const tickRingPlugin = {
       id: "tickRingPlugin",
       afterDatasetsDraw(chart, args, opts) {
@@ -599,7 +626,6 @@
 
         for (let i = 0; i < totalTicks; i++) {
           const angle = -Math.PI / 2 + (i / totalTicks) * Math.PI * 2;
-          // Gambar garis kecil hanya di bagian lingkaran yang belum terisi segmen warna
           const normAngle = angle < aktifStartAngle ? angle + Math.PI * 2 : angle;
           if (normAngle > aktifEndAngle + 0.06 && normAngle < aktifStartAngle + Math.PI * 2 - 0.06) {
             const x1 = cx + Math.cos(angle) * innerR;
@@ -640,10 +666,10 @@
           return `
             <div class="dark-item-row d-flex justify-content-between align-items-center">
               <div>
-                <div class="fw-medium small">${r.label}</div>
-                <div class="text-white-50" style="font-size: 0.75rem;">${pct}% dari approval</div>
+                <div class="small">${r.label}</div>
+                <div class="text-white-50" style="font-size: 0.74rem;">${pct}% dari approval</div>
               </div>
-              <div class="fw-semibold">${r.jumlah.toLocaleString("id-ID")}</div>
+              <div>${r.jumlah.toLocaleString("id-ID")}</div>
             </div>
           `;
         })
@@ -656,7 +682,8 @@
         }
       });
 
-      const warnaCincin = ["#facc15", "#7e22ce", "#18181b", "#a855f7", "#eab308"];
+      // Palet seperti gambar 3: ungu pekat, emas keemasan, dan ungu cerah
+      const warnaCincin = ["#4a0e4e", "#eab308", "#7e22ce", "#facc15", "#a855f7"];
       const lebarKolomPersen = rows.length > 0 ? (100 / rows.length).toFixed(2) : 100;
 
       document.getElementById("gridApprovalItems").innerHTML = rows
@@ -667,7 +694,7 @@
           return `
             <div style="flex: 0 0 calc(${lebarKolomPersen}% - 0.35rem); min-width: 118px;">
               <div class="approval-item-card">
-                <div class="fw-medium small text-truncate w-100" title="${r.label}">${r.label}</div>
+                <div class="small text-truncate w-100" title="${r.label}">${r.label}</div>
                 <div class="ring-gauge-wrap">
                   <canvas id="${canvasId}"></canvas>
                   <div class="ring-gauge-center">
@@ -739,10 +766,20 @@
           datasets: [{
             label: "Jumlah Data",
             data: rows.map((r) => r.jumlah),
-            backgroundColor: "#7e22ce",
-            hoverBackgroundColor: "#4c1d95",
-            borderRadius: 10,
-            maxBarThickness: 52
+            backgroundColor: (context) => {
+              const { ctx, chartArea, dataIndex } = context.chart;
+              if (dataIndex === rows.length - 1 && rows.length > 1) {
+                return buatGradienEmas(ctx, chartArea);
+              }
+              return buatGradienBatangUngu(ctx, chartArea);
+            },
+            borderColor: (context) => {
+              const { dataIndex } = context.chart;
+              return dataIndex === rows.length - 1 && rows.length > 1 ? "#ca8a04" : "#4a0e4e";
+            },
+            borderWidth: 1,
+            borderRadius: 6,
+            maxBarThickness: 54
           }]
         },
         options: {
@@ -778,9 +815,21 @@
           datasets: [{
             label: "Jumlah Data",
             data: sortedRows.map((r) => r.jumlah),
-            backgroundColor: "#9333ea",
-            hoverBackgroundColor: "#581c87",
-            borderRadius: 8,
+            backgroundColor: (context) => {
+              const { ctx, chartArea, dataIndex } = context.chart;
+              if (!chartArea) return "#4a0e4e";
+              const grad = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+              if (dataIndex === 0) {
+                grad.addColorStop(0, "#ca8a04");
+                grad.addColorStop(1, "#facc15");
+                return grad;
+              }
+              grad.addColorStop(0, "#f3e8ff");
+              grad.addColorStop(0.35, "#7e22ce");
+              grad.addColorStop(1, "#4a0e4e");
+              return grad;
+            },
+            borderRadius: 6,
             maxBarThickness: 22
           }]
         },
@@ -810,15 +859,15 @@
 
     function renderDonutPBI(key, canvasId, ringkasId, rows) {
       const total = rows.reduce((acc, r) => acc + r.jumlah, 0);
-      const palet = ["#7e22ce", "#facc15", "#18181b", "#c084fc", "#a855f7"];
+      const palet = ["#4a0e4e", "#eab308", "#7e22ce", "#facc15", "#e9d5ff"];
 
       document.getElementById(ringkasId).innerHTML = rows
         .map((r) => {
           const pct = total > 0 ? ((r.jumlah / total) * 100).toFixed(1) : "0.0";
           return `
             <div class="d-flex justify-content-between align-items-center p-2 rounded-3" style="background: #faf5ff;">
-              <span class="fw-medium">${r.label}</span>
-              <strong style="color: var(--ungu-gelap);">${r.jumlah.toLocaleString("id-ID")} (${pct}%)</strong>
+              <span>${r.label}</span>
+              <span style="color: var(--ungu-pekat);">${r.jumlah.toLocaleString("id-ID")} (${pct}%)</span>
             </div>
           `;
         })
