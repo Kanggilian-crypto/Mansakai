@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MANSAKAI - Publikasi Data Agregat Desil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --ungu-utama: #7e22ce;
+      --ungu-gelap: #581c87;
+      --ungu-muda: #f3e8ff;
+      --ungu-border: #e9d5ff;
+      --teks-utama: #1e1b4b;
+      --teks-redup: #6b7280;
+    }
+
+    body {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      background-color: #faf5ff;
+      color: var(--teks-utama);
+      min-height: 100vh;
+    }
+
+    .navbar-mansakai {
+      background: linear-gradient(135deg, var(--ungu-gelap), var(--ungu-utama));
+    }
+
+    .hero-mansakai {
+      background: linear-gradient(135deg, rgba(88, 28, 135, 0.88), rgba(126, 34, 206, 0.82)),
+                  url("Beranda.jpg") center/cover no-repeat;
+      color: #ffffff;
+      padding: 3.25rem 0;
+      border-bottom: 4px solid var(--ungu-border);
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid var(--ungu-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      box-shadow: 0 6px 20px rgba(126, 34, 206, 0.06);
+      height: 100%;
+    }
+
+    .kpi-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background-color: var(--ungu-muda);
+      color: var(--ungu-utama);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+    }
+
+    .chart-card {
+      background: #ffffff;
+      border: 1px solid var(--ungu-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 24px rgba(126, 34, 206, 0.07);
+    }
+
+    .badge-ungu {
+      background-color: var(--ungu-muda);
+      color: var(--ungu-utama);
+      font-weight: 600;
+      border: 1px solid var(--ungu-border);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-mansakai sticky-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+        <i class="fa-solid fa-chart-column"></i>
+        <span>MANSAKAI</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMansakai">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMansakai">
+        <ul class="navbar-nav ms-auto gap-lg-2">
+          <li class="nav-item"><a class="nav-link active" href="#beranda">Beranda</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              Kategori Data
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+              <li><a class="dropdown-item" href="#grafik-desil">Sebaran Desil</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header id="beranda" class="hero-mansakai">
+    <div class="container">
+      <span class="badge rounded-pill badge-ungu mb-2 px-3 py-2">
+        <i class="fa-solid fa-database me-1"></i> Publikasi Data Agregat
+      </span>
+      <h1 class="fw-bold mb-2">Portal Rekapitulasi Data MANSAKAI</h1>
+      <p class="mb-0 text-white-50">
+        Visualisasi data agregat berbasis Google Sheets yang diperbarui secara otomatis.
+      </p>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <section class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="kpi-card d-flex align-items-center justify-content-between">
+          <div>
+            <div class="text-muted small fw-medium">Total Data Terdata</div>
+            <div id="kpiTotalData" class="fs-3 fw-bold mt-1">Memuat...</div>
+          </div>
+          <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="kpi-card d-flex align-items-center justify-content-between">
+          <div>
+            <div class="text-muted small fw-medium">Jumlah Kelompok Desil</div>
+            <div id="kpiJumlahDesil" class="fs-3 fw-bold mt-1">Memuat...</div>
+          </div>
+          <div class="kpi-icon"><i class="fa-solid fa-layer-group"></i></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="kpi-card d-flex align-items-center justify-content-between">
+          <div>
+            <div class="text-muted small fw-medium">Desil Terbanyak</div>
+            <div id="kpiDesilTerbanyak" class="fs-3 fw-bold mt-1">Memuat...</div>
+          </div>
+          <div class="kpi-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="grafik-desil" class="chart-card">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div>
+          <h2 class="h5 fw-bold mb-1">Jumlah Data per Desil</h2>
+          <p class="text-muted small mb-0">Sumber otomatis dari tab <code>Umum_Desil</code> (Rekap Mansakai)</p>
+        </div>
+        <span id="statusSinkron" class="badge badge-ungu px-3 py-2">Menghubungkan CSV...</span>
+      </div>
+
+      <div id="alertError" class="alert alert-danger d-none" role="alert"></div>
+
+      <div style="position: relative; min-height: 340px;">
+        <canvas id="chartDesil"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const URL_CSV_DESIL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=0&single=true&output=csv";
+
+    let chartInstance = null;
+
+    function pecahBarisCSV(baris) {
+      const hasil = [];
+      let saatIni = "";
+      let dalamKutipan = false;
+
+      for (let i = 0; i < baris.length; i++) {
+        const karakter = baris[i];
+        if (karakter === '"') {
+          if (dalamKutipan && baris[i + 1] === '"') {
+            saatIni += '"';
+            i++;
+          } else {
+            dalamKutipan = !dalamKutipan;
+          }
+        } else if (karakter === "," && !dalamKutipan) {
+          hasil.push(saatIni.trim());
+          saatIni = "";
+        } else {
+          saatIni += karakter;
+        }
+      }
+      hasil.push(saatIni.trim());
+      return hasil;
+    }
+
+    function parseCSV(teksCSV) {
+      const barisList = teksCSV
+        .replace(/^\uFEFF/, "")
+        .trim()
+        .split(/\r?\n/)
+        .filter((baris) => baris.trim() !== "");
+
+      if (barisList.length <= 1) return [];
+
+      return barisList
+        .slice(1)
+        .map(pecahBarisCSV)
+        .map((kolom) => {
+          const desil = kolom[1] ?? "";
+          const jumlahBersih = String(kolom[2] ?? "0").replace(/[^0-9.-]/g, "");
+          return {
+            desil: desil,
+            jumlah: Number(jumlahBersih) || 0
+          };
+        })
+        .filter((item) => item.desil !== "");
+    }
+
+    function perbaruiKPI(dataRows) {
+      const totalData = dataRows.reduce((acc, item) => acc + item.jumlah, 0);
+      const jumlahKelompok = dataRows.length;
+
+      let terbanyak = "-";
+      if (dataRows.length > 0) {
+        const maksItem = dataRows.reduce((max, curr) => (curr.jumlah > max.jumlah ? curr : max), dataRows[0]);
+        terbanyak = `Desil ${maksItem.desil} (${maksItem.jumlah.toLocaleString("id-ID")})`;
+      }
+
+      document.getElementById("kpiTotalData").textContent = totalData.toLocaleString("id-ID");
+      document.getElementById("kpiJumlahDesil").textContent = `${jumlahKelompok} Desil`;
+      document.getElementById("kpiDesilTerbanyak").textContent = terbanyak;
+    }
+
+    function renderGrafik(dataRows) {
+      const labels = dataRows.map((item) => `Desil ${item.desil}`);
+      const values = dataRows.map((item) => item.jumlah);
+
+      const ctx = document.getElementById("chartDesil").getContext("2d");
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+
+      chartInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Jumlah Data",
+              data: values,
+              backgroundColor: "#7e22ce",
+              hoverBackgroundColor: "#581c87",
+              borderColor: "#6b21a8",
+              borderWidth: 1,
+              borderRadius: 8,
+              maxBarThickness: 64
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: (context) => ` Jumlah: ${Number(context.raw).toLocaleString("id-ID")}`
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: (val) => Number(val).toLocaleString("id-ID")
+              },
+              grid: {
+                color: "#f3e8ff"
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+    }
+
+    async function muatDataGrafik() {
+      const statusEl = document.getElementById("statusSinkron");
+      const alertEl = document.getElementById("alertError");
+
+      try {
+        const urlDenganCacheBust = `${URL_CSV_DESIL}${URL_CSV_DESIL.includes("?") ? "&" : "?"}_t=${Date.now()}`;
+        const respon = await fetch(urlDenganCacheBust);
+        if (!respon.ok) {
+          throw new Error(`HTTP ${respon.status}`);
+        }
+
+        const teksCSV = await respon.text();
+        const dataRows = parseCSV(teksCSV);
+
+        if (dataRows.length === 0) {
+          throw new Error("Data CSV kosong atau format kolom tidak sesuai.");
+        }
+
+        perbaruiKPI(dataRows);
+        renderGrafik(dataRows);
+
+        alertEl.classList.add("d-none");
+        statusEl.textContent = "Terhubung ke CSV";
+      } catch (error) {
+        statusEl.textContent = "Gagal memuat CSV";
+        alertEl.textContent = `Tidak dapat memuat data dari tautan CSV: ${error.message}. Pastikan halaman dibuka melalui web server/hosting dan tautan CSV sudah dipublikasikan.`;
+        alertEl.classList.remove("d-none");
+        document.getElementById("kpiTotalData").textContent = "-";
+        document.getElementById("kpiJumlahDesil").textContent = "-";
+        document.getElementById("kpiDesilTerbanyak").textContent = "-";
+      }
+    }
+
+    muatDataGrafik();
+  </script>
+</body>
+</html>
