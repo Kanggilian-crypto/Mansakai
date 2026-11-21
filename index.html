@@ -41,13 +41,6 @@
       box-shadow: 0 20px 50px rgba(76, 29, 149, 0.08);
     }
 
-    .header-identity-group {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.65rem;
-      flex-wrap: wrap;
-    }
-
     .brand-pill {
       background: #ffffff;
       border: 1px solid #e9d5ff;
@@ -66,28 +59,6 @@
       height: 32px;
       object-fit: contain;
       border-radius: 50%;
-    }
-
-    .admin-top-pill {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 999px;
-      padding: 0.28rem 0.85rem 0.28rem 0.32rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--teks-utama);
-    }
-
-    .admin-top-avatar {
-      width: 30px;
-      height: 30px;
-      object-fit: cover;
-      object-position: top center;
-      border-radius: 50%;
-      border: 1.5px solid var(--ungu-aksen);
     }
 
     .nav-pills-wrap {
@@ -139,25 +110,38 @@
       height: 100%;
     }
 
-    .hero-banner-card {
+    .admin-profile-card {
       position: relative;
       border-radius: 22px;
       overflow: hidden;
-      min-height: 290px;
-      background: linear-gradient(155deg, rgba(76, 29, 149, 0.86), rgba(126, 34, 206, 0.72)),
+      min-height: 280px;
+      background: linear-gradient(180deg, rgba(24, 24, 27, 0.14) 0%, rgba(24, 24, 27, 0.38) 55%, rgba(24, 24, 27, 0.9) 100%),
+                  url("Foto.png") center top/cover no-repeat,
                   url("Beranda.jpg") center/cover no-repeat;
       color: #ffffff;
-      padding: 1.35rem;
+      padding: 1.2rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
+    .admin-badge-pill {
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ungu-gelap);
+      border-radius: 999px;
+      padding: 0.32rem 0.8rem;
+      font-size: 0.76rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
     .approval-item-card {
       background: #fffdf5;
       border: 1px solid #f3e8ff;
-      border-radius: 20px;
-      padding: 1rem;
+      border-radius: 18px;
+      padding: 0.75rem 0.5rem;
       text-align: center;
       height: 100%;
       display: flex;
@@ -169,14 +153,14 @@
 
     .approval-item-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(88, 28, 135, 0.08);
+      box-shadow: 0 8px 20px rgba(88, 28, 135, 0.08);
     }
 
     .ring-gauge-wrap {
       position: relative;
-      width: 146px;
-      height: 146px;
-      margin: 0.4rem auto;
+      width: 102px;
+      height: 102px;
+      margin: 0.25rem auto;
     }
 
     .ring-gauge-center {
@@ -187,20 +171,20 @@
       align-items: center;
       justify-content: center;
       pointer-events: none;
-      padding: 0 0.5rem;
+      padding: 0 0.25rem;
     }
 
     .ring-gauge-value {
-      font-size: 1.15rem;
+      font-size: 0.92rem;
       font-weight: 600;
       color: var(--teks-utama);
-      line-height: 1.15;
+      line-height: 1.1;
     }
 
     .ring-gauge-sub {
-      font-size: 0.72rem;
+      font-size: 0.66rem;
       color: var(--teks-redup);
-      margin-top: 0.15rem;
+      margin-top: 0.1rem;
     }
 
     .pill-meter-track {
@@ -264,19 +248,12 @@
 <body>
   <div class="container">
     <div class="dashboard-shell">
-      <!-- Top Bar: Logo + Foto Admin di Atas Samping Logo -->
+      <!-- Top Bar -->
       <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
-        <div class="header-identity-group">
-          <a href="#" class="brand-pill">
-            <img src="LOGO.png" alt="Logo MANSAKAI" class="brand-logo" />
-            <span>MANSAKAI</span>
-          </a>
-
-          <div class="admin-top-pill">
-            <img src="Foto.png" alt="Foto Admin MANSAKAI" class="admin-top-avatar" />
-            <span>Admin Verifikasi</span>
-          </div>
-        </div>
+        <a href="#" class="brand-pill">
+          <img src="LOGO.png" alt="Logo MANSAKAI" class="brand-logo" />
+          <span>MANSAKAI</span>
+        </a>
 
         <!-- Navigasi Kategori Grafik -->
         <ul class="nav nav-pills-wrap" id="kategoriTab" role="tablist">
@@ -302,22 +279,22 @@
         </span>
       </div>
 
-      <!-- Header & Indikator Utama (Mengacu Approval + Total Data Keseluruhan) -->
+      <!-- Header & Indikator Utama -->
       <section class="row g-4 align-items-center mb-4">
         <div class="col-lg-5">
           <h1 class="fw-normal fs-2 mb-1" style="letter-spacing: -0.02em;">Dashboard Rekapitulasi MANSAKAI</h1>
           <p class="text-muted small mb-3">
-            Indikator utama mengacu pada status <strong>Approval</strong> dan total rekap data keseluruhan.
+            Persentase approval mengacu pada <strong>Total Data</strong> keseluruhan menurut Desil.
           </p>
 
           <div class="row g-2 align-items-center">
-            <div class="col-6">
-              <div class="small text-muted mb-1" id="labelBarApprovalUtama">Porsi Status Terbanyak</div>
+            <div class="col-7">
+              <div class="small text-muted mb-1">Persentase Approval Terhadap Total Data</div>
               <div class="pill-meter-track">
-                <div id="barApprovalUtama" class="pill-meter-fill" style="width: 25%;">0%</div>
+                <div id="barPersenApprovalTotal" class="pill-meter-fill" style="width: 20%;">0%</div>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-5">
               <div class="small text-muted mb-1">Kategori Status Approval</div>
               <div class="pill-meter-track">
                 <div id="barKategoriApproval" class="pill-meter-fill" style="width: 100%; background: #18181b;">
@@ -331,20 +308,20 @@
         <div class="col-lg-7">
           <div class="row g-3 text-lg-end">
             <div class="col-6 col-sm-3">
+              <div class="small text-muted">Total Data (Desil)</div>
+              <div id="kpiTotalData" class="stat-big mt-1" style="color: var(--ungu-gelap);">...</div>
+            </div>
+            <div class="col-6 col-sm-3">
               <div class="small text-muted">Total Approval</div>
               <div id="kpiTotalApproval" class="stat-big mt-1">...</div>
             </div>
             <div class="col-6 col-sm-3">
+              <div class="small text-muted">% Approval / Total</div>
+              <div id="kpiPersenApprovalTotal" class="stat-big mt-1" style="color: var(--ungu-utama);">...</div>
+            </div>
+            <div class="col-6 col-sm-3">
               <div class="small text-muted">Status Terbanyak</div>
-              <div id="kpiStatusApprovalTerbanyak" class="fs-6 fw-semibold mt-2" style="color: var(--ungu-utama);">...</div>
-            </div>
-            <div class="col-6 col-sm-3">
-              <div class="small text-muted">Jumlah Status</div>
-              <div id="kpiJumlahStatusApproval" class="stat-big mt-1">...</div>
-            </div>
-            <div class="col-6 col-sm-3">
-              <div class="small text-muted">Total Data Keseluruhan</div>
-              <div id="kpiTotalKeseluruhan" class="stat-big mt-1" style="color: var(--ungu-gelap);">...</div>
+              <div id="kpiStatusApprovalTerbanyak" class="fs-6 fw-semibold mt-2">...</div>
             </div>
           </div>
         </div>
@@ -354,20 +331,22 @@
       <div class="tab-content" id="kategoriTabContent">
         <!-- ================= KATEGORI 1: KATEGORI UMUM ================= -->
         <div class="tab-pane fade show active" id="pane-umum" role="tabpanel" tabindex="0">
-          <!-- BARIS 1 (PALING ATAS): Banner + Grafik Cincin Setiap Item Approval + Ringkasan Gelap Approval -->
+          <!-- BARIS 1 (PALING ATAS): Foto Admin (seperti semula) + Grafik Approval (1 baris) + Ringkasan Gelap Approval -->
           <div class="row g-4 mb-4">
+            <!-- Kartu Profil Admin dengan Foto.png -->
             <div class="col-lg-3">
-              <div class="hero-banner-card">
-                <div class="d-flex align-items-center justify-content-between">
-                  <span class="badge bg-light text-dark px-3 py-2 rounded-pill fw-medium">
-                    Kategori Umum
+              <div class="admin-profile-card">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="admin-badge-pill">
+                    <i class="fa-solid fa-user-shield"></i> Admin MANSAKAI
                   </span>
-                  <img src="LOGO.png" alt="Logo" style="width: 34px; height: 34px; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px;" />
+                  <img src="LOGO.png" alt="Logo MANSAKAI" style="width: 32px; height: 32px; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px;" />
                 </div>
+
                 <div>
-                  <h2 class="h5 fw-semibold mb-1">Rekap Mansakai</h2>
+                  <h2 class="h5 fw-semibold mb-1">Verifikasi & Validasi</h2>
                   <p class="small text-white-50 mb-2">
-                    Visualisasi status approval per item serta sebaran data agregat.
+                    Rekap status approval data terpadu secara otomatis.
                   </p>
                   <span id="pillHighlightApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 600;">
                     Memuat Approval...
@@ -376,19 +355,19 @@
               </div>
             </div>
 
-            <!-- Grafik Setiap Item Approval (Cincin Melingkar Seperti Gambar 2) -->
+            <!-- Grafik Setiap Item Approval (Kompak & Muat 1 Baris) -->
             <div class="col-lg-5">
               <div class="dash-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
                     <span class="small text-muted fw-medium">Grafik 1 • Prioritas Utama</span>
-                    <h2 class="h5 fw-semibold mb-0">Status Approval Per Item</h2>
+                    <h2 class="h5 fw-semibold mb-0">Status Approval</h2>
                   </div>
                   <span id="statusApproval" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorApproval" class="alert alert-danger py-2 small d-none"></div>
-                <div id="gridApprovalItems" class="row g-3 flex-grow-1 align-items-stretch">
-                  <div class="col-12 text-center text-muted small py-4">Memuat grafik item approval...</div>
+                <div id="gridApprovalItems" class="d-flex flex-nowrap gap-2 overflow-auto flex-grow-1 align-items-stretch py-1">
+                  <div class="text-center text-muted small py-4 w-100">Memuat grafik item approval...</div>
                 </div>
               </div>
             </div>
@@ -529,7 +508,8 @@
     };
 
     const chartInstances = {};
-    const totalPerSumber = {};
+    let totalDataDesil = 0;
+    let totalDataApproval = 0;
 
     function pecahBarisCSV(baris) {
       const hasil = [];
@@ -599,12 +579,22 @@
       chartInstances[key] = new Chart(ctx, config);
     }
 
-    function perbaruiTotalKeseluruhan() {
-      const totalGabungan = Object.values(totalPerSumber).reduce((acc, n) => acc + (Number(n) || 0), 0);
-      document.getElementById("kpiTotalKeseluruhan").textContent = totalGabungan.toLocaleString("id-ID");
+    function perbaruiPersentaseApprovalTerhadapTotal() {
+      const persenTerhadapTotal = totalDataDesil > 0
+        ? ((totalDataApproval / totalDataDesil) * 100).toFixed(1)
+        : "0.0";
+
+      document.getElementById("kpiTotalData").textContent = totalDataDesil.toLocaleString("id-ID");
+      document.getElementById("kpiTotalApproval").textContent = totalDataApproval.toLocaleString("id-ID");
+      document.getElementById("kpiPersenApprovalTotal").textContent = `${persenTerhadapTotal}%`;
+
+      const barEl = document.getElementById("barPersenApprovalTotal");
+      const lebarBar = Math.min(Math.max(Number(persenTerhadapTotal), 16), 100);
+      barEl.style.width = `${lebarBar}%`;
+      barEl.textContent = `${persenTerhadapTotal}%`;
     }
 
-    // Plugin garis tik putus-putus di sekeliling cincin (seperti gambar 2)
+    // Plugin garis tik putus-putus di sekeliling cincin
     const tickRingPlugin = {
       id: "tickRingPlugin",
       beforeDraw(chart, args, opts) {
@@ -612,13 +602,13 @@
         if (!chartArea) return;
         const cx = (chartArea.left + chartArea.right) / 2;
         const cy = (chartArea.top + chartArea.bottom) / 2;
-        const outerR = Math.min(chartArea.width, chartArea.height) / 2 - 4;
-        const innerR = outerR - (opts.tickLength || 7);
-        const totalTicks = opts.ticks || 36;
+        const outerR = Math.min(chartArea.width, chartArea.height) / 2 - 3;
+        const innerR = outerR - (opts.tickLength || 5);
+        const totalTicks = opts.ticks || 32;
 
         ctx.save();
         ctx.strokeStyle = opts.color || "#9ca3af";
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 1.35;
 
         for (let i = 0; i < totalTicks; i++) {
           const angle = (i / totalTicks) * Math.PI * 2;
@@ -635,41 +625,33 @@
       }
     };
 
-    // 1. GRAFIK SETIAP ITEM APPROVAL (POLA CINCIN SEPERTI GAMBAR 2) & INDIKATOR ATAS
+    // 1. GRAFIK SETIAP ITEM APPROVAL (MUAT 1 BARIS) & INDIKATOR
     function renderApproval(rows) {
-      const totalData = rows.reduce((acc, r) => acc + r.jumlah, 0);
-      totalPerSumber.approval = totalData;
-      perbaruiTotalKeseluruhan();
+      totalDataApproval = rows.reduce((acc, r) => acc + r.jumlah, 0);
+      perbaruiPersentaseApprovalTerhadapTotal();
 
       let maks = rows[0];
       rows.forEach((r) => {
         if (r.jumlah > maks.jumlah) maks = r;
       });
 
-      const persenMaks = totalData > 0 ? ((maks.jumlah / totalData) * 100).toFixed(1) : "0.0";
+      const persenMaksInternal = totalDataApproval > 0
+        ? ((maks.jumlah / totalDataApproval) * 100).toFixed(1)
+        : "0.0";
 
-      // Update indikator utama yang mengacu pada Approval
-      document.getElementById("kpiTotalApproval").textContent = totalData.toLocaleString("id-ID");
-      document.getElementById("kpiJumlahStatusApproval").textContent = `${rows.length}`;
       document.getElementById("kpiStatusApprovalTerbanyak").textContent = `${maks.label} (${maks.jumlah.toLocaleString("id-ID")})`;
-
-      document.getElementById("labelBarApprovalUtama").textContent = `Porsi ${maks.label}`;
-      const barApproval = document.getElementById("barApprovalUtama");
-      barApproval.style.width = `${Math.max(Number(persenMaks), 18)}%`;
-      barApproval.textContent = `${persenMaks}%`;
-
       document.getElementById("barKategoriApproval").textContent = `${rows.length} Status Approval`;
-      document.getElementById("badgeTotalApproval").textContent = `${totalData.toLocaleString("id-ID")} Data`;
-      document.getElementById("pillHighlightApproval").textContent = `${maks.label}: ${maks.jumlah.toLocaleString("id-ID")} (${persenMaks}%)`;
+      document.getElementById("badgeTotalApproval").textContent = `${totalDataApproval.toLocaleString("id-ID")} Data`;
+      document.getElementById("pillHighlightApproval").textContent = `${maks.label}: ${maks.jumlah.toLocaleString("id-ID")} (${persenMaksInternal}%)`;
 
       document.getElementById("daftarRingkasApproval").innerHTML = rows
         .map((r) => {
-          const pct = totalData > 0 ? ((r.jumlah / totalData) * 100).toFixed(1) : "0.0";
+          const pct = totalDataApproval > 0 ? ((r.jumlah / totalDataApproval) * 100).toFixed(1) : "0.0";
           return `
             <div class="dark-item-row d-flex justify-content-between align-items-center">
               <div>
                 <div class="fw-medium small">${r.label}</div>
-                <div class="text-white-50" style="font-size: 0.75rem;">${pct}% dari total approval</div>
+                <div class="text-white-50" style="font-size: 0.75rem;">${pct}% dari approval</div>
               </div>
               <div class="fw-semibold">${r.jumlah.toLocaleString("id-ID")}</div>
             </div>
@@ -677,7 +659,6 @@
         })
         .join("");
 
-      // Hancurkan chart item approval lama jika ada
       Object.keys(chartInstances).forEach((k) => {
         if (k.startsWith("approvalItem_")) {
           chartInstances[k].destroy();
@@ -686,15 +667,15 @@
       });
 
       const warnaCincin = ["#facc15", "#7e22ce", "#18181b", "#a855f7", "#eab308"];
-      const colClass = rows.length <= 2 ? "col-6" : "col-6 col-sm-6";
+      const lebarKolomPersen = rows.length > 0 ? (100 / rows.length).toFixed(2) : 100;
 
       document.getElementById("gridApprovalItems").innerHTML = rows
         .map((r, idx) => {
-          const pctNum = totalData > 0 ? (r.jumlah / totalData) * 100 : 0;
+          const pctNum = totalDataApproval > 0 ? (r.jumlah / totalDataApproval) * 100 : 0;
           const pctText = pctNum.toFixed(1);
           const canvasId = `gaugeApproval_${idx}`;
           return `
-            <div class="${colClass}">
+            <div style="flex: 0 0 calc(${lebarKolomPersen}% - 0.35rem); min-width: 118px;">
               <div class="approval-item-card">
                 <div class="fw-medium small text-truncate w-100" title="${r.label}">${r.label}</div>
                 <div class="ring-gauge-wrap">
@@ -704,7 +685,7 @@
                     <span class="ring-gauge-sub">${pctText}%</span>
                   </div>
                 </div>
-                <div class="small text-muted">Dari ${totalData.toLocaleString("id-ID")}</div>
+                <div class="small text-muted" style="font-size: 0.72rem;">Approval</div>
               </div>
             </div>
           `;
@@ -712,7 +693,7 @@
         .join("");
 
       rows.forEach((r, idx) => {
-        const pctNum = totalData > 0 ? Math.min(Math.max((r.jumlah / totalData) * 100, 0), 100) : 0;
+        const pctNum = totalDataApproval > 0 ? Math.min(Math.max((r.jumlah / totalDataApproval) * 100, 0), 100) : 0;
         const sisa = Math.max(100 - pctNum, 0);
         const aktifWarna = warnaCincin[idx % warnaCincin.length];
         const key = `approvalItem_${idx}`;
@@ -732,7 +713,7 @@
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            cutout: "76%",
+            cutout: "75%",
             rotation: 0,
             plugins: {
               legend: { display: false },
@@ -747,8 +728,8 @@
                 }
               },
               tickRingPlugin: {
-                ticks: 36,
-                tickLength: 6,
+                ticks: 32,
+                tickLength: 5,
                 color: "#9ca3af"
               }
             }
@@ -758,10 +739,10 @@
       });
     }
 
-    // 2. GRAFIK SEBARAN MENURUT DESIL
+    // 2. GRAFIK SEBARAN MENURUT DESIL (SUMBER TOTAL DATA)
     function renderDesil(rows) {
-      totalPerSumber.desil = rows.reduce((acc, r) => acc + r.jumlah, 0);
-      perbaruiTotalKeseluruhan();
+      totalDataDesil = rows.reduce((acc, r) => acc + r.jumlah, 0);
+      perbaruiPersentaseApprovalTerhadapTotal();
 
       buatAtauPerbaruiChart("desil", "chartDesil", {
         type: "bar",
@@ -801,9 +782,6 @@
 
     // 3. GRAFIK SEBARAN MENURUT KECAMATAN (DIURUTKAN DARI TERBANYAK)
     function renderKecamatan(rows) {
-      totalPerSumber.kecamatan = rows.reduce((acc, r) => acc + r.jumlah, 0);
-      perbaruiTotalKeseluruhan();
-
       const sortedRows = [...rows].sort((a, b) => b.jumlah - a.jumlah);
 
       buatAtauPerbaruiChart("kecamatan", "chartKecamatan", {
@@ -846,9 +824,6 @@
     // 4 & 5. GRAFIK PBI NASIONAL & PBI PEMDA
     function renderDonutPBI(key, canvasId, ringkasId, rows) {
       const total = rows.reduce((acc, r) => acc + r.jumlah, 0);
-      totalPerSumber[key] = total;
-      perbaruiTotalKeseluruhan();
-
       const palet = ["#7e22ce", "#facc15", "#18181b", "#c084fc", "#a855f7"];
 
       document.getElementById(ringkasId).innerHTML = rows
@@ -900,16 +875,16 @@
     async function muatSemuaKategoriUmum() {
       const tugas = [
         {
-          url: SUMBER_CSV.approval,
-          statusId: "statusApproval",
-          errorId: "errorApproval",
-          render: renderApproval
-        },
-        {
           url: SUMBER_CSV.desil,
           statusId: "statusDesil",
           errorId: "errorDesil",
           render: renderDesil
+        },
+        {
+          url: SUMBER_CSV.approval,
+          statusId: "statusApproval",
+          errorId: "errorApproval",
+          render: renderApproval
         },
         {
           url: SUMBER_CSV.kecamatan,
