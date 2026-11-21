@@ -50,6 +50,19 @@
       box-shadow: 0 20px 50px rgba(76, 29, 149, 0.08);
     }
 
+    .sticky-header-bar {
+      position: sticky;
+      top: 0.5rem;
+      z-index: 1030;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid #ede9fe;
+      border-radius: 22px;
+      padding: 0.65rem 0.9rem;
+      box-shadow: 0 10px 26px rgba(76, 29, 149, 0.08);
+    }
+
     .brand-pill {
       background: #ffffff;
       border: 1px solid #e9d5ff;
@@ -71,10 +84,10 @@
     }
 
     .nav-pills-wrap {
-      background: #ffffff;
+      background: #faf5ff;
       border: 1px solid #ede9fe;
       border-radius: 999px;
-      padding: 0.3rem;
+      padding: 0.25rem;
       display: inline-flex;
       flex-wrap: wrap;
       gap: 0.25rem;
@@ -236,8 +249,8 @@
 <body>
   <div class="container">
     <div class="dashboard-shell">
-      <!-- Top Bar -->
-      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+      <!-- Top Bar Freeze -->
+      <div class="sticky-header-bar d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
         <a href="#" class="brand-pill">
           <img src="LOGO.png" alt="Logo MANSAKAI" class="brand-logo" />
           <span>MANSAKAI</span>
@@ -802,7 +815,6 @@
       }
     };
 
-    // Label nilai di ujung batang tanpa legenda & tanpa angka sumbu
     const labelNilaiBarPlugin = {
       id: "labelNilaiBarPlugin",
       afterDatasetsDraw(chart) {
