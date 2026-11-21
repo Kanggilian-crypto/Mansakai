@@ -260,8 +260,8 @@
             </button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-kategori-2" data-bs-toggle="pill" data-bs-target="#pane-kategori-2" type="button" role="tab">
-              Kategori Wilayah / Sektor
+            <button class="nav-link" id="tab-perumahan" data-bs-toggle="pill" data-bs-target="#pane-perumahan" type="button" role="tab">
+              Perumahan
             </button>
           </li>
           <li class="nav-item" role="presentation">
@@ -272,7 +272,7 @@
         </ul>
 
         <span id="statusGlobal" class="badge-status">
-          <i class="fa-solid fa-rotate me-1"></i> Memuat 5 sumber CSV...
+          <i class="fa-solid fa-rotate me-1"></i> Memuat 9 sumber CSV...
         </span>
       </div>
 
@@ -461,14 +461,81 @@
           </div>
         </div>
 
-        <!-- ================= RUANG KATEGORI 2 (SIAP PAKAI) ================= -->
-        <div class="tab-pane fade" id="pane-kategori-2" role="tabpanel" tabindex="0">
-          <div class="placeholder-slot">
-            <i class="fa-solid fa-chart-pie fs-2 mb-2"></i>
-            <h2 class="h5">Ruang Kategori Grafik Kedua</h2>
-            <p class="small text-muted mb-0">
-              Siap diisi grafik tambahan begitu tautan CSV tab rekap berikutnya dipublikasikan dari Rekap Mansakai.
-            </p>
+        <!-- ================= KATEGORI 2: PERUMAHAN ================= -->
+        <div class="tab-pane fade" id="pane-perumahan" role="tabpanel" tabindex="0">
+          <!-- BARIS 1: 1. Status Kepemilikan Rumah + 2. Jenis Lantai Terluas -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-6">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted">Grafik 1 • Perumahan</span>
+                    <h2 class="h5 mb-0">Status Kepemilikan Rumah</h2>
+                  </div>
+                  <span id="statusKepemilikanRumah" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorKepemilikanRumah" class="alert alert-danger py-2 small d-none"></div>
+                <div class="row align-items-center g-3 flex-grow-1">
+                  <div class="col-sm-6" style="position: relative; min-height: 240px;">
+                    <canvas id="chartKepemilikanRumah"></canvas>
+                  </div>
+                  <div class="col-sm-6">
+                    <div id="ringkasKepemilikanRumah" class="d-flex flex-column gap-2 small"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted">Grafik 2 • Perumahan</span>
+                    <h2 class="h5 mb-0">Jenis Lantai Terluas</h2>
+                  </div>
+                  <span id="statusJenisLantai" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorJenisLantai" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 290px;">
+                  <canvas id="chartJenisLantai"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BARIS 2: 3. Jenis Atap Terluas + 4. Jenis Dinding Terluas -->
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted">Grafik 3 • Perumahan</span>
+                    <h2 class="h5 mb-0">Jenis Atap Terluas</h2>
+                  </div>
+                  <span id="statusJenisAtap" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorJenisAtap" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 290px;">
+                  <canvas id="chartJenisAtap"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted">Grafik 4 • Perumahan</span>
+                    <h2 class="h5 mb-0">Jenis Dinding Terluas</h2>
+                  </div>
+                  <span id="statusJenisDinding" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorJenisDinding" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 290px;">
+                  <canvas id="chartJenisDinding"></canvas>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -493,7 +560,11 @@
       desil: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=0&single=true&output=csv",
       kecamatan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1517054386&single=true&output=csv",
       pbiNasional: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1491098598&single=true&output=csv",
-      pbiPemda: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=858926562&single=true&output=csv"
+      pbiPemda: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=858926562&single=true&output=csv",
+      statusKepemilikanRumah: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=640888748&single=true&output=csv",
+      jenisLantai: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=595722365&single=true&output=csv",
+      jenisAtap: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=686227034&single=true&output=csv",
+      jenisDinding: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=387816287&single=true&output=csv"
     };
 
     const chartInstances = {};
@@ -907,6 +978,55 @@
       });
     }
 
+    function renderBatangPerumahan(key, canvasId, rows) {
+      const sortedRows = [...rows].sort((a, b) => b.jumlah - a.jumlah);
+
+      buatAtauPerbaruiChart(key, canvasId, {
+        type: "bar",
+        data: {
+          labels: sortedRows.map((r) => r.label),
+          datasets: [{
+            label: "Jumlah Data",
+            data: sortedRows.map((r) => r.jumlah),
+            backgroundColor: (context) => {
+              const { ctx, chartArea, dataIndex } = context.chart;
+              if (dataIndex === 0 && sortedRows.length > 1) {
+                return buatGradienEmas(ctx, chartArea);
+              }
+              return buatGradienBatangUngu(ctx, chartArea);
+            },
+            borderColor: (context) => {
+              const { dataIndex } = context.chart;
+              return dataIndex === 0 && sortedRows.length > 1 ? "#ca8a04" : "#4a0e4e";
+            },
+            borderWidth: 1,
+            borderRadius: 6,
+            maxBarThickness: 48
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` Jumlah: ${Number(ctx.raw).toLocaleString("id-ID")}`
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { callback: (v) => Number(v).toLocaleString("id-ID") },
+              grid: { color: "#f3e8ff" }
+            },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
     async function muatSemuaKategoriUmum() {
       const tugas = [
         {
@@ -938,6 +1058,30 @@
           statusId: "statusPbiPemda",
           errorId: "errorPbiPemda",
           render: (rows) => renderDonutPBI("pbiPemda", "chartPbiPemda", "ringkasPbiPemda", rows)
+        },
+        {
+          url: SUMBER_CSV.statusKepemilikanRumah,
+          statusId: "statusKepemilikanRumah",
+          errorId: "errorKepemilikanRumah",
+          render: (rows) => renderDonutPBI("statusKepemilikanRumah", "chartKepemilikanRumah", "ringkasKepemilikanRumah", rows)
+        },
+        {
+          url: SUMBER_CSV.jenisLantai,
+          statusId: "statusJenisLantai",
+          errorId: "errorJenisLantai",
+          render: (rows) => renderBatangPerumahan("jenisLantai", "chartJenisLantai", rows)
+        },
+        {
+          url: SUMBER_CSV.jenisAtap,
+          statusId: "statusJenisAtap",
+          errorId: "errorJenisAtap",
+          render: (rows) => renderBatangPerumahan("jenisAtap", "chartJenisAtap", rows)
+        },
+        {
+          url: SUMBER_CSV.jenisDinding,
+          statusId: "statusJenisDinding",
+          errorId: "errorJenisDinding",
+          render: (rows) => renderBatangPerumahan("jenisDinding", "chartJenisDinding", rows)
         }
       ];
 
@@ -962,7 +1106,7 @@
       );
 
       const globalEl = document.getElementById("statusGlobal");
-      globalEl.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> ${berhasil}/5 Grafik Terhubung`;
+      globalEl.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> ${berhasil}/${tugas.length} Grafik Terhubung`;
     }
 
     muatSemuaKategoriUmum();
