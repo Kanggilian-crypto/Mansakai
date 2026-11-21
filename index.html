@@ -289,14 +289,14 @@
             </button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-infrastruktur" data-bs-toggle="pill" data-bs-target="#pane-infrastruktur" type="button" role="tab">
-              Infrastruktur
+            <button class="nav-link" id="tab-infrastruktur-sanitasi" data-bs-toggle="pill" data-bs-target="#pane-infrastruktur-sanitasi" type="button" role="tab">
+              Infrastruktur dan Sanitasi
             </button>
           </li>
         </ul>
 
         <span id="statusGlobal" class="badge-status">
-          <i class="fa-solid fa-rotate me-1"></i> Memuat 12 sumber CSV...
+          <i class="fa-solid fa-rotate me-1"></i> Memuat 15 sumber CSV...
         </span>
       </div>
 
@@ -566,61 +566,106 @@
           </div>
         </div>
 
-        <!-- ================= KATEGORI 3: INFRASTRUKTUR ================= -->
-        <div class="tab-pane fade" id="pane-infrastruktur" role="tabpanel" tabindex="0">
-          <!-- BARIS 1: 1. Sumber air minum utama + 2. Sumber Penerangan Utama -->
+        <!-- ================= KATEGORI 3: INFRASTRUKTUR DAN SANITASI ================= -->
+        <div class="tab-pane fade" id="pane-infrastruktur-sanitasi" role="tabpanel" tabindex="0">
+          <!-- BARIS 1: INFRASTRUKTUR (3 GRAFIK) -->
           <div class="row g-4 mb-4">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted">Grafik 1 • Infrastruktur</span>
+                    <span class="small text-muted">Infrastruktur • Grafik 1</span>
                     <h2 class="h5 mb-0">Sumber Air Minum Utama</h2>
                   </div>
                   <span id="statusSumberAirMinum" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorSumberAirMinum" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 270px;">
+                <div class="flex-grow-1" style="position: relative; min-height: 275px;">
                   <canvas id="chartSumberAirMinum"></canvas>
                 </div>
-                <div id="legendaSumberAirMinum" class="legenda-baris-box"></div>
               </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-4">
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted">Grafik 2 • Infrastruktur</span>
+                    <span class="small text-muted">Infrastruktur • Grafik 2</span>
                     <h2 class="h5 mb-0">Sumber Penerangan Utama</h2>
                   </div>
                   <span id="statusSumberPenerangan" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorSumberPenerangan" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 270px;">
+                <div class="flex-grow-1" style="position: relative; min-height: 275px;">
                   <canvas id="chartSumberPenerangan"></canvas>
                 </div>
-                <div id="legendaSumberPenerangan" class="legenda-baris-box"></div>
               </div>
             </div>
-          </div>
 
-          <!-- BARIS 2: 3. Bahan bakar utama untuk masak -->
-          <div class="row g-4">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small text-muted">Grafik 3 • Infrastruktur</span>
+                    <span class="small text-muted">Infrastruktur • Grafik 3</span>
                     <h2 class="h5 mb-0">Bahan Bakar Utama untuk Masak</h2>
                   </div>
                   <span id="statusBahanBakarMasak" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorBahanBakarMasak" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 270px;">
+                <div class="flex-grow-1" style="position: relative; min-height: 275px;">
                   <canvas id="chartBahanBakarMasak"></canvas>
                 </div>
-                <div id="legendaBahanBakarMasak" class="legenda-baris-box"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BARIS 2: SANITASI (3 GRAFIK) -->
+          <div class="row g-4">
+            <div class="col-lg-4">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted">Sanitasi • Grafik 4</span>
+                    <h2 class="h5 mb-0">Fasilitas Buang Air Besar</h2>
+                  </div>
+                  <span id="statusFasilitasBab" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorFasilitasBab" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 275px;">
+                  <canvas id="chartFasilitasBab"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted">Sanitasi • Grafik 5</span>
+                    <h2 class="h5 mb-0">Jenis Kloset</h2>
+                  </div>
+                  <span id="statusJenisKloset" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorJenisKloset" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 275px;">
+                  <canvas id="chartJenisKloset"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted">Sanitasi • Grafik 6</span>
+                    <h2 class="h5 mb-0">Pembuangan Akhir Tinja</h2>
+                  </div>
+                  <span id="statusPembuanganTinja" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorPembuanganTinja" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 275px;">
+                  <canvas id="chartPembuanganTinja"></canvas>
+                </div>
               </div>
             </div>
           </div>
@@ -643,7 +688,10 @@
       jenisDinding: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=387816287&single=true&output=csv",
       sumberAirMinum: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1229999159&single=true&output=csv",
       sumberPenerangan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1714567630&single=true&output=csv",
-      bahanBakarMasak: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=2095146236&single=true&output=csv"
+      bahanBakarMasak: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=2095146236&single=true&output=csv",
+      fasilitasBab: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1739519489&single=true&output=csv",
+      jenisKloset: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1053371556&single=true&output=csv",
+      pembuanganTinja: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1623186494&single=true&output=csv"
     };
 
     const chartInstances = {};
@@ -1162,6 +1210,73 @@
       });
     }
 
+    function renderBatangInfrastrukturSanitasi(key, canvasId, rows) {
+      const sortedRows = [...rows].sort((a, b) => b.jumlah - a.jumlah);
+      const total = sortedRows.reduce((acc, r) => acc + r.jumlah, 0);
+
+      buatAtauPerbaruiChart(key, canvasId, {
+        type: "bar",
+        data: {
+          labels: sortedRows.map((r) => r.label),
+          datasets: [{
+            label: "Jumlah Data",
+            data: sortedRows.map((r) => r.jumlah),
+            backgroundColor: (context) => {
+              const { ctx, chartArea, dataIndex } = context.chart;
+              if (!chartArea) return "#4a0e4e";
+              const grad = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+              if (dataIndex === 0 && sortedRows.length > 1) {
+                grad.addColorStop(0, "#fef08a");
+                grad.addColorStop(0.55, "#eab308");
+                grad.addColorStop(1, "#ca8a04");
+                return grad;
+              }
+              grad.addColorStop(0, "#f3e8ff");
+              grad.addColorStop(0.35, "#7e22ce");
+              grad.addColorStop(1, "#4a0e4e");
+              return grad;
+            },
+            borderRadius: 6,
+            maxBarThickness: 22
+          }]
+        },
+        options: {
+          indexAxis: "y",
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: {
+            padding: { right: 48 }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  const val = Number(ctx.raw) || 0;
+                  const pct = total > 0 ? ((val / total) * 100).toFixed(1) : "0.0";
+                  return ` Jumlah: ${val.toLocaleString("id-ID")} (${pct}%)`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              ticks: { callback: (v) => Number(v).toLocaleString("id-ID") },
+              grid: { color: "#f3e8ff" }
+            },
+            y: {
+              grid: { display: false },
+              ticks: {
+                font: { size: 11 }
+              }
+            }
+          }
+        },
+        plugins: [nilaiDiUjungBarPlugin]
+      });
+    }
+
     async function muatSemuaKategoriUmum() {
       const tugas = [
         {
@@ -1222,19 +1337,37 @@
           url: SUMBER_CSV.sumberAirMinum,
           statusId: "statusSumberAirMinum",
           errorId: "errorSumberAirMinum",
-          render: (rows) => renderBatangPerumahan("sumberAirMinum", "chartSumberAirMinum", "legendaSumberAirMinum", rows)
+          render: (rows) => renderBatangInfrastrukturSanitasi("sumberAirMinum", "chartSumberAirMinum", rows)
         },
         {
           url: SUMBER_CSV.sumberPenerangan,
           statusId: "statusSumberPenerangan",
           errorId: "errorSumberPenerangan",
-          render: (rows) => renderBatangPerumahan("sumberPenerangan", "chartSumberPenerangan", "legendaSumberPenerangan", rows)
+          render: (rows) => renderBatangInfrastrukturSanitasi("sumberPenerangan", "chartSumberPenerangan", rows)
         },
         {
           url: SUMBER_CSV.bahanBakarMasak,
           statusId: "statusBahanBakarMasak",
           errorId: "errorBahanBakarMasak",
-          render: (rows) => renderBatangPerumahan("bahanBakarMasak", "chartBahanBakarMasak", "legendaBahanBakarMasak", rows)
+          render: (rows) => renderBatangInfrastrukturSanitasi("bahanBakarMasak", "chartBahanBakarMasak", rows)
+        },
+        {
+          url: SUMBER_CSV.fasilitasBab,
+          statusId: "statusFasilitasBab",
+          errorId: "errorFasilitasBab",
+          render: (rows) => renderBatangInfrastrukturSanitasi("fasilitasBab", "chartFasilitasBab", rows)
+        },
+        {
+          url: SUMBER_CSV.jenisKloset,
+          statusId: "statusJenisKloset",
+          errorId: "errorJenisKloset",
+          render: (rows) => renderBatangInfrastrukturSanitasi("jenisKloset", "chartJenisKloset", rows)
+        },
+        {
+          url: SUMBER_CSV.pembuanganTinja,
+          statusId: "statusPembuanganTinja",
+          errorId: "errorPembuanganTinja",
+          render: (rows) => renderBatangInfrastrukturSanitasi("pembuanganTinja", "chartPembuanganTinja", rows)
         }
       ];
 
