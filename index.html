@@ -231,15 +231,6 @@
       border-radius: 14px;
       padding: 0.65rem 0.9rem;
     }
-
-    .placeholder-slot {
-      border: 2px dashed #d8b4fe;
-      background: #faf5ff;
-      border-radius: 22px;
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      color: var(--ungu-gelap);
-    }
   </style>
 </head>
 <body>
@@ -811,44 +802,38 @@
       }
     };
 
-    // Label kategori di atas batang & angka jumlah di ujung kanan batang (tanpa axes/legenda)
-    const labelBarBersihPlugin = {
-      id: "labelBarBersihPlugin",
+    // Label nilai di ujung batang tanpa legenda & tanpa angka sumbu
+    const labelNilaiBarPlugin = {
+      id: "labelNilaiBarPlugin",
       afterDatasetsDraw(chart) {
         const meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data) return;
-        const { ctx, chartArea } = chart;
+        const { ctx } = chart;
         const isHorizontal = chart.config.options.indexAxis === "y";
 
         ctx.save();
         ctx.font = '500 11px "Outfit", "DM Sans", sans-serif';
         ctx.fillStyle = "#141416";
-        ctx.textBaseline = "middle";
 
         meta.data.forEach((barElement, idx) => {
           const val = Number(chart.data.datasets[0].data[idx]) || 0;
-          const lbl = chart.data.labels[idx] ?? "";
           const formattedVal = val.toLocaleString("id-ID");
 
           if (isHorizontal) {
-            // Label kategori di kiri atas batang
             ctx.textAlign = "left";
-            ctx.fillText(String(lbl), chartArea.left, barElement.y - 11);
-            // Nilai jumlah di kanan ujung batang
-            ctx.textAlign = "left";
+            ctx.textBaseline = "middle";
             ctx.fillText(formattedVal, barElement.x + 6, barElement.y);
           } else {
-            // Bar vertikal: nilai jumlah di atas batang & label di bawah batang
             ctx.textAlign = "center";
-            ctx.fillText(formattedVal, barElement.x, barElement.y - 10);
-            ctx.fillText(String(lbl), barElement.x, chartArea.bottom + 12);
+            ctx.textBaseline = "bottom";
+            ctx.fillText(formattedVal, barElement.x, barElement.y - 4);
           }
         });
         ctx.restore();
       }
     };
 
-    function buatKonfigurasiBarTanpaAxes(rows, { isHorizontal = false, sorotIndex = -1 } = {}) {
+    function buatKonfigurasiBarSamping(rows, { isHorizontal = false, sorotIndex = -1 } = {}) {
       const total = rows.reduce((acc, r) => acc + r.jumlah, 0);
 
       return {
@@ -879,7 +864,7 @@
                 : buatGradienBatangUngu(ctx, chartArea);
             },
             borderRadius: 6,
-            maxBarThickness: isHorizontal ? 16 : 46
+            maxBarThickness: isHorizontal ? 20 : 46
           }]
         },
         options: {
@@ -888,8 +873,8 @@
           maintainAspectRatio: false,
           layout: {
             padding: isHorizontal
-              ? { top: 10, right: 52, bottom: 4, left: 0 }
-              : { top: 22, right: 8, bottom: 24, left: 8 }
+              ? { top: 4, right: 52, bottom: 4, left: 0 }
+              : { top: 20, right: 8, bottom: 4, left: 8 }
           },
           plugins: {
             legend: { display: false },
@@ -903,12 +888,39 @@
               }
             }
           },
-          scales: {
-            x: { display: false, beginAtZero: true },
-            y: { display: false, beginAtZero: true }
-          }
+          scales: isHorizontal
+            ? {
+                x: {
+                  display: false,
+                  beginAtZero: true
+                },
+                y: {
+                  beginAtZero: true,
+                  grid: { display: false },
+                  border: { display: false },
+                  ticks: {
+                    color: "#141416",
+                    font: { size: 11 }
+                  }
+                }
+              }
+            : {
+                x: {
+                  beginAtZero: true,
+                  grid: { display: false },
+                  border: { display: false },
+                  ticks: {
+                    color: "#141416",
+                    font: { size: 11 }
+                  }
+                },
+                y: {
+                  display: false,
+                  beginAtZero: true
+                }
+              }
         },
-        plugins: [labelBarBersihPlugin]
+        plugins: [labelNilaiBarPlugin]
       };
     }
 
@@ -1036,7 +1048,7 @@
       buatAtauPerbaruiChart(
         "desil",
         "chartDesil",
-        buatKonfigurasiBarTanpaAxes(formattedRows, {
+        buatKonfigurasiBarSamping(formattedRows, {
           isHorizontal: false,
           sorotIndex: formattedRows.length - 1
         })
@@ -1048,7 +1060,7 @@
       buatAtauPerbaruiChart(
         "kecamatan",
         "chartKecamatan",
-        buatKonfigurasiBarTanpaAxes(sortedRows, {
+        buatKonfigurasiBarSamping(sortedRows, {
           isHorizontal: true,
           sorotIndex: 0
         })
@@ -1105,12 +1117,12 @@
       });
     }
 
-    function renderBarHorizontalBersih(key, canvasId, rows) {
+    function renderBarHorizontalSamping(key, canvasId, rows) {
       const sortedRows = [...rows].sort((a, b) => b.jumlah - a.jumlah);
       buatAtauPerbaruiChart(
         key,
         canvasId,
-        buatKonfigurasiBarTanpaAxes(sortedRows, {
+        buatKonfigurasiBarSamping(sortedRows, {
           isHorizontal: true,
           sorotIndex: 0
         })
@@ -1159,55 +1171,55 @@
           url: SUMBER_CSV.jenisLantai,
           statusId: "statusJenisLantai",
           errorId: "errorJenisLantai",
-          render: (rows) => renderBarHorizontalBersih("jenisLantai", "chartJenisLantai", rows)
+          render: (rows) => renderBarHorizontalSamping("jenisLantai", "chartJenisLantai", rows)
         },
         {
           url: SUMBER_CSV.jenisAtap,
           statusId: "statusJenisAtap",
           errorId: "errorJenisAtap",
-          render: (rows) => renderBarHorizontalBersih("jenisAtap", "chartJenisAtap", rows)
+          render: (rows) => renderBarHorizontalSamping("jenisAtap", "chartJenisAtap", rows)
         },
         {
           url: SUMBER_CSV.jenisDinding,
           statusId: "statusJenisDinding",
           errorId: "errorJenisDinding",
-          render: (rows) => renderBarHorizontalBersih("jenisDinding", "chartJenisDinding", rows)
+          render: (rows) => renderBarHorizontalSamping("jenisDinding", "chartJenisDinding", rows)
         },
         {
           url: SUMBER_CSV.sumberAirMinum,
           statusId: "statusSumberAirMinum",
           errorId: "errorSumberAirMinum",
-          render: (rows) => renderBarHorizontalBersih("sumberAirMinum", "chartSumberAirMinum", rows)
+          render: (rows) => renderBarHorizontalSamping("sumberAirMinum", "chartSumberAirMinum", rows)
         },
         {
           url: SUMBER_CSV.sumberPenerangan,
           statusId: "statusSumberPenerangan",
           errorId: "errorSumberPenerangan",
-          render: (rows) => renderBarHorizontalBersih("sumberPenerangan", "chartSumberPenerangan", rows)
+          render: (rows) => renderBarHorizontalSamping("sumberPenerangan", "chartSumberPenerangan", rows)
         },
         {
           url: SUMBER_CSV.bahanBakarMasak,
           statusId: "statusBahanBakarMasak",
           errorId: "errorBahanBakarMasak",
-          render: (rows) => renderBarHorizontalBersih("bahanBakarMasak", "chartBahanBakarMasak", rows)
+          render: (rows) => renderBarHorizontalSamping("bahanBakarMasak", "chartBahanBakarMasak", rows)
         },
         {
           url: SUMBER_CSV.fasilitasBab,
           statusId: "statusFasilitasBab",
           errorId: "errorFasilitasBab",
-          render: (rows) => renderBarHorizontalBersih("fasilitasBab", "chartFasilitasBab", rows)
+          render: (rows) => renderBarHorizontalSamping("fasilitasBab", "chartFasilitasBab", rows)
         },
         {
           url: SUMBER_CSV.jenisKloset,
           statusId: "statusJenisKloset",
           errorId: "errorJenisKloset",
-          render: (rows) => renderBarHorizontalBersih("jenisKloset", "chartJenisKloset", rows)
+          render: (rows) => renderBarHorizontalSamping("jenisKloset", "chartJenisKloset", rows)
         },
         {
           url: SUMBER_CSV.pembuanganTinja,
           statusId: "statusPembuanganTinja",
           errorId: "errorPembuanganTinja",
-          render: (rows) => renderBarHorizontalBersih("pembuanganTinja", "chartPembuanganTinja", rows)
+          render: (rows) => renderBarHorizontalSamping("pembuanganTinja", "chartPembuanganTinja", rows)
         }
       ];
 
