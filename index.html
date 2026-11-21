@@ -289,14 +289,14 @@
             </button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-kategori-3" data-bs-toggle="pill" data-bs-target="#pane-kategori-3" type="button" role="tab">
-              Kategori Bantuan Lainnya
+            <button class="nav-link" id="tab-infrastruktur" data-bs-toggle="pill" data-bs-target="#pane-infrastruktur" type="button" role="tab">
+              Infrastruktur
             </button>
           </li>
         </ul>
 
         <span id="statusGlobal" class="badge-status">
-          <i class="fa-solid fa-rotate me-1"></i> Memuat 9 sumber CSV...
+          <i class="fa-solid fa-rotate me-1"></i> Memuat 12 sumber CSV...
         </span>
       </div>
 
@@ -566,14 +566,63 @@
           </div>
         </div>
 
-        <!-- ================= RUANG KATEGORI 3 (SIAP PAKAI) ================= -->
-        <div class="tab-pane fade" id="pane-kategori-3" role="tabpanel" tabindex="0">
-          <div class="placeholder-slot">
-            <i class="fa-solid fa-layer-group fs-2 mb-2"></i>
-            <h2 class="h5">Ruang Kategori Grafik Ketiga</h2>
-            <p class="small text-muted mb-0">
-              Siap digunakan untuk kelompok indikator atau program berikutnya tanpa mengubah struktur halaman.
-            </p>
+        <!-- ================= KATEGORI 3: INFRASTRUKTUR ================= -->
+        <div class="tab-pane fade" id="pane-infrastruktur" role="tabpanel" tabindex="0">
+          <!-- BARIS 1: 1. Sumber air minum utama + 2. Sumber Penerangan Utama -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-6">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted">Grafik 1 • Infrastruktur</span>
+                    <h2 class="h5 mb-0">Sumber Air Minum Utama</h2>
+                  </div>
+                  <span id="statusSumberAirMinum" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorSumberAirMinum" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 270px;">
+                  <canvas id="chartSumberAirMinum"></canvas>
+                </div>
+                <div id="legendaSumberAirMinum" class="legenda-baris-box"></div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted">Grafik 2 • Infrastruktur</span>
+                    <h2 class="h5 mb-0">Sumber Penerangan Utama</h2>
+                  </div>
+                  <span id="statusSumberPenerangan" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorSumberPenerangan" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 270px;">
+                  <canvas id="chartSumberPenerangan"></canvas>
+                </div>
+                <div id="legendaSumberPenerangan" class="legenda-baris-box"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BARIS 2: 3. Bahan bakar utama untuk masak -->
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted">Grafik 3 • Infrastruktur</span>
+                    <h2 class="h5 mb-0">Bahan Bakar Utama untuk Masak</h2>
+                  </div>
+                  <span id="statusBahanBakarMasak" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorBahanBakarMasak" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 270px;">
+                  <canvas id="chartBahanBakarMasak"></canvas>
+                </div>
+                <div id="legendaBahanBakarMasak" class="legenda-baris-box"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -591,7 +640,10 @@
       statusKepemilikanRumah: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=640888748&single=true&output=csv",
       jenisLantai: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=595722365&single=true&output=csv",
       jenisAtap: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=686227034&single=true&output=csv",
-      jenisDinding: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=387816287&single=true&output=csv"
+      jenisDinding: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=387816287&single=true&output=csv",
+      sumberAirMinum: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1229999159&single=true&output=csv",
+      sumberPenerangan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1714567630&single=true&output=csv",
+      bahanBakarMasak: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=2095146236&single=true&output=csv"
     };
 
     const chartInstances = {};
@@ -1165,6 +1217,24 @@
           statusId: "statusJenisDinding",
           errorId: "errorJenisDinding",
           render: (rows) => renderBatangPerumahan("jenisDinding", "chartJenisDinding", "legendaJenisDinding", rows)
+        },
+        {
+          url: SUMBER_CSV.sumberAirMinum,
+          statusId: "statusSumberAirMinum",
+          errorId: "errorSumberAirMinum",
+          render: (rows) => renderBatangPerumahan("sumberAirMinum", "chartSumberAirMinum", "legendaSumberAirMinum", rows)
+        },
+        {
+          url: SUMBER_CSV.sumberPenerangan,
+          statusId: "statusSumberPenerangan",
+          errorId: "errorSumberPenerangan",
+          render: (rows) => renderBatangPerumahan("sumberPenerangan", "chartSumberPenerangan", "legendaSumberPenerangan", rows)
+        },
+        {
+          url: SUMBER_CSV.bahanBakarMasak,
+          statusId: "statusBahanBakarMasak",
+          errorId: "errorBahanBakarMasak",
+          render: (rows) => renderBatangPerumahan("bahanBakarMasak", "chartBahanBakarMasak", "legendaBahanBakarMasak", rows)
         }
       ];
 
