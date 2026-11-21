@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MANSAKAI - Dashboard Publikasi Data Agregat</title>
+  <title>Mansakai - Dashboard Publikasi Data Agregat</title>
   <link rel="icon" type="image/png" href="LOGO.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -83,6 +83,17 @@
       border-radius: 50%;
     }
 
+    .header-avatar-foto {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 10%;
+      border: 2px solid #e9d5ff;
+      box-shadow: 0 4px 12px rgba(76, 29, 149, 0.14);
+      flex-shrink: 0;
+    }
+
     .nav-pills-wrap {
       background: #faf5ff;
       border: 1px solid #ede9fe;
@@ -132,16 +143,15 @@
       height: 100%;
     }
 
-    .admin-profile-card {
+    .verifikasi-banner-card {
       position: relative;
       border-radius: 22px;
       overflow: hidden;
       min-height: 280px;
-      background: linear-gradient(180deg, rgba(24, 24, 27, 0.05) 45%, rgba(24, 24, 27, 0.55) 76%, rgba(24, 24, 27, 0.92) 100%),
-                  url("Foto.png") center 10%/cover no-repeat,
+      background: linear-gradient(135deg, #2e1065 0%, #4a0e4e 55%, #18181b 100%),
                   url("Beranda.jpg") center/cover no-repeat;
       color: #ffffff;
-      padding: 1.45rem 1.15rem 1.15rem;
+      padding: 1.45rem 1.25rem 1.25rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -252,8 +262,8 @@
       <!-- Top Bar Freeze -->
       <div class="sticky-header-bar d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
         <a href="#" class="brand-pill">
-          <img src="LOGO.png" alt="Logo MANSAKAI" class="brand-logo" />
-          <span>MANSAKAI</span>
+          <img src="LOGO.png" alt="Logo Mansakai" class="brand-logo" />
+          <span>Mansakai</span>
         </a>
 
         <!-- Navigasi Kategori Grafik -->
@@ -275,15 +285,24 @@
           </li>
         </ul>
 
-        <span id="statusGlobal" class="badge-status">
-          <i class="fa-solid fa-rotate me-1"></i> Memuat 15 sumber CSV...
-        </span>
+        <!-- Status CSV & Foto di Paling Kanan Header -->
+        <div class="d-flex align-items-center gap-2 ms-auto ms-lg-0">
+          <span id="statusGlobal" class="badge-status">
+            <i class="fa-solid fa-rotate me-1"></i> Memuat 15 sumber CSV...
+          </span>
+          <img
+            src="Foto.png"
+            alt="Foto Profil Mansakai"
+            class="header-avatar-foto"
+            onerror="this.onerror=null;this.src='Beranda.jpg';"
+          />
+        </div>
       </div>
 
       <!-- Header & Indikator Utama -->
       <section class="row g-4 align-items-center mb-4">
         <div class="col-lg-5">
-          <h1 class="fs-2 mb-1">Dashboard Rekapitulasi MANSAKAI</h1>
+          <h1 class="fs-2 mb-1">Dashboard Rekapitulasi Mansakai</h1>
           <p class="text-muted small mb-3">
             Persentase approval mengacu pada <strong>Total Data</strong> keseluruhan menurut Desil.
           </p>
@@ -332,10 +351,10 @@
       <div class="tab-content" id="kategoriTabContent">
         <!-- ================= KATEGORI 1: KATEGORI UMUM ================= -->
         <div class="tab-pane fade show active" id="pane-umum" role="tabpanel" tabindex="0">
-          <!-- BARIS 1 (PALING ATAS): Foto Profil + Grafik Approval (1 baris) + Ringkasan Gelap Approval -->
+          <!-- BARIS 1 (PALING ATAS): Kartu Verifikasi + Grafik Approval (1 baris) + Ringkasan Gelap Approval -->
           <div class="row g-4 mb-4">
             <div class="col-lg-3">
-              <div class="admin-profile-card">
+              <div class="verifikasi-banner-card">
                 <div>
                   <h2 class="h5 mb-1">Verifikasi & Validasi</h2>
                   <p class="small text-white-50 mb-2">
