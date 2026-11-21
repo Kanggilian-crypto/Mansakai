@@ -3,170 +3,413 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MANSAKAI - Publikasi Data Agregat Desil</title>
+  <title>MANSAKAI - Dashboard Publikasi Data Agregat</title>
+  <link rel="icon" type="image/png" href="LOGO.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
       --ungu-utama: #7e22ce;
-      --ungu-gelap: #581c87;
-      --ungu-muda: #f3e8ff;
-      --ungu-border: #e9d5ff;
-      --teks-utama: #1e1b4b;
+      --ungu-gelap: #4c1d95;
+      --ungu-lembut: #f3e8ff;
+      --ungu-aksen: #a855f7;
+      --kuning-aksen: #facc15;
+      --gelap-pill: #18181b;
+      --teks-utama: #18181b;
       --teks-redup: #6b7280;
     }
 
     body {
       font-family: "Plus Jakarta Sans", sans-serif;
-      background-color: #faf5ff;
+      background: linear-gradient(120deg, #f5f3ff 0%, #faf5ff 48%, #fefce8 100%);
       color: var(--teks-utama);
       min-height: 100vh;
+      padding: 1.25rem 0 2.5rem;
     }
 
-    .navbar-mansakai {
-      background: linear-gradient(135deg, var(--ungu-gelap), var(--ungu-utama));
+    .dashboard-shell {
+      background: rgba(255, 255, 255, 0.76);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      border-radius: 28px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 50px rgba(76, 29, 149, 0.08);
     }
 
-    .hero-mansakai {
-      background: linear-gradient(135deg, rgba(88, 28, 135, 0.88), rgba(126, 34, 206, 0.82)),
-                  url("Beranda.jpg") center/cover no-repeat;
-      color: #ffffff;
-      padding: 3.25rem 0;
-      border-bottom: 4px solid var(--ungu-border);
-    }
-
-    .kpi-card {
+    .brand-pill {
       background: #ffffff;
-      border: 1px solid var(--ungu-border);
-      border-radius: 14px;
-      padding: 1.25rem;
-      box-shadow: 0 6px 20px rgba(126, 34, 206, 0.06);
+      border: 1px solid #e9d5ff;
+      border-radius: 999px;
+      padding: 0.4rem 1rem 0.4rem 0.55rem;
+      font-weight: 800;
+      color: var(--ungu-gelap);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .nav-pills-wrap {
+      background: #ffffff;
+      border: 1px solid #ede9fe;
+      border-radius: 999px;
+      padding: 0.3rem;
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+    .nav-pills-wrap .nav-link {
+      color: var(--teks-utama);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      border: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav-pills-wrap .nav-link:hover {
+      background: var(--ungu-lembut);
+      color: var(--ungu-utama);
+    }
+
+    .nav-pills-wrap .nav-link.active {
+      background: var(--gelap-pill);
+      color: #ffffff;
+    }
+
+    .dash-card {
+      background: #ffffff;
+      border: 1px solid #f1e8ff;
+      border-radius: 22px;
+      padding: 1.35rem;
+      box-shadow: 0 8px 24px rgba(88, 28, 135, 0.05);
       height: 100%;
     }
 
-    .kpi-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      background-color: var(--ungu-muda);
-      color: var(--ungu-utama);
+    .dash-card-dark {
+      background: var(--gelap-pill);
+      color: #ffffff;
+      border: 1px solid #27272a;
+      border-radius: 22px;
+      padding: 1.35rem;
+      box-shadow: 0 12px 28px rgba(24, 24, 27, 0.18);
+      height: 100%;
+    }
+
+    .hero-visual-card {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      min-height: 290px;
+      background: linear-gradient(155deg, rgba(76, 29, 149, 0.86), rgba(126, 34, 206, 0.72)),
+                  url("Beranda.jpg") center/cover no-repeat;
+      color: #ffffff;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pill-meter-track {
+      height: 34px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 3px;
+    }
+
+    .pill-meter-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--ungu-utama), var(--ungu-aksen));
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 700;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.15rem;
+      min-width: 54px;
+      transition: width 0.5s ease;
     }
 
-    .chart-card {
-      background: #ffffff;
-      border: 1px solid var(--ungu-border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 8px 24px rgba(126, 34, 206, 0.07);
+    .stat-big {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
     }
 
-    .badge-ungu {
-      background-color: var(--ungu-muda);
+    .badge-status {
+      background: var(--ungu-lembut);
       color: var(--ungu-utama);
+      border: 1px solid #e9d5ff;
       font-weight: 600;
-      border: 1px solid var(--ungu-border);
+      border-radius: 999px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.78rem;
+    }
+
+    .desil-item-row {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 14px;
+      padding: 0.65rem 0.9rem;
+    }
+
+    .placeholder-slot {
+      border: 2px dashed #d8b4fe;
+      background: #faf5ff;
+      border-radius: 22px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--ungu-gelap);
     }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-mansakai sticky-top shadow-sm">
-    <div class="container">
-      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
-        <i class="fa-solid fa-chart-column"></i>
-        <span>MANSAKAI</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMansakai">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navMansakai">
-        <ul class="navbar-nav ms-auto gap-lg-2">
-          <li class="nav-item"><a class="nav-link active" href="#beranda">Beranda</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-              Kategori Data
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-              <li><a class="dropdown-item" href="#grafik-desil">Sebaran Desil</a></li>
-            </ul>
+  <div class="container">
+    <div class="dashboard-shell">
+      <!-- Top Bar -->
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <a href="#" class="brand-pill">
+          <img src="LOGO.png" alt="Logo MANSAKAI" class="brand-logo" />
+          <span>MANSAKAI</span>
+        </a>
+
+        <!-- Navigasi Kategori Grafik -->
+        <ul class="nav nav-pills-wrap" id="kategoriTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="tab-umum" data-bs-toggle="pill" data-bs-target="#pane-umum" type="button" role="tab">
+              Kategori Umum
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-kategori-2" data-bs-toggle="pill" data-bs-target="#pane-kategori-2" type="button" role="tab">
+              Kategori Wilayah / Sektor
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-kategori-3" data-bs-toggle="pill" data-bs-target="#pane-kategori-3" type="button" role="tab">
+              Kategori Bantuan Lainnya
+            </button>
           </li>
         </ul>
+
+        <span id="statusGlobal" class="badge-status">
+          <i class="fa-solid fa-rotate me-1"></i> Memuat 4 sumber CSV...
+        </span>
+      </div>
+
+      <!-- Greeting & Top Metrics -->
+      <section class="row g-4 align-items-center mb-4">
+        <div class="col-lg-6">
+          <h1 class="fw-extrabold fs-2 mb-1">Dashboard Rekapitulasi MANSAKAI</h1>
+          <p class="text-muted mb-3">
+            Publikasi data agregat otomatis berdasarkan pembaruan Google Sheets.
+          </p>
+
+          <div class="row g-2 align-items-center">
+            <div class="col-5">
+              <div class="small text-muted mb-1">Porsi Desil Terbanyak</div>
+              <div class="pill-meter-track">
+                <div id="barPorsiTerbanyak" class="pill-meter-fill" style="width: 25%;">0%</div>
+              </div>
+            </div>
+            <div class="col-7">
+              <div class="small text-muted mb-1">Cakupan Kecamatan Terdata</div>
+              <div class="pill-meter-track">
+                <div id="barCakupanKecamatan" class="pill-meter-fill" style="width: 100%; background: #18181b;">
+                  0 Kecamatan
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="row g-3 text-lg-end">
+            <div class="col-4">
+              <div class="small text-muted">Total Terdata</div>
+              <div id="kpiTotalData" class="stat-big mt-1">...</div>
+            </div>
+            <div class="col-4">
+              <div class="small text-muted">Kecamatan</div>
+              <div id="kpiJumlahKecamatan" class="stat-big mt-1">...</div>
+            </div>
+            <div class="col-4">
+              <div class="small text-muted">Desil Terbanyak</div>
+              <div id="kpiDesilTerbanyak" class="fs-5 fw-bold mt-2" style="color: var(--ungu-utama);">...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Konten Per Kategori -->
+      <div class="tab-content" id="kategoriTabContent">
+        <!-- ================= KATEGORI 1: KATEGORI UMUM ================= -->
+        <div class="tab-pane fade show active" id="pane-umum" role="tabpanel" tabindex="0">
+          <!-- Baris 1: Kartu Identitas + Grafik 1 (Desil) + Ringkasan Gelap -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3">
+              <div class="hero-visual-card">
+                <div class="d-flex align-items-center gap-2">
+                  <img src="LOGO.png" alt="Logo" style="width: 38px; height: 38px; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px;" />
+                  <span class="badge bg-light text-dark px-3 py-2 rounded-pill fw-semibold">
+                    Kategori Umum
+                  </span>
+                </div>
+                <div>
+                  <h2 class="h5 fw-bold mb-1">Rekap Mansakai</h2>
+                  <p class="small text-white-50 mb-0">
+                    Sebaran data menurut kelompok Desil, Kecamatan, PBI Nasional, dan PBI Pemda.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Grafik 1: Sebaran Menurut Desil -->
+            <div class="col-lg-5">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted fw-semibold">Grafik 1 • Kategori Umum</span>
+                    <h2 class="h5 fw-bold mb-0">Sebaran Menurut Desil</h2>
+                  </div>
+                  <span id="statusDesil" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorDesil" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 250px;">
+                  <canvas id="chartDesil"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ringkasan Cepat Desil (Kartu Gelap) -->
+            <div class="col-lg-4">
+              <div class="dash-card-dark d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <div class="small text-white-50">Rincian Kelompok</div>
+                    <h2 class="h5 fw-bold mb-0">Ringkasan Desil</h2>
+                  </div>
+                  <span id="badgeTotalRingkas" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 700;">
+                    0 Data
+                  </span>
+                </div>
+                <div id="daftarRingkasDesil" class="d-flex flex-column gap-2 flex-grow-1">
+                  <div class="desil-item-row small text-white-50">Memuat rincian desil...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Baris 2: Grafik 2 (Kecamatan) + Grafik 3 (PBI Nasional) + Grafik 4 (PBI Pemda) -->
+          <div class="row g-4">
+            <!-- Grafik 2: Menurut Kecamatan -->
+            <div class="col-lg-6">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted fw-semibold">Grafik 2 • Kategori Umum</span>
+                    <h2 class="h5 fw-bold mb-0">Sebaran Menurut Kecamatan</h2>
+                  </div>
+                  <span id="statusKecamatan" class="badge-status">Memuat...</span>
+                </div>
+                <div id="errorKecamatan" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 330px;">
+                  <canvas id="chartKecamatan"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Grafik 3: Menurut PBI Nasional -->
+            <div class="col-lg-3">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted fw-semibold">Grafik 3</span>
+                    <h2 class="h6 fw-bold mb-0">PBI Nasional</h2>
+                  </div>
+                  <span id="statusPbiNasional" class="badge-status">...</span>
+                </div>
+                <div id="errorPbiNasional" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 250px;">
+                  <canvas id="chartPbiNasional"></canvas>
+                </div>
+                <div id="ringkasPbiNasional" class="mt-2 pt-2 border-top small text-muted"></div>
+              </div>
+            </div>
+
+            <!-- Grafik 4: Menurut PBI Pemda -->
+            <div class="col-lg-3">
+              <div class="dash-card d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                  <div>
+                    <span class="small text-muted fw-semibold">Grafik 4</span>
+                    <h2 class="h6 fw-bold mb-0">PBI Pemda</h2>
+                  </div>
+                  <span id="statusPbiPemda" class="badge-status">...</span>
+                </div>
+                <div id="errorPbiPemda" class="alert alert-danger py-2 small d-none"></div>
+                <div class="flex-grow-1" style="position: relative; min-height: 250px;">
+                  <canvas id="chartPbiPemda"></canvas>
+                </div>
+                <div id="ringkasPbiPemda" class="mt-2 pt-2 border-top small text-muted"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= RUANG KATEGORI 2 (SIAP PAKAI) ================= -->
+        <div class="tab-pane fade" id="pane-kategori-2" role="tabpanel" tabindex="0">
+          <div class="placeholder-slot">
+            <i class="fa-solid fa-chart-pie fs-2 mb-2"></i>
+            <h2 class="h5 fw-bold">Ruang Kategori Grafik Kedua</h2>
+            <p class="small text-muted mb-0">
+              Siap diisi grafik tambahan begitu tautan CSV tab rekap berikutnya dipublikasikan dari Rekap Mansakai.
+            </p>
+          </div>
+        </div>
+
+        <!-- ================= RUANG KATEGORI 3 (SIAP PAKAI) ================= -->
+        <div class="tab-pane fade" id="pane-kategori-3" role="tabpanel" tabindex="0">
+          <div class="placeholder-slot">
+            <i class="fa-solid fa-layer-group fs-2 mb-2"></i>
+            <h2 class="h5 fw-bold">Ruang Kategori Grafik Ketiga</h2>
+            <p class="small text-muted mb-0">
+              Siap digunakan untuk kelompok indikator atau program berikutnya tanpa mengubah struktur halaman.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
-  </nav>
-
-  <header id="beranda" class="hero-mansakai">
-    <div class="container">
-      <span class="badge rounded-pill badge-ungu mb-2 px-3 py-2">
-        <i class="fa-solid fa-database me-1"></i> Publikasi Data Agregat
-      </span>
-      <h1 class="fw-bold mb-2">Portal Rekapitulasi Data MANSAKAI</h1>
-      <p class="mb-0 text-white-50">
-        Visualisasi data agregat berbasis Google Sheets yang diperbarui secara otomatis.
-      </p>
-    </div>
-  </header>
-
-  <main class="container py-4">
-    <section class="row g-3 mb-4">
-      <div class="col-md-4">
-        <div class="kpi-card d-flex align-items-center justify-content-between">
-          <div>
-            <div class="text-muted small fw-medium">Total Data Terdata</div>
-            <div id="kpiTotalData" class="fs-3 fw-bold mt-1">Memuat...</div>
-          </div>
-          <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="kpi-card d-flex align-items-center justify-content-between">
-          <div>
-            <div class="text-muted small fw-medium">Jumlah Kelompok Desil</div>
-            <div id="kpiJumlahDesil" class="fs-3 fw-bold mt-1">Memuat...</div>
-          </div>
-          <div class="kpi-icon"><i class="fa-solid fa-layer-group"></i></div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="kpi-card d-flex align-items-center justify-content-between">
-          <div>
-            <div class="text-muted small fw-medium">Desil Terbanyak</div>
-            <div id="kpiDesilTerbanyak" class="fs-3 fw-bold mt-1">Memuat...</div>
-          </div>
-          <div class="kpi-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="grafik-desil" class="chart-card">
-      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-        <div>
-          <h2 class="h5 fw-bold mb-1">Jumlah Data per Desil</h2>
-          <p class="text-muted small mb-0">Sumber otomatis dari tab <code>Umum_Desil</code> (Rekap Mansakai)</p>
-        </div>
-        <span id="statusSinkron" class="badge badge-ungu px-3 py-2">Menghubungkan CSV...</span>
-      </div>
-
-      <div id="alertError" class="alert alert-danger d-none" role="alert"></div>
-
-      <div style="position: relative; min-height: 340px;">
-        <canvas id="chartDesil"></canvas>
-      </div>
-    </section>
-  </main>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    const URL_CSV_DESIL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=0&single=true&output=csv";
+    const SUMBER_CSV = {
+      desil: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=0&single=true&output=csv",
+      kecamatan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1517054386&single=true&output=csv",
+      pbiNasional: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1491098598&single=true&output=csv",
+      pbiPemda: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=858926562&single=true&output=csv"
+    };
 
-    let chartInstance = null;
+    const chartInstances = {};
 
     function pecahBarisCSV(baris) {
       const hasil = [];
@@ -193,7 +436,9 @@
       return hasil;
     }
 
-    function parseCSV(teksCSV) {
+    // Parser fleksibel: membaca kolom B (label) & C (jumlah),
+    // atau otomatis jatuh ke kolom A (label) & B (jumlah) jika hanya 2 kolom.
+    function parseCSVUmum(teksCSV) {
       const barisList = teksCSV
         .replace(/^\uFEFF/, "")
         .trim()
@@ -206,83 +451,185 @@
         .slice(1)
         .map(pecahBarisCSV)
         .map((kolom) => {
-          const desil = kolom[1] ?? "";
-          const jumlahBersih = String(kolom[2] ?? "0").replace(/[^0-9.-]/g, "");
+          const gunakanDuaKolom = kolom.length < 3;
+          const label = (gunakanDuaKolom ? kolom[0] : kolom[1]) ?? "";
+          const rawNilai = (gunakanDuaKolom ? kolom[1] : kolom[2]) ?? "0";
+          const nilaiBersih = String(rawNilai).replace(/[^0-9.-]/g, "");
           return {
-            desil: desil,
-            jumlah: Number(jumlahBersih) || 0
+            label: String(label).trim(),
+            jumlah: Number(nilaiBersih) || 0
           };
         })
-        .filter((item) => item.desil !== "");
+        .filter((item) => item.label !== "" && item.label.toLowerCase() !== "total");
     }
 
-    function perbaruiKPI(dataRows) {
-      const totalData = dataRows.reduce((acc, item) => acc + item.jumlah, 0);
-      const jumlahKelompok = dataRows.length;
+    async function ambilDataCSV(url) {
+      const urlCacheBust = `${url}${url.includes("?") ? "&" : "?"}_t=${Date.now()}`;
+      const respon = await fetch(urlCacheBust);
+      if (!respon.ok) throw new Error(`HTTP ${respon.status}`);
+      const teks = await respon.text();
+      const rows = parseCSVUmum(teks);
+      if (rows.length === 0) throw new Error("Data CSV kosong atau format kolom belum terbaca.");
+      return rows;
+    }
 
-      let terbanyak = "-";
-      if (dataRows.length > 0) {
-        const maksItem = dataRows.reduce((max, curr) => (curr.jumlah > max.jumlah ? curr : max), dataRows[0]);
-        terbanyak = `Desil ${maksItem.desil} (${maksItem.jumlah.toLocaleString("id-ID")})`;
+    function buatAtauPerbaruiChart(key, canvasId, config) {
+      const ctx = document.getElementById(canvasId).getContext("2d");
+      if (chartInstances[key]) {
+        chartInstances[key].destroy();
       }
+      chartInstances[key] = new Chart(ctx, config);
+    }
+
+    function renderDesil(rows) {
+      const totalData = rows.reduce((acc, r) => acc + r.jumlah, 0);
+      let maks = rows[0];
+      rows.forEach((r) => {
+        if (r.jumlah > maks.jumlah) maks = r;
+      });
+
+      const persenMaks = totalData > 0 ? ((maks.jumlah / totalData) * 100).toFixed(1) : "0.0";
+      const labelMaks = /^desil/i.test(maks.label) ? maks.label : `Desil ${maks.label}`;
 
       document.getElementById("kpiTotalData").textContent = totalData.toLocaleString("id-ID");
-      document.getElementById("kpiJumlahDesil").textContent = `${jumlahKelompok} Desil`;
-      document.getElementById("kpiDesilTerbanyak").textContent = terbanyak;
-    }
+      document.getElementById("kpiDesilTerbanyak").textContent = `${labelMaks} (${maks.jumlah.toLocaleString("id-ID")})`;
+      document.getElementById("badgeTotalRingkas").textContent = `${totalData.toLocaleString("id-ID")} Data`;
 
-    function renderGrafik(dataRows) {
-      const labels = dataRows.map((item) => `Desil ${item.desil}`);
-      const values = dataRows.map((item) => item.jumlah);
+      const barPorsi = document.getElementById("barPorsiTerbanyak");
+      barPorsi.style.width = `${Math.max(Number(persenMaks), 18)}%`;
+      barPorsi.textContent = `${persenMaks}%`;
 
-      const ctx = document.getElementById("chartDesil").getContext("2d");
-      if (chartInstance) {
-        chartInstance.destroy();
-      }
+      document.getElementById("daftarRingkasDesil").innerHTML = rows
+        .map((r) => {
+          const nama = /^desil/i.test(r.label) ? r.label : `Desil ${r.label}`;
+          const pct = totalData > 0 ? ((r.jumlah / totalData) * 100).toFixed(1) : "0.0";
+          return `
+            <div class="desil-item-row d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-semibold small">${nama}</div>
+                <div class="text-white-50" style="font-size: 0.75rem;">${pct}% dari total</div>
+              </div>
+              <div class="fw-bold">${r.jumlah.toLocaleString("id-ID")}</div>
+            </div>
+          `;
+        })
+        .join("");
 
-      chartInstance = new Chart(ctx, {
+      buatAtauPerbaruiChart("desil", "chartDesil", {
         type: "bar",
         data: {
-          labels: labels,
-          datasets: [
-            {
-              label: "Jumlah Data",
-              data: values,
-              backgroundColor: "#7e22ce",
-              hoverBackgroundColor: "#581c87",
-              borderColor: "#6b21a8",
-              borderWidth: 1,
-              borderRadius: 8,
-              maxBarThickness: 64
-            }
-          ]
+          labels: rows.map((r) => (/^desil/i.test(r.label) ? r.label : `Desil ${r.label}`)),
+          datasets: [{
+            label: "Jumlah Data",
+            data: rows.map((r) => r.jumlah),
+            backgroundColor: "#7e22ce",
+            hoverBackgroundColor: "#4c1d95",
+            borderRadius: 10,
+            maxBarThickness: 52
+          }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: {
-              display: false
-            },
+            legend: { display: false },
             tooltip: {
               callbacks: {
-                label: (context) => ` Jumlah: ${Number(context.raw).toLocaleString("id-ID")}`
+                label: (ctx) => ` Jumlah: ${Number(ctx.raw).toLocaleString("id-ID")}`
               }
             }
           },
           scales: {
             y: {
               beginAtZero: true,
-              ticks: {
-                callback: (val) => Number(val).toLocaleString("id-ID")
-              },
-              grid: {
-                color: "#f3e8ff"
-              }
+              ticks: { callback: (v) => Number(v).toLocaleString("id-ID") },
+              grid: { color: "#f3e8ff" }
             },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    function renderKecamatan(rows) {
+      document.getElementById("kpiJumlahKecamatan").textContent = `${rows.length}`;
+      document.getElementById("barCakupanKecamatan").textContent = `${rows.length} Kecamatan Terdata`;
+
+      buatAtauPerbaruiChart("kecamatan", "chartKecamatan", {
+        type: "bar",
+        data: {
+          labels: rows.map((r) => r.label),
+          datasets: [{
+            label: "Jumlah Data",
+            data: rows.map((r) => r.jumlah),
+            backgroundColor: "#9333ea",
+            hoverBackgroundColor: "#581c87",
+            borderRadius: 8,
+            maxBarThickness: 24
+          }]
+        },
+        options: {
+          indexAxis: "y",
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` Jumlah: ${Number(ctx.raw).toLocaleString("id-ID")}`
+              }
+            }
+          },
+          scales: {
             x: {
-              grid: {
-                display: false
+              beginAtZero: true,
+              ticks: { callback: (v) => Number(v).toLocaleString("id-ID") },
+              grid: { color: "#f3e8ff" }
+            },
+            y: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    function renderDonutPBI(key, canvasId, ringkasId, rows) {
+      const total = rows.reduce((acc, r) => acc + r.jumlah, 0);
+      const palet = ["#7e22ce", "#facc15", "#18181b", "#c084fc", "#a855f7"];
+
+      document.getElementById(ringkasId).innerHTML = rows
+        .map((r) => {
+          const pct = total > 0 ? ((r.jumlah / total) * 100).toFixed(1) : "0.0";
+          return `<div class="d-flex justify-content-between"><span>${r.label}</span><strong>${r.jumlah.toLocaleString("id-ID")} (${pct}%)</strong></div>`;
+        })
+        .join("");
+
+      buatAtauPerbaruiChart(key, canvasId, {
+        type: "doughnut",
+        data: {
+          labels: rows.map((r) => r.label),
+          datasets: [{
+            data: rows.map((r) => r.jumlah),
+            backgroundColor: rows.map((_, idx) => palet[idx % palet.length]),
+            borderWidth: 2,
+            borderColor: "#ffffff"
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "62%",
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: { boxWidth: 12, font: { size: 11 } }
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  const val = Number(ctx.raw) || 0;
+                  const pct = total > 0 ? ((val / total) * 100).toFixed(1) : "0.0";
+                  return ` ${ctx.label}: ${val.toLocaleString("id-ID")} (${pct}%)`;
+                }
               }
             }
           }
@@ -290,40 +637,59 @@
       });
     }
 
-    async function muatDataGrafik() {
-      const statusEl = document.getElementById("statusSinkron");
-      const alertEl = document.getElementById("alertError");
-
-      try {
-        const urlDenganCacheBust = `${URL_CSV_DESIL}${URL_CSV_DESIL.includes("?") ? "&" : "?"}_t=${Date.now()}`;
-        const respon = await fetch(urlDenganCacheBust);
-        if (!respon.ok) {
-          throw new Error(`HTTP ${respon.status}`);
+    async function muatSemuaKategoriUmum() {
+      const tugas = [
+        {
+          url: SUMBER_CSV.desil,
+          statusId: "statusDesil",
+          errorId: "errorDesil",
+          render: renderDesil
+        },
+        {
+          url: SUMBER_CSV.kecamatan,
+          statusId: "statusKecamatan",
+          errorId: "errorKecamatan",
+          render: renderKecamatan
+        },
+        {
+          url: SUMBER_CSV.pbiNasional,
+          statusId: "statusPbiNasional",
+          errorId: "errorPbiNasional",
+          render: (rows) => renderDonutPBI("pbiNasional", "chartPbiNasional", "ringkasPbiNasional", rows)
+        },
+        {
+          url: SUMBER_CSV.pbiPemda,
+          statusId: "statusPbiPemda",
+          errorId: "errorPbiPemda",
+          render: (rows) => renderDonutPBI("pbiPemda", "chartPbiPemda", "ringkasPbiPemda", rows)
         }
+      ];
 
-        const teksCSV = await respon.text();
-        const dataRows = parseCSV(teksCSV);
+      let berhasil = 0;
 
-        if (dataRows.length === 0) {
-          throw new Error("Data CSV kosong atau format kolom tidak sesuai.");
-        }
+      await Promise.all(
+        tugas.map(async (item) => {
+          const statusEl = document.getElementById(item.statusId);
+          const errorEl = document.getElementById(item.errorId);
+          try {
+            const rows = await ambilDataCSV(item.url);
+            item.render(rows);
+            errorEl.classList.add("d-none");
+            statusEl.textContent = "Terhubung";
+            berhasil++;
+          } catch (err) {
+            statusEl.textContent = "Gagal";
+            errorEl.textContent = `Gagal memuat CSV: ${err.message}`;
+            errorEl.classList.remove("d-none");
+          }
+        })
+      );
 
-        perbaruiKPI(dataRows);
-        renderGrafik(dataRows);
-
-        alertEl.classList.add("d-none");
-        statusEl.textContent = "Terhubung ke CSV";
-      } catch (error) {
-        statusEl.textContent = "Gagal memuat CSV";
-        alertEl.textContent = `Tidak dapat memuat data dari tautan CSV: ${error.message}. Pastikan halaman dibuka melalui web server/hosting dan tautan CSV sudah dipublikasikan.`;
-        alertEl.classList.remove("d-none");
-        document.getElementById("kpiTotalData").textContent = "-";
-        document.getElementById("kpiJumlahDesil").textContent = "-";
-        document.getElementById("kpiDesilTerbanyak").textContent = "-";
-      }
+      const globalEl = document.getElementById("statusGlobal");
+      globalEl.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> ${berhasil}/4 Grafik Terhubung`;
     }
 
-    muatDataGrafik();
+    muatSemuaKategoriUmum();
   </script>
 </body>
 </html>
