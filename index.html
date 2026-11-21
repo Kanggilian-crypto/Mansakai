@@ -115,8 +115,8 @@
       border-radius: 22px;
       overflow: hidden;
       min-height: 280px;
-      background: linear-gradient(180deg, rgba(24, 24, 27, 0) 42%, rgba(24, 24, 27, 0.55) 75%, rgba(24, 24, 27, 0.92) 100%),
-                  url("Foto.png") center 12%/cover no-repeat,
+      background: linear-gradient(180deg, rgba(24, 24, 27, 0) 45%, rgba(24, 24, 27, 0.55) 76%, rgba(24, 24, 27, 0.92) 100%),
+                  url("Foto.png") center 24%/cover no-repeat,
                   url("Beranda.jpg") center/cover no-repeat;
       color: #ffffff;
       padding: 1.15rem;
@@ -321,7 +321,7 @@
         <div class="tab-pane fade show active" id="pane-umum" role="tabpanel" tabindex="0">
           <!-- BARIS 1 (PALING ATAS): Foto Profil Bersih + Grafik Approval (1 baris) + Ringkasan Gelap Approval -->
           <div class="row g-4 mb-4">
-            <!-- Kartu Foto Bersih (Tanpa Lencana & Logo di Dalam Gambar) -->
+            <!-- Kartu Foto Bersih (Posisi Foto Diturunkan Sedikit) -->
             <div class="col-lg-3">
               <div class="admin-profile-card">
                 <div>
@@ -575,31 +575,42 @@
       barEl.textContent = `${persenTerhadapTotal}%`;
     }
 
+    // Plugin garis tik kecil permanen pada bagian sisa cincin
     const tickRingPlugin = {
       id: "tickRingPlugin",
-      beforeDraw(chart, args, opts) {
-        const { ctx, chartArea } = chart;
-        if (!chartArea) return;
-        const cx = (chartArea.left + chartArea.right) / 2;
-        const cy = (chartArea.top + chartArea.bottom) / 2;
-        const outerR = Math.min(chartArea.width, chartArea.height) / 2 - 3;
-        const innerR = outerR - (opts.tickLength || 5);
-        const totalTicks = opts.ticks || 32;
+      afterDatasetsDraw(chart, args, opts) {
+        const meta = chart.getDatasetMeta(0);
+        const arc = meta && meta.data && meta.data[0];
+        if (!arc) return;
+
+        const { ctx } = chart;
+        const cx = arc.x;
+        const cy = arc.y;
+        const outerR = arc.outerRadius - 2;
+        const innerR = arc.innerRadius + 2;
+        const totalTicks = opts.ticks || 36;
+        const aktifEndAngle = arc.endAngle;
+        const aktifStartAngle = arc.startAngle;
 
         ctx.save();
         ctx.strokeStyle = opts.color || "#9ca3af";
-        ctx.lineWidth = 1.35;
+        ctx.lineWidth = 1.4;
+        ctx.lineCap = "round";
 
         for (let i = 0; i < totalTicks; i++) {
-          const angle = (i / totalTicks) * Math.PI * 2;
-          const x1 = cx + Math.cos(angle) * innerR;
-          const y1 = cy + Math.sin(angle) * innerR;
-          const x2 = cx + Math.cos(angle) * outerR;
-          const y2 = cy + Math.sin(angle) * outerR;
-          ctx.beginPath();
-          ctx.moveTo(x1, y1);
-          ctx.lineTo(x2, y2);
-          ctx.stroke();
+          const angle = -Math.PI / 2 + (i / totalTicks) * Math.PI * 2;
+          // Gambar garis kecil hanya di bagian lingkaran yang belum terisi segmen warna
+          const normAngle = angle < aktifStartAngle ? angle + Math.PI * 2 : angle;
+          if (normAngle > aktifEndAngle + 0.06 && normAngle < aktifStartAngle + Math.PI * 2 - 0.06) {
+            const x1 = cx + Math.cos(angle) * innerR;
+            const y1 = cy + Math.sin(angle) * innerR;
+            const x2 = cx + Math.cos(angle) * outerR;
+            const y2 = cy + Math.sin(angle) * outerR;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+          }
         }
         ctx.restore();
       }
@@ -684,9 +695,9 @@
             labels: [r.label, "Sisanya"],
             datasets: [{
               data: [pctNum, sisa],
-              backgroundColor: [aktifWarna, "#f3f4f6"],
+              backgroundColor: [aktifWarna, "rgba(0, 0, 0, 0)"],
               borderWidth: 0,
-              borderRadius: 20
+              borderRadius: [20, 0]
             }]
           },
           options: {
@@ -707,8 +718,7 @@
                 }
               },
               tickRingPlugin: {
-                ticks: 32,
-                tickLength: 5,
+                ticks: 36,
                 color: "#9ca3af"
               }
             }
