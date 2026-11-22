@@ -67,13 +67,33 @@
       background: #ffffff;
       border: 1px solid #e9d5ff;
       border-radius: 999px;
-      padding: 0.38rem 1rem 0.38rem 0.5rem;
+      padding: 0.35rem 1.05rem 0.35rem 0.5rem;
       font-weight: 500;
       color: var(--ungu-gelap);
       display: inline-flex;
       align-items: center;
       gap: 0.55rem;
       text-decoration: none;
+      line-height: 1.15;
+    }
+
+    .brand-text-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .brand-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--ungu-gelap);
+    }
+
+    .brand-subtitle {
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: var(--teks-redup);
+      margin-top: 1px;
     }
 
     .brand-logo {
@@ -106,9 +126,9 @@
 
     .nav-pills-wrap .nav-link {
       color: var(--teks-utama);
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       font-weight: 400;
-      padding: 0.45rem 1rem;
+      padding: 0.38rem 0.85rem;
       border-radius: 999px;
       border: 0;
       transition: all 0.2s ease;
@@ -262,8 +282,11 @@
       <!-- Top Bar Freeze -->
       <div class="sticky-header-bar d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
         <a href="#" class="brand-pill">
-          <img src="LOGO.png" alt="Logo Mansakai" class="brand-logo" />
-          <span>Mansakai</span>
+          <img src="LOGO.png" alt="Logo MMC" class="brand-logo" />
+          <div class="brand-text-wrap">
+            <span class="brand-title">MMC</span>
+            <span class="brand-subtitle">Management Mansakai Center</span>
+          </div>
         </a>
 
         <!-- Navigasi Kategori Grafik -->
@@ -1275,7 +1298,7 @@
       );
 
       const globalEl = document.getElementById("statusGlobal");
-      globalEl.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> ${berhasil}/${tugas.length} Grafik Terhubung`;
+      globalEl.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> ${berhasil}/${tugas.length} Terhubung`;
     }
 
     muatSemuaKategoriUmum();
