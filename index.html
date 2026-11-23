@@ -114,29 +114,42 @@
       flex-shrink: 0;
     }
 
-    .aksi-akses-wrap {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      line-height: 1.15;
-    }
-
-    .indikator-jumlah-akses {
-      font-size: 0.65rem;
-      color: var(--ungu-gelap);
-      margin-top: 3px;
+    .btn-minta-akses {
+      background: var(--ungu-lembut);
+      color: var(--ungu-utama);
+      border: 1px solid #e9d5ff;
+      font-size: 0.76rem;
       font-weight: 500;
-      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
-    .riwayat-singkat-akses {
-      font-size: 0.6rem;
+    .btn-minta-akses:hover,
+    .btn-minta-akses:focus {
+      background: #e9d5ff;
+      color: var(--ungu-gelap);
+      border-color: #d8b4fe;
+    }
+
+    .subteks-permintaan-kpi {
+      font-size: 0.74rem;
       color: var(--teks-redup);
-      margin-top: 2px;
-      max-width: 195px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin-top: 0.7rem;
+      padding-top: 0.55rem;
+      border-top: 1px dashed #e9d5ff;
+    }
+
+    .subteks-permintaan-kpi strong {
+      color: var(--ungu-gelap);
+      font-weight: 500;
+    }
+
+    .riwayat-modal-box {
+      background: #faf5ff;
+      border: 1px solid #ede9fe;
+      border-radius: 14px;
+      padding: 0.65rem 0.85rem;
     }
 
     .nav-pills-wrap {
@@ -354,21 +367,17 @@
           </li>
         </ul>
 
-        <!-- Status CSV, Tombol Minta Akses + Indikator & Foto di Paling Kanan Header -->
+        <!-- Status CSV, Tombol Minta Akses & Foto di Paling Kanan Header -->
         <div class="d-flex align-items-center gap-2 ms-auto ms-lg-0">
-          <div class="aksi-akses-wrap">
-            <button
-              type="button"
-              class="btn btn-sm rounded-pill px-3"
-              style="background: var(--ungu-lembut); color: var(--ungu-utama); border: 1px solid #e9d5ff; font-size: 0.76rem;"
-              data-bs-toggle="modal"
-              data-bs-target="#modalMintaAkses"
-            >
-              <i class="fa-solid fa-user-plus me-1"></i> Minta Akses
-            </button>
-            <span id="indikatorJumlahPermintaan" class="indikator-jumlah-akses">0 permintaan terkirim</span>
-            <span id="riwayatSingkatPermintaan" class="riwayat-singkat-akses" title="Belum ada pengajuan terbaru">Belum ada pengajuan</span>
-          </div>
+          <button
+            type="button"
+            class="btn btn-sm rounded-pill px-3 btn-minta-akses"
+            data-bs-toggle="modal"
+            data-bs-target="#modalMintaAkses"
+          >
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Minta Akses</span>
+          </button>
           <span id="statusGlobal" class="badge-status">
             <i class="fa-solid fa-rotate me-1"></i> Memuat 15 sumber CSV...
           </span>
@@ -425,6 +434,13 @@
               <div class="small text-muted">Status Terbanyak</div>
               <div id="kpiStatusApprovalTerbanyak" class="fs-6 fw-normal mt-2">...</div>
             </div>
+          </div>
+
+          <!-- Opsi 2: Ditempatkan setelah blok Status Terbanyak -->
+          <div id="subteksPermintaanKpi" class="subteks-permintaan-kpi text-lg-end d-none">
+            <i class="fa-solid fa-paper-plane me-1" style="color: var(--ungu-utama);"></i>
+            <strong id="teksJumlahPermintaanKpi">0 permintaan terkirim</strong>
+            <span id="teksRiwayatPermintaanKpi"></span>
           </div>
         </div>
       </section>
@@ -766,6 +782,16 @@
 
         <form id="formMintaAkses">
           <div class="modal-body">
+            <div class="riwayat-modal-box mb-3">
+              <div class="d-flex justify-content-between align-items-center small mb-1">
+                <span class="fw-medium" style="color: var(--ungu-gelap);">
+                  <i class="fa-solid fa-clock-rotate-left me-1"></i> Riwayat Permintaan Terkirim
+                </span>
+                <span id="ringkasanCountModal" class="badge-status py-0 px-2" style="font-size: 0.7rem;">0 terkirim</span>
+              </div>
+              <div id="daftarRiwayatModal" class="small text-muted">Belum ada pengajuan modul/role tercatat.</div>
+            </div>
+
             <div class="mb-3">
               <label class="form-label small">Nama Lengkap</label>
               <input type="text" name="nama" class="form-control" required placeholder="Contoh: Budi Santoso" />
@@ -869,23 +895,46 @@
     }
 
     function perbaruiIndikatorPermintaan() {
-      const elIndikator = document.getElementById("indikatorJumlahPermintaan");
-      const elRiwayat = document.getElementById("riwayatSingkatPermintaan");
+      const elSubteks = document.getElementById("subteksPermintaanKpi");
+      const elJumlahKpi = document.getElementById("teksJumlahPermintaanKpi");
+      const elRiwayatKpi = document.getElementById("teksRiwayatPermintaanKpi");
+      const elCountModal = document.getElementById("ringkasanCountModal");
+      const elDaftarModal = document.getElementById("daftarRiwayatModal");
       const jumlah = ambilJumlahPermintaan();
       const riwayat = ambilRiwayatPermintaan();
 
-      if (elIndikator) {
-        elIndikator.textContent = `${jumlah} permintaan terkirim`;
+      if (elSubteks) {
+        if (jumlah > 0 || riwayat.length > 0) {
+          elSubteks.classList.remove("d-none");
+        } else {
+          elSubteks.classList.add("d-none");
+        }
       }
 
-      if (elRiwayat) {
-        if (!riwayat.length) {
-          elRiwayat.textContent = "Belum ada pengajuan";
-          elRiwayat.title = "Belum ada pengajuan terbaru";
-        } else {
+      if (elJumlahKpi) {
+        elJumlahKpi.textContent = `${jumlah} permintaan terkirim`;
+      }
+
+      if (elRiwayatKpi) {
+        if (riwayat.length > 0) {
           const daftarTeks = riwayat.map((r) => `${r.modul} (${r.role})`).join(" • ");
-          elRiwayat.textContent = daftarTeks;
-          elRiwayat.title = `Pengajuan terbaru: ${daftarTeks}`;
+          elRiwayatKpi.textContent = ` • ${daftarTeks}`;
+        } else {
+          elRiwayatKpi.textContent = "";
+        }
+      }
+
+      if (elCountModal) {
+        elCountModal.textContent = `${jumlah} terkirim`;
+      }
+
+      if (elDaftarModal) {
+        if (!riwayat.length) {
+          elDaftarModal.textContent = "Belum ada pengajuan modul/role tercatat.";
+        } else {
+          elDaftarModal.innerHTML = riwayat
+            .map((r) => `<span class="d-inline-block me-2 mb-1 px-2 py-1 rounded-pill bg-white border" style="border-color:#e9d5ff!important;"><strong>${r.modul}</strong> • ${r.role}</span>`)
+            .join("");
         }
       }
     }
@@ -1147,12 +1196,10 @@
         const totalNilai = Number(pluginOptions.total || 0);
         const rasioAktif = totalNilai > 0 ? Math.min(1, Math.max(0, nilaiAktif / totalNilai)) : 0;
 
-        // Sudut mulai chart adalah -PI/2 (arah jam 12), searah jarum jam
         const sudutAwalChart = -Math.PI / 2;
         const bentangAktif = rasioAktif * Math.PI * 2;
         const sudutAkhirAktif = sudutAwalChart + bentangAktif;
 
-        // Jarak aman agar garis kecil tidak muncul di sisi badan donat yang berwarna
         const bufferRad = 0.14;
         const mulaiSisa = sudutAkhirAktif + bufferRad;
         const akhirSisa = sudutAwalChart + Math.PI * 2 - bufferRad;
