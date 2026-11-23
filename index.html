@@ -771,7 +771,7 @@
     </div>
   </div>
 
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const URL_WEB_APP_AKSES = "https://script.google.com/macros/s/AKfycbyx7cqWcizD_Q81jvW8bssSDzBdvos6X0soIHJpppPt7b9jxuTnoFpOfe38k7zxInLCqQ/exec";
 
@@ -1015,7 +1015,7 @@
               labels: [item.label, "Lainnya"],
               datasets: [{
                 data: [item.jumlah, sisa],
-                backgroundColor: ["#7e22ce", "#f3e8ff"],
+                backgroundColor: ["#4c1d95", "#f97316"],
                 borderWidth: 0
               }]
             },
@@ -1041,7 +1041,15 @@
       perbaruiRingkasanKPI();
     }
 
-    function renderBarChart(key, items, canvasId, errorId, statusId, warnaBar = "#7e22ce", horizontal = false) {
+    function buatGradasiUnguHorizontal(ctx, chartArea) {
+      const gradasi = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+      gradasi.addColorStop(0, "#4a0e4e");
+      gradasi.addColorStop(0.55, "#7e22ce");
+      gradasi.addColorStop(1, "#a855f7");
+      return gradasi;
+    }
+
+    function renderBarChart(key, items, canvasId, errorId, statusId) {
       sembunyikanError(errorId);
       const elStatus = document.getElementById(statusId);
       if (!items.length) {
@@ -1059,6 +1067,12 @@
 
       if (elStatus) elStatus.textContent = `${formatAngka(total)} Data`;
 
+      const canvas = document.getElementById(canvasId);
+      if (canvas && canvas.parentElement) {
+        const tinggiDinamis = Math.max(280, dataChart.length * 36);
+        canvas.parentElement.style.minHeight = `${tinggiDinamis}px`;
+      }
+
       buatAtauPerbaruiChart(canvasId, {
         type: "bar",
         data: {
@@ -1066,13 +1080,18 @@
           datasets: [{
             label: "Jumlah",
             data: dataChart.map((d) => d.jumlah),
-            backgroundColor: warnaBar,
+            backgroundColor: (context) => {
+              const { ctx, chartArea } = context.chart;
+              if (!chartArea) return "#7e22ce";
+              return buatGradasiUnguHorizontal(ctx, chartArea);
+            },
+            hoverBackgroundColor: "#4c1d95",
             borderRadius: 8,
-            maxBarThickness: 36
+            maxBarThickness: 28
           }]
         },
         options: {
-          indexAxis: horizontal ? "y" : "x",
+          indexAxis: "y",
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
@@ -1080,7 +1099,7 @@
             tooltip: {
               callbacks: {
                 label: (ctx) => {
-                  const val = ctx.parsed[horizontal ? "x" : "y"] || 0;
+                  const val = ctx.parsed.x || 0;
                   return ` ${formatAngka(val)} (${formatPersen(val, total)})`;
                 }
               }
@@ -1088,7 +1107,7 @@
           },
           scales: {
             x: { beginAtZero: true, grid: { color: "#f3e8ff" } },
-            y: { beginAtZero: true, grid: { color: "#f3e8ff" } }
+            y: { grid: { display: false } }
           }
         }
       });
@@ -1106,7 +1125,9 @@
       const total = items.reduce((acc, cur) => acc + cur.jumlah, 0);
       if (elStatus) elStatus.textContent = `${formatAngka(total)} Data`;
 
-      const palet = ["#7e22ce", "#a855f7", "#facc15", "#4c1d95", "#c084fc", "#ca8a04", "#18181b"];
+      const palet = items.length === 2
+        ? ["#4c1d95", "#f97316"]
+        : ["#4c1d95", "#f97316", "#7e22ce", "#a855f7", "#facc15", "#c084fc", "#18181b"];
 
       buatAtauPerbaruiChart(canvasId, {
         type: "doughnut",
@@ -1163,9 +1184,9 @@
           if (key === "approval") {
             renderApproval(data);
           } else if (key === "desil") {
-            renderBarChart(key, data, "chartDesil", "errorDesil", "statusDesil", "#7e22ce", false);
+            renderBarChart(key, data, "chartDesil", "errorDesil", "statusDesil");
           } else if (key === "kecamatan") {
-            renderBarChart(key, data, "chartKecamatan", "errorKecamatan", "statusKecamatan", "#4c1d95", true);
+            renderBarChart(key, data, "chartKecamatan", "errorKecamatan", "statusKecamatan");
           } else if (key === "pbiNasional") {
             renderDoughnutRingkasan(data, "chartPbiNasional", "ringkasPbiNasional", "errorPbiNasional", "statusPbiNasional");
           } else if (key === "pbiPemda") {
@@ -1173,23 +1194,23 @@
           } else if (key === "statusKepemilikanRumah") {
             renderDoughnutRingkasan(data, "chartKepemilikanRumah", "ringkasKepemilikanRumah", "errorKepemilikanRumah", "statusKepemilikanRumah");
           } else if (key === "jenisLantai") {
-            renderBarChart(key, data, "chartJenisLantai", "errorJenisLantai", "statusJenisLantai", "#7e22ce", false);
+            renderBarChart(key, data, "chartJenisLantai", "errorJenisLantai", "statusJenisLantai");
           } else if (key === "jenisAtap") {
-            renderBarChart(key, data, "chartJenisAtap", "errorJenisAtap", "statusJenisAtap", "#a855f7", false);
+            renderBarChart(key, data, "chartJenisAtap", "errorJenisAtap", "statusJenisAtap");
           } else if (key === "jenisDinding") {
-            renderBarChart(key, data, "chartJenisDinding", "errorJenisDinding", "statusJenisDinding", "#4c1d95", false);
+            renderBarChart(key, data, "chartJenisDinding", "errorJenisDinding", "statusJenisDinding");
           } else if (key === "sumberAirMinum") {
-            renderBarChart(key, data, "chartSumberAirMinum", "errorSumberAirMinum", "statusSumberAirMinum", "#7e22ce", false);
+            renderBarChart(key, data, "chartSumberAirMinum", "errorSumberAirMinum", "statusSumberAirMinum");
           } else if (key === "sumberPenerangan") {
-            renderBarChart(key, data, "chartSumberPenerangan", "errorSumberPenerangan", "statusSumberPenerangan", "#ca8a04", false);
+            renderBarChart(key, data, "chartSumberPenerangan", "errorSumberPenerangan", "statusSumberPenerangan");
           } else if (key === "bahanBakarMasak") {
-            renderBarChart(key, data, "chartBahanBakarMasak", "errorBahanBakarMasak", "statusBahanBakarMasak", "#a855f7", false);
+            renderBarChart(key, data, "chartBahanBakarMasak", "errorBahanBakarMasak", "statusBahanBakarMasak");
           } else if (key === "fasilitasBab") {
-            renderBarChart(key, data, "chartFasilitasBab", "errorFasilitasBab", "statusFasilitasBab", "#4c1d95", false);
+            renderBarChart(key, data, "chartFasilitasBab", "errorFasilitasBab", "statusFasilitasBab");
           } else if (key === "jenisKloset") {
-            renderBarChart(key, data, "chartJenisKloset", "errorJenisKloset", "statusJenisKloset", "#7e22ce", false);
+            renderBarChart(key, data, "chartJenisKloset", "errorJenisKloset", "statusJenisKloset");
           } else if (key === "pembuanganTinja") {
-            renderBarChart(key, data, "chartPembuanganTinja", "errorPembuanganTinja", "statusPembuanganTinja", "#4a0e4e", false);
+            renderBarChart(key, data, "chartPembuanganTinja", "errorPembuanganTinja", "statusPembuanganTinja");
           }
         } catch (err) {
           const mapErr = {
