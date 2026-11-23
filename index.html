@@ -225,75 +225,104 @@
       justify-content: flex-end;
     }
 
+    /* Perapian Baris KPI */
+    .kpi-kolom-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kpi-label-seragam {
+      font-size: 0.82rem;
+      line-height: 1.25;
+      color: var(--teks-redup);
+    }
+
+    .kpi-nilai-seragam {
+      min-height: 2.25rem;
+      margin-top: 0.35rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      line-height: 1.15;
+    }
+
+    @media (min-width: 992px) {
+      .kpi-nilai-seragam {
+        justify-content: flex-end;
+      }
+    }
+
+    /* Susunan Donat Persentase di Atas + 3 Donat Ukuran Sama di Bawah */
     .cluster-donat-wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      padding: 0.15rem 0;
+      gap: 0.9rem;
+      padding: 0.2rem 0;
     }
 
-    .donat-utama-blok {
+    .donat-persen-atas-blok {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
     }
 
-    .donat-utama-label {
-      font-size: 0.84rem;
+    .donat-persen-judul {
+      font-size: 0.8rem;
       font-weight: 500;
-      color: var(--teks-utama);
-      margin-bottom: 0.2rem;
+      color: var(--teks-redup);
+      margin-bottom: 0.3rem;
     }
 
-    .ring-hero-wrap {
+    .ring-persen-wrap {
       position: relative;
-      width: 126px;
-      height: 126px;
+      width: 112px;
+      height: 112px;
       margin: 0 auto;
     }
 
     .ring-hero-value {
-      font-size: 1.28rem;
-      font-weight: 500;
-      color: var(--teks-utama);
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: var(--ungu-gelap);
       line-height: 1.05;
     }
 
     .ring-hero-sub {
-      font-size: 0.7rem;
+      font-size: 0.66rem;
       color: var(--teks-redup);
-      margin-top: 0.12rem;
+      margin-top: 0.14rem;
     }
 
-    .ring-hero-total {
-      font-size: 0.64rem;
-      color: #6b7280;
-      margin-top: 0.04rem;
-    }
-
-    .donat-sekunder-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.15rem;
+    .tiga-donat-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
       width: 100%;
+      align-items: start;
     }
 
-    .donat-sekunder-blok {
+    @media (max-width: 575.98px) {
+      .tiga-donat-row {
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+      }
+    }
+
+    .donat-item-sama {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      min-width: 102px;
     }
 
-    .ring-gauge-wrap {
+    .ring-sama-wrap {
       position: relative;
-      width: 84px;
-      height: 84px;
+      width: 96px;
+      height: 96px;
       margin: 0 auto;
     }
 
@@ -305,28 +334,138 @@
       align-items: center;
       justify-content: center;
       pointer-events: none;
-      padding: 0 0.2rem;
+      padding: 0 0.25rem;
     }
 
     .ring-gauge-value {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 500;
       color: var(--teks-utama);
       line-height: 1.1;
     }
 
     .ring-gauge-sub {
-      font-size: 0.64rem;
+      font-size: 0.66rem;
       color: var(--teks-redup);
-      margin-top: 0.1rem;
+      margin-top: 0.12rem;
     }
 
-    .donat-sekunder-label {
-      font-size: 0.72rem;
+    .donat-label-bawah {
+      font-size: 0.74rem;
+      font-weight: 500;
       color: var(--teks-redup);
-      margin-top: 0.22rem;
-      max-width: 116px;
+      margin-top: 0.32rem;
       line-height: 1.2;
+      max-width: 120px;
+    }
+
+    /* Grafik Desil Glass Capsule + Lingkaran Nilai */
+    .desil-glass-stage {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(243, 232, 255, 0.35));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      padding: 1rem 0.9rem 0.75rem;
+      overflow-x: auto;
+    }
+
+    .desil-capsule-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 0.65rem;
+      min-height: 255px;
+      min-width: 520px;
+      padding: 1.35rem 0.25rem 0.4rem;
+      border-bottom: 1.5px solid rgba(76, 29, 149, 0.22);
+    }
+
+    .desil-col-item {
+      flex: 1 1 0;
+      min-width: 54px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .desil-track-glass {
+      position: relative;
+      width: 100%;
+      max-width: 52px;
+      height: 205px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.36);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 3px;
+    }
+
+    .desil-bar-glass {
+      position: relative;
+      width: 100%;
+      min-height: 18%;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 10px 20px rgba(76, 29, 149, 0.16);
+      transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      justify-content: center;
+    }
+
+    .desil-halo-ring {
+      position: absolute;
+      top: -17px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .desil-node-glass {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 2px solid var(--bar-warna, #7e22ce);
+      box-shadow:
+        0 6px 14px rgba(20, 20, 22, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #141416;
+      line-height: 1;
+      padding: 0 2px;
+      text-align: center;
+    }
+
+    .desil-label-bawah {
+      margin-top: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #1f2937;
+      text-align: center;
+      line-height: 1.2;
+      max-width: 76px;
+    }
+
+    .desil-persen-bawah {
+      font-size: 0.65rem;
+      color: #6b7280;
+      margin-top: 0.08rem;
     }
 
     .donat-tengah-wrap {
@@ -377,30 +516,6 @@
     .grafik-footer-meta strong {
       color: var(--ungu-gelap);
       font-weight: 500;
-    }
-
-    .pill-meter-track {
-      height: 32px;
-      border-radius: 999px;
-      background: #ececef;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      padding: 2px;
-    }
-
-    .pill-meter-fill {
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #4a0e4e, #7e22ce);
-      color: #ffffff;
-      font-size: 0.76rem;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 56px;
-      transition: width 0.5s ease;
     }
 
     .stat-big {
@@ -604,45 +719,28 @@
           <section class="row g-4 align-items-start mb-4">
             <div class="col-lg-5">
               <h1 class="fs-2 mb-1">Dashboard Rekapitulasi Mansakai</h1>
-              <p class="small mb-3" style="color: var(--teks-redup);">
+              <p class="small mb-0" style="color: var(--teks-redup);">
                 Persentase approval mengacu pada <strong>Total Data</strong> keseluruhan menurut Desil.
               </p>
-
-              <div class="row g-2 align-items-center">
-                <div class="col-7">
-                  <div class="small mb-1" style="color: var(--teks-redup);">Persentase Approval Terhadap Total Data</div>
-                  <div class="pill-meter-track">
-                    <div id="barPersenApprovalTotal" class="pill-meter-fill" style="width: 20%;">0%</div>
-                  </div>
-                </div>
-                <div class="col-5">
-                  <div class="small mb-1" style="color: var(--teks-redup);">Kategori Status Approval</div>
-                  <div class="pill-meter-track">
-                    <div id="barKategoriApproval" class="pill-meter-fill" style="width: 100%; background: #18181b;">
-                      0 Status
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <div class="col-lg-7">
               <div class="row g-3 text-lg-end">
-                <div class="col-6 col-sm-3">
-                  <div class="small" style="color: var(--teks-redup);">Total Data (Desil)</div>
-                  <div id="kpiTotalData" class="stat-big mt-1" style="color: var(--ungu-pekat);">...</div>
+                <div class="col-6 col-sm-3 kpi-kolom-item">
+                  <div class="kpi-label-seragam">Total Data (Desil)</div>
+                  <div id="kpiTotalData" class="stat-big kpi-nilai-seragam" style="color: var(--ungu-pekat);">...</div>
                 </div>
-                <div class="col-6 col-sm-3">
-                  <div class="small" style="color: var(--teks-redup);">Total Approval</div>
-                  <div id="kpiTotalApproval" class="stat-big mt-1">...</div>
+                <div class="col-6 col-sm-3 kpi-kolom-item">
+                  <div class="kpi-label-seragam">Total Approval</div>
+                  <div id="kpiTotalApproval" class="stat-big kpi-nilai-seragam">...</div>
                 </div>
-                <div class="col-6 col-sm-3">
-                  <div class="small" style="color: var(--teks-redup);">% Approval / Total</div>
-                  <div id="kpiPersenApprovalTotal" class="stat-big mt-1" style="color: var(--ungu-utama);">...</div>
+                <div class="col-6 col-sm-3 kpi-kolom-item">
+                  <div class="kpi-label-seragam">% Approval / Total</div>
+                  <div id="kpiPersenApprovalTotal" class="stat-big kpi-nilai-seragam" style="color: var(--ungu-utama);">...</div>
                 </div>
-                <div class="col-6 col-sm-3">
-                  <div class="small" style="color: var(--teks-redup);">Status Terbanyak</div>
-                  <div id="kpiStatusApprovalTerbanyak" class="fs-6 fw-normal mt-2">...</div>
+                <div class="col-6 col-sm-3 kpi-kolom-item">
+                  <div class="kpi-label-seragam">Status Terbanyak</div>
+                  <div id="kpiStatusApprovalTerbanyak" class="fs-6 fw-medium kpi-nilai-seragam">...</div>
                 </div>
               </div>
 
@@ -654,7 +752,7 @@
             </div>
           </section>
 
-          <!-- Baris Utama: Banner + Donat Approval (Ungu Tua, Biru, Orange) + Ringkasan Gelap -->
+          <!-- Baris Utama: Banner + Donat Persentase di Atas 3 Donat Sama + Ringkasan Gelap -->
           <div class="row g-4 align-items-stretch mb-4">
             <div class="col-lg-3">
               <div class="beranda-banner-card">
@@ -681,7 +779,7 @@
                 </div>
                 <div id="errorApproval" class="alert alert-danger py-2 small d-none"></div>
                 <div id="gridApprovalItems" class="cluster-donat-wrap flex-grow-1">
-                  <div class="text-center small py-4 w-100" style="color: var(--teks-redup);">Memuat grafik item approval...</div>
+                  <div class="text-center small py-4 w-100" style="color: var(--teks-redup);">Memuat grafik approval...</div>
                 </div>
               </div>
             </div>
@@ -716,8 +814,10 @@
                   <span id="statusDesil" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorDesil" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 290px;">
-                  <canvas id="chartDesil"></canvas>
+                <div class="desil-glass-stage flex-grow-1">
+                  <div id="desilCapsuleChart" class="desil-capsule-chart">
+                    <div class="text-center small py-5 w-100" style="color: var(--teks-redup);">Memuat grafik desil...</div>
+                  </div>
                 </div>
                 <div id="metaDesil" class="grafik-footer-meta">Memuat ringkasan desil...</div>
               </div>
@@ -761,8 +861,10 @@
                   </div>
                   <span id="statusDesilPerencanaan" class="badge-status">Memuat...</span>
                 </div>
-                <div class="flex-grow-1" style="position: relative; min-height: 300px;">
-                  <canvas id="chartDesilPerencanaan"></canvas>
+                <div class="desil-glass-stage flex-grow-1">
+                  <div id="desilCapsuleChartPerencanaan" class="desil-capsule-chart">
+                    <div class="text-center small py-5 w-100" style="color: var(--teks-redup);">Memuat grafik desil...</div>
+                  </div>
                 </div>
                 <div id="metaDesilPerencanaan" class="grafik-footer-meta">Memuat ringkasan desil...</div>
               </div>
@@ -1474,9 +1576,18 @@
       pembuanganTinja: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1623186494&single=true&output=csv"
     };
 
+    const PALET_GLASS_DESIL = [
+      { grad: "linear-gradient(180deg, rgba(126, 34, 206, 0.72) 0%, rgba(76, 29, 149, 0.92) 100%)", warna: "#7e22ce", halo: "rgba(126, 34, 206, 0.25)" },
+      { grad: "linear-gradient(180deg, rgba(37, 99, 235, 0.72) 0%, rgba(30, 64, 175, 0.92) 100%)", warna: "#2563eb", halo: "rgba(37, 99, 235, 0.25)" },
+      { grad: "linear-gradient(180deg, rgba(139, 92, 246, 0.72) 0%, rgba(91, 33, 182, 0.92) 100%)", warna: "#8b5cf6", halo: "rgba(139, 92, 246, 0.25)" },
+      { grad: "linear-gradient(180deg, rgba(249, 115, 22, 0.72) 0%, rgba(194, 65, 12, 0.92) 100%)", warna: "#f97316", halo: "rgba(249, 115, 22, 0.25)" },
+      { grad: "linear-gradient(180deg, rgba(14, 165, 233, 0.72) 0%, rgba(3, 105, 161, 0.92) 100%)", warna: "#0ea5e9", halo: "rgba(14, 165, 233, 0.25)" }
+    ];
+
     const chartInstances = {};
     let totalDataDesil = 0;
     let totalDataApproval = 0;
+    let itemApprovalTerakhir = [];
 
     function pecahBarisCSV(baris) {
       const hasil = [];
@@ -1591,28 +1702,186 @@
       });
     }
 
+    function tentukanWarnaStatusApproval(index) {
+      const paletDonat = ["#4c1d95", "#2563eb", "#f97316", "#7e22ce"];
+      return paletDonat[index % paletDonat.length];
+    }
+
+    function buatKonfigurasiDonatProporsi(labelAktif, labelSisa, nilaiAktif, total, warnaAktif, cutoutPersen, tebalRadius) {
+      const sisa = Math.max(0, total - nilaiAktif);
+      const punyaData = total > 0;
+      return {
+        type: "doughnut",
+        data: {
+          labels: [labelAktif, labelSisa],
+          datasets: [{
+            data: punyaData ? [nilaiAktif, sisa] : [0, 1],
+            backgroundColor: punyaData ? [warnaAktif, "#e5e7eb"] : ["#e5e7eb", "#e5e7eb"],
+            borderWidth: 0,
+            borderRadius: [tebalRadius, 0]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: cutoutPersen,
+          rotation: 0,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              enabled: punyaData,
+              yAlign: "bottom",
+              caretPadding: 6,
+              callbacks: {
+                label: (ctx) => {
+                  const val = ctx.parsed || 0;
+                  return ` ${ctx.label}: ${formatAngka(val)} (${formatPersen(val, total)})`;
+                }
+              }
+            }
+          }
+        }
+      };
+    }
+
+    function renderKlasterApproval() {
+      const elGrid = document.getElementById("gridApprovalItems");
+      if (!elGrid) return;
+
+      const pctAngka = totalDataDesil > 0 ? Math.min(100, (totalDataApproval / totalDataDesil) * 100) : 0;
+      const pctLabel = `${pctAngka.toFixed(1).replace(".", ",")}%`;
+      const tigaDonat = itemApprovalTerakhir.slice(0, 3);
+
+      const htmlDonatPersenAtas = `
+        <div class="donat-persen-atas-blok">
+          <div class="donat-persen-judul">Persentase Approval Terhadap Total Data</div>
+          <div class="ring-persen-wrap">
+            <canvas id="gaugeApprovalPersenTotal"></canvas>
+            <div class="ring-gauge-center">
+              <span class="ring-hero-value">${pctLabel}</span>
+              <span class="ring-hero-sub">${formatAngka(totalDataApproval)} / ${formatAngka(totalDataDesil)}</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const htmlTigaDonatSama = tigaDonat.length
+        ? `<div class="tiga-donat-row">${tigaDonat.map((item, idx) => {
+            const canvasId = `gaugeApprovalSama_${idx}`;
+            const pctStatus = formatPersen(item.jumlah, totalDataApproval);
+            return `
+              <div class="donat-item-sama">
+                <div class="ring-sama-wrap">
+                  <canvas id="${canvasId}"></canvas>
+                  <div class="ring-gauge-center">
+                    <span class="ring-gauge-value">${formatAngka(item.jumlah)}</span>
+                    <span class="ring-gauge-sub">${pctStatus}</span>
+                  </div>
+                </div>
+                <div class="donat-label-bawah" title="${item.label}">${item.label}</div>
+              </div>
+            `;
+          }).join("")}</div>`
+        : `<div class="small text-muted">Menunggu data status approval...</div>`;
+
+      elGrid.innerHTML = htmlDonatPersenAtas + htmlTigaDonatSama;
+
+      buatAtauPerbaruiChart(
+        "gaugeApprovalPersenTotal",
+        buatKonfigurasiDonatProporsi(
+          "Total Approval",
+          "Belum Ter-approval",
+          Math.min(totalDataApproval, totalDataDesil),
+          Math.max(totalDataDesil, totalDataApproval),
+          "#7e22ce",
+          "76%",
+          10
+        )
+      );
+
+      tigaDonat.forEach((item, idx) => {
+        buatAtauPerbaruiChart(
+          `gaugeApprovalSama_${idx}`,
+          buatKonfigurasiDonatProporsi(
+            item.label,
+            "Status Lainnya",
+            item.jumlah,
+            totalDataApproval,
+            tentukanWarnaStatusApproval(idx),
+            "75%",
+            9
+          )
+        );
+      });
+    }
+
     function perbaruiRingkasanKPI() {
       const elTotalData = document.getElementById("kpiTotalData");
       const elTotalApproval = document.getElementById("kpiTotalApproval");
       const elPersen = document.getElementById("kpiPersenApprovalTotal");
-      const elBarPersen = document.getElementById("barPersenApprovalTotal");
 
       if (elTotalData) elTotalData.textContent = formatAngka(totalDataDesil);
       if (elTotalApproval) elTotalApproval.textContent = formatAngka(totalDataApproval);
 
       const pctAngka = totalDataDesil > 0 ? Math.min(100, (totalDataApproval / totalDataDesil) * 100) : 0;
       const pctLabel = `${pctAngka.toFixed(1).replace(".", ",")}%`;
-
       if (elPersen) elPersen.textContent = pctLabel;
-      if (elBarPersen) {
-        elBarPersen.style.width = `${Math.max(12, pctAngka)}%`;
-        elBarPersen.textContent = pctLabel;
-      }
+
+      renderKlasterApproval();
     }
 
-    function tentukanWarnaStatusApproval(index) {
-      const paletDonat = ["#4c1d95", "#2563eb", "#f97316", "#7e22ce"];
-      return paletDonat[index % paletDonat.length];
+    function renderGrafikDesilGlass(items, containerIds, statusIds, metaIds) {
+      sembunyikanError("errorDesil");
+      if (!items.length) {
+        statusIds.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = "Kosong";
+        });
+        return;
+      }
+
+      const maks = Math.max(...items.map((d) => Number(d.jumlah) || 0), 1);
+      const total = items.reduce((acc, d) => acc + (Number(d.jumlah) || 0), 0);
+
+      totalDataDesil = total;
+      perbaruiRingkasanKPI();
+
+      statusIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = "Terhubung";
+      });
+
+      const htmlKolom = items.map((d, idx) => {
+        const nilai = Number(d.jumlah) || 0;
+        const tinggiPct = Math.max(18, Math.round((nilai / maks) * 100));
+        const pctTotal = formatPersen(nilai, total);
+        const skema = PALET_GLASS_DESIL[idx % PALET_GLASS_DESIL.length];
+
+        return `
+          <div class="desil-col-item">
+            <div class="desil-track-glass">
+              <div
+                class="desil-bar-glass"
+                style="height: ${tinggiPct}%; background: ${skema.grad}; --bar-warna: ${skema.warna};"
+                title="${d.label}: ${formatAngka(nilai)} (${pctTotal})"
+              >
+                <div class="desil-halo-ring" style="background: radial-gradient(circle, ${skema.halo} 0%, rgba(255,255,255,0) 72%);">
+                  <div class="desil-node-glass">${formatAngka(nilai)}</div>
+                </div>
+              </div>
+            </div>
+            <div class="desil-label-bawah">${d.label}</div>
+            <div class="desil-persen-bawah">${pctTotal}</div>
+          </div>
+        `;
+      }).join("");
+
+      containerIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = htmlKolom;
+      });
+
+      setMetaGrafik(metaIds, items, total);
     }
 
     const pluginLabelNilaiBatang = {
@@ -1653,48 +1922,11 @@
 
     Chart.register(pluginLabelNilaiBatang);
 
-    function buatKonfigurasiDonatGambar2(item, total, warnaAktif, cutoutPersen, tebalRadius) {
-      const sisa = Math.max(0, total - item.jumlah);
-      return {
-        type: "doughnut",
-        data: {
-          labels: [item.label, "Sisanya"],
-          datasets: [{
-            data: [item.jumlah, sisa],
-            backgroundColor: [warnaAktif, "#eef0f4"],
-            borderWidth: 0,
-            borderRadius: [tebalRadius, 0]
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: cutoutPersen,
-          rotation: 0,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              yAlign: "bottom",
-              caretPadding: 6,
-              callbacks: {
-                label: (ctx) => {
-                  const val = ctx.parsed || 0;
-                  return ` ${ctx.label}: ${formatAngka(val)} (${formatPersen(val, total)})`;
-                }
-              }
-            }
-          }
-        }
-      };
-    }
-
     function renderApproval(items) {
       sembunyikanError("errorApproval");
       const elStatus = document.getElementById("statusApproval");
-      const elGrid = document.getElementById("gridApprovalItems");
       const elDaftar = document.getElementById("daftarRingkasApproval");
       const elBadgeTotal = document.getElementById("badgeTotalApproval");
-      const elBarKat = document.getElementById("barKategoriApproval");
       const elTerbanyak = document.getElementById("kpiStatusApprovalTerbanyak");
       const elPillHighlight = document.getElementById("pillHighlightApproval");
 
@@ -1704,68 +1936,13 @@
       }
 
       const sorted = [...items].sort((a, b) => b.jumlah - a.jumlah);
+      itemApprovalTerakhir = sorted;
       totalDataApproval = sorted.reduce((acc, cur) => acc + cur.jumlah, 0);
 
       if (elStatus) elStatus.textContent = "Terhubung";
       if (elBadgeTotal) elBadgeTotal.textContent = `${formatAngka(totalDataApproval)} Data`;
-      if (elBarKat) elBarKat.textContent = `${sorted.length} Status`;
       if (elTerbanyak) elTerbanyak.textContent = `${sorted[0].label} (${formatAngka(sorted[0].jumlah)})`;
       if (elPillHighlight) elPillHighlight.textContent = `Terbanyak: ${sorted[0].label} • ${formatAngka(sorted[0].jumlah)}`;
-
-      if (elGrid) {
-        const utama = sorted[0];
-        const sekunder = sorted.slice(1);
-        const pctUtama = totalDataApproval > 0 ? `${((utama.jumlah / totalDataApproval) * 100).toFixed(1)}%` : "0%";
-        const canvasUtamaId = "gaugeApproval_utama";
-
-        const htmlUtama = `
-          <div class="donat-utama-blok">
-            <div class="donat-utama-label">${utama.label}</div>
-            <div class="ring-hero-wrap">
-              <canvas id="${canvasUtamaId}"></canvas>
-              <div class="ring-gauge-center">
-                <span class="ring-hero-value">${formatAngka(utama.jumlah)}</span>
-                <span class="ring-hero-sub">${pctUtama}</span>
-                <span class="ring-hero-total">dari ${formatAngka(totalDataApproval)}</span>
-              </div>
-            </div>
-          </div>
-        `;
-
-        const htmlSekunder = sekunder.length
-          ? `<div class="donat-sekunder-row">${sekunder.map((item, idx) => {
-              const canvasId = `gaugeApproval_sek_${idx}`;
-              const pctItem = totalDataApproval > 0 ? `${((item.jumlah / totalDataApproval) * 100).toFixed(1)}%` : "0%";
-              return `
-                <div class="donat-sekunder-blok">
-                  <div class="ring-gauge-wrap">
-                    <canvas id="${canvasId}"></canvas>
-                    <div class="ring-gauge-center">
-                      <span class="ring-gauge-value">${formatAngka(item.jumlah)}</span>
-                      <span class="ring-gauge-sub">${pctItem}</span>
-                    </div>
-                  </div>
-                  <div class="donat-sekunder-label" title="${item.label}">${item.label}</div>
-                </div>
-              `;
-            }).join("")}</div>`
-          : "";
-
-        elGrid.innerHTML = htmlUtama + htmlSekunder;
-
-        buatAtauPerbaruiChart(
-          canvasUtamaId,
-          buatKonfigurasiDonatGambar2(utama, totalDataApproval, tentukanWarnaStatusApproval(0), "78%", 12)
-        );
-
-        sekunder.forEach((item, idx) => {
-          const canvasId = `gaugeApproval_sek_${idx}`;
-          buatAtauPerbaruiChart(
-            canvasId,
-            buatKonfigurasiDonatGambar2(item, totalDataApproval, tentukanWarnaStatusApproval(idx + 1), "76%", 9)
-          );
-        });
-      }
 
       if (elDaftar) {
         elDaftar.innerHTML = sorted.map((item, idx) => `
@@ -1782,14 +1959,6 @@
       perbaruiRingkasanKPI();
     }
 
-    function buatGradasiDesilVertikal(ctx, chartArea) {
-      const gradasi = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-      gradasi.addColorStop(0, "#4c1d95");
-      gradasi.addColorStop(0.55, "#7e22ce");
-      gradasi.addColorStop(1, "#e9d5ff");
-      return gradasi;
-    }
-
     function buatGradasiBarHorizontal(ctx, chartArea) {
       const gradasi = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
       gradasi.addColorStop(0, "#dbeafe");
@@ -1798,7 +1967,7 @@
       return gradasi;
     }
 
-    function konfigurasiBarChart(isDesil, dataChart, total) {
+    function konfigurasiBarHorizontal(dataChart, total) {
       return {
         type: "bar",
         data: {
@@ -1808,55 +1977,46 @@
             data: dataChart.map((d) => d.jumlah),
             backgroundColor: (context) => {
               const { ctx, chartArea } = context.chart;
-              if (!chartArea) return isDesil ? "#7e22ce" : "#2563eb";
-              return isDesil
-                ? buatGradasiDesilVertikal(ctx, chartArea)
-                : buatGradasiBarHorizontal(ctx, chartArea);
+              if (!chartArea) return "#2563eb";
+              return buatGradasiBarHorizontal(ctx, chartArea);
             },
             borderRadius: 8,
-            maxBarThickness: isDesil ? 52 : 24
+            maxBarThickness: 24
           }]
         },
         options: {
-          indexAxis: isDesil ? "x" : "y",
+          indexAxis: "y",
           responsive: true,
           maintainAspectRatio: false,
           layout: {
-            padding: isDesil
-              ? { top: 24, right: 12, left: 6, bottom: 4 }
-              : { top: 6, right: 56, left: 4, bottom: 4 }
+            padding: { top: 6, right: 56, left: 4, bottom: 4 }
           },
           plugins: {
             legend: { display: false },
             tooltip: {
               callbacks: {
                 label: (ctx) => {
-                  const val = ctx.parsed[isDesil ? "y" : "x"] || 0;
+                  const val = ctx.parsed.x || 0;
                   return ` Jumlah: ${formatAngka(val)} (${formatPersen(val, total)})`;
                 }
               }
             }
           },
-          scales: isDesil
-            ? {
-                x: { grid: { display: false } },
-                y: { display: false, beginAtZero: true }
+          scales: {
+            x: { display: false, beginAtZero: true },
+            y: {
+              grid: { display: false },
+              ticks: {
+                autoSkip: false,
+                font: { size: 11.5 }
               }
-            : {
-                x: { display: false, beginAtZero: true },
-                y: {
-                  grid: { display: false },
-                  ticks: {
-                    autoSkip: false,
-                    font: { size: 11.5 }
-                  }
-                }
-              }
+            }
+          }
         }
       };
     }
 
-    function renderBarChart(key, items, canvasId, errorId, statusId, salinanIds = [], metaIds = []) {
+    function renderBarHorizontalChart(items, canvasId, errorId, statusId, salinanIds = [], metaIds = []) {
       if (errorId) sembunyikanError(errorId);
       const elStatus = document.getElementById(statusId);
       if (!items.length) {
@@ -1864,14 +2024,8 @@
         return;
       }
 
-      const isDesil = key === "desil";
-      const dataChart = isDesil ? items : [...items].sort((a, b) => b.jumlah - a.jumlah);
+      const dataChart = [...items].sort((a, b) => b.jumlah - a.jumlah);
       const total = dataChart.reduce((acc, cur) => acc + cur.jumlah, 0);
-
-      if (isDesil) {
-        totalDataDesil = total;
-        perbaruiRingkasanKPI();
-      }
 
       if (elStatus) elStatus.textContent = "Terhubung";
 
@@ -1879,10 +2033,10 @@
       daftarCanvas.forEach((id) => {
         const canvas = document.getElementById(id);
         if (canvas && canvas.parentElement) {
-          const tinggiDinamis = isDesil ? 290 : Math.max(260, dataChart.length * 32);
+          const tinggiDinamis = Math.max(260, dataChart.length * 32);
           canvas.parentElement.style.minHeight = `${tinggiDinamis}px`;
         }
-        buatAtauPerbaruiChart(id, konfigurasiBarChart(isDesil, dataChart, total));
+        buatAtauPerbaruiChart(id, konfigurasiBarHorizontal(dataChart, total));
       });
 
       setMetaGrafik(metaIds, dataChart, total);
@@ -1981,11 +2135,14 @@
           if (key === "approval") {
             renderApproval(data);
           } else if (key === "desil") {
-            renderBarChart(key, data, "chartDesil", "errorDesil", "statusDesil", ["chartDesilPerencanaan"], ["metaDesil", "metaDesilPerencanaan"]);
-            const elStatP = document.getElementById("statusDesilPerencanaan");
-            if (elStatP) elStatP.textContent = "Terhubung";
+            renderGrafikDesilGlass(
+              data,
+              ["desilCapsuleChart", "desilCapsuleChartPerencanaan"],
+              ["statusDesil", "statusDesilPerencanaan"],
+              ["metaDesil", "metaDesilPerencanaan"]
+            );
           } else if (key === "kecamatan") {
-            renderBarChart(key, data, "chartKecamatan", "errorKecamatan", "statusKecamatan", ["chartKecamatanPerencanaan"], ["metaKecamatan", "metaKecamatanPerencanaan"]);
+            renderBarHorizontalChart(data, "chartKecamatan", "errorKecamatan", "statusKecamatan", ["chartKecamatanPerencanaan"], ["metaKecamatan", "metaKecamatanPerencanaan"]);
             const elStatK = document.getElementById("statusKecamatanPerencanaan");
             if (elStatK) elStatK.textContent = "Terhubung";
           } else if (key === "pbiNasional") {
@@ -1995,23 +2152,23 @@
           } else if (key === "statusKepemilikanRumah") {
             renderDoughnutRingkasan(data, "chartKepemilikanRumah", "ringkasKepemilikanRumah", "errorKepemilikanRumah", "statusKepemilikanRumah", "centerKepemilikanRumah", ["metaKepemilikanRumah"]);
           } else if (key === "jenisLantai") {
-            renderBarChart(key, data, "chartJenisLantai", "errorJenisLantai", "statusJenisLantai", [], ["metaJenisLantai"]);
+            renderBarHorizontalChart(data, "chartJenisLantai", "errorJenisLantai", "statusJenisLantai", [], ["metaJenisLantai"]);
           } else if (key === "jenisAtap") {
-            renderBarChart(key, data, "chartJenisAtap", "errorJenisAtap", "statusJenisAtap", [], ["metaJenisAtap"]);
+            renderBarHorizontalChart(data, "chartJenisAtap", "errorJenisAtap", "statusJenisAtap", [], ["metaJenisAtap"]);
           } else if (key === "jenisDinding") {
-            renderBarChart(key, data, "chartJenisDinding", "errorJenisDinding", "statusJenisDinding", [], ["metaJenisDinding"]);
+            renderBarHorizontalChart(data, "chartJenisDinding", "errorJenisDinding", "statusJenisDinding", [], ["metaJenisDinding"]);
           } else if (key === "sumberAirMinum") {
-            renderBarChart(key, data, "chartSumberAirMinum", "errorSumberAirMinum", "statusSumberAirMinum", [], ["metaSumberAirMinum"]);
+            renderBarHorizontalChart(data, "chartSumberAirMinum", "errorSumberAirMinum", "statusSumberAirMinum", [], ["metaSumberAirMinum"]);
           } else if (key === "sumberPenerangan") {
-            renderBarChart(key, data, "chartSumberPenerangan", "errorSumberPenerangan", "statusSumberPenerangan", [], ["metaSumberPenerangan"]);
+            renderBarHorizontalChart(data, "chartSumberPenerangan", "errorSumberPenerangan", "statusSumberPenerangan", [], ["metaSumberPenerangan"]);
           } else if (key === "bahanBakarMasak") {
-            renderBarChart(key, data, "chartBahanBakarMasak", "errorBahanBakarMasak", "statusBahanBakarMasak", [], ["metaBahanBakarMasak"]);
+            renderBarHorizontalChart(data, "chartBahanBakarMasak", "errorBahanBakarMasak", "statusBahanBakarMasak", [], ["metaBahanBakarMasak"]);
           } else if (key === "fasilitasBab") {
-            renderBarChart(key, data, "chartFasilitasBab", "errorFasilitasBab", "statusFasilitasBab", [], ["metaFasilitasBab"]);
+            renderBarHorizontalChart(data, "chartFasilitasBab", "errorFasilitasBab", "statusFasilitasBab", [], ["metaFasilitasBab"]);
           } else if (key === "jenisKloset") {
-            renderBarChart(key, data, "chartJenisKloset", "errorJenisKloset", "statusJenisKloset", [], ["metaJenisKloset"]);
+            renderBarHorizontalChart(data, "chartJenisKloset", "errorJenisKloset", "statusJenisKloset", [], ["metaJenisKloset"]);
           } else if (key === "pembuanganTinja") {
-            renderBarChart(key, data, "chartPembuanganTinja", "errorPembuanganTinja", "statusPembuanganTinja", [], ["metaPembuanganTinja"]);
+            renderBarHorizontalChart(data, "chartPembuanganTinja", "errorPembuanganTinja", "statusPembuanganTinja", [], ["metaPembuanganTinja"]);
           }
         } catch (err) {
           const mapErr = {
