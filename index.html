@@ -35,7 +35,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    h1, h2, h3, .stat-big, .ring-gauge-value {
+    h1, h2, h3, .stat-big, .ring-gauge-value, .ring-hero-value {
       font-family: "Outfit", "DM Sans", sans-serif;
       font-weight: 400;
       letter-spacing: -0.02em;
@@ -215,30 +215,77 @@
       justify-content: flex-end;
     }
 
-    .approval-item-card {
-      background: #fffdf6;
-      border: 1px solid #f3e8ff;
-      border-radius: 20px;
-      padding: 0.8rem 0.55rem;
-      text-align: center;
-      height: 100%;
+    /* Gaya Donat ala Gambar 2 (Vacation) */
+    .cluster-donat-wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      justify-content: center;
+      gap: 0.65rem;
+      padding: 0.2rem 0;
     }
 
-    .approval-item-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(88, 28, 135, 0.08);
+    .donat-utama-blok {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .donat-utama-label {
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--teks-utama);
+      margin-bottom: 0.25rem;
+    }
+
+    .ring-hero-wrap {
+      position: relative;
+      width: 146px;
+      height: 146px;
+      margin: 0 auto;
+    }
+
+    .ring-hero-value {
+      font-size: 1.38rem;
+      font-weight: 500;
+      color: var(--teks-utama);
+      line-height: 1.05;
+    }
+
+    .ring-hero-sub {
+      font-size: 0.72rem;
+      color: var(--teks-redup);
+      margin-top: 0.15rem;
+    }
+
+    .ring-hero-total {
+      font-size: 0.66rem;
+      color: #9ca3af;
+      margin-top: 0.05rem;
+    }
+
+    .donat-sekunder-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.15rem;
+      width: 100%;
+    }
+
+    .donat-sekunder-blok {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-width: 108px;
     }
 
     .ring-gauge-wrap {
       position: relative;
-      width: 122px;
-      height: 122px;
-      margin: 0.2rem auto;
+      width: 96px;
+      height: 96px;
+      margin: 0 auto;
     }
 
     .ring-gauge-center {
@@ -253,16 +300,24 @@
     }
 
     .ring-gauge-value {
-      font-size: 1.05rem;
+      font-size: 0.96rem;
       font-weight: 500;
       color: var(--teks-utama);
       line-height: 1.1;
     }
 
     .ring-gauge-sub {
+      font-size: 0.66rem;
+      color: var(--teks-redup);
+      margin-top: 0.12rem;
+    }
+
+    .donat-sekunder-label {
       font-size: 0.72rem;
       color: var(--teks-redup);
-      margin-top: 0.15rem;
+      margin-top: 0.25rem;
+      max-width: 118px;
+      line-height: 1.2;
     }
 
     .pill-meter-track {
@@ -436,7 +491,6 @@
             </div>
           </div>
 
-          <!-- Opsi 2: Ditempatkan setelah blok Status Terbanyak -->
           <div id="subteksPermintaanKpi" class="subteks-permintaan-kpi text-lg-end d-none">
             <i class="fa-solid fa-paper-plane me-1" style="color: var(--ungu-utama);"></i>
             <strong id="teksJumlahPermintaanKpi">0 permintaan terkirim</strong>
@@ -449,7 +503,7 @@
       <div class="tab-content" id="kategoriTabContent">
         <!-- ================= KATEGORI 1: KATEGORI UMUM ================= -->
         <div class="tab-pane fade show active" id="pane-umum" role="tabpanel" tabindex="0">
-          <!-- BARIS 1 (PALING ATAS): Kartu Beranda + Grafik Approval (1 baris) + Ringkasan Gelap Approval -->
+          <!-- BARIS 1 (PALING ATAS): Kartu Beranda + Grafik Approval (Gaya Gambar 2) + Ringkasan Gelap Approval -->
           <div class="row g-4 mb-4">
             <div class="col-lg-3">
               <div class="beranda-banner-card">
@@ -465,7 +519,7 @@
               </div>
             </div>
 
-            <!-- Grafik Setiap Item Approval (Kompak & Muat 1 Baris) -->
+            <!-- Grafik Setiap Item Approval (Bergaya Gambar 2) -->
             <div class="col-lg-5">
               <div class="dash-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
@@ -476,7 +530,7 @@
                   <span id="statusApproval" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorApproval" class="alert alert-danger py-2 small d-none"></div>
-                <div id="gridApprovalItems" class="d-flex flex-nowrap gap-2 overflow-auto flex-grow-1 align-items-stretch py-1">
+                <div id="gridApprovalItems" class="cluster-donat-wrap flex-grow-1">
                   <div class="text-center text-muted small py-4 w-100">Memuat grafik item approval...</div>
                 </div>
               </div>
@@ -1175,70 +1229,15 @@
       if (teks.includes("disetujui") || teks.includes("setuju") || teks.includes("approved")) {
         return "#eab308";
       }
-      if (teks.includes("menunggu") || teks.includes("pending")) {
-        return "#3b0745";
-      }
       if (teks.includes("dikembalikan") || teks.includes("revisi") || teks.includes("tolak")) {
-        return "#8b2cf5";
+        return "#3f3f46";
       }
-      const cadangan = ["#3b0745", "#eab308", "#8b2cf5", "#7e22ce"];
+      if (teks.includes("menunggu") || teks.includes("pending")) {
+        return "#facc15";
+      }
+      const cadangan = ["#eab308", "#3f3f46", "#8b2cf5", "#7e22ce"];
       return cadangan[index % cadangan.length];
     }
-
-    const pluginGaugeGarisRadial = {
-      id: "gaugeGarisRadial",
-      beforeDatasetDraw(chart, args, pluginOptions) {
-        if (!pluginOptions || !pluginOptions.enabled) return;
-        const { ctx, chartArea } = chart;
-        if (!chartArea) return;
-
-        const nilaiAktif = Number(pluginOptions.value || 0);
-        const totalNilai = Number(pluginOptions.total || 0);
-        const rasioAktif = totalNilai > 0 ? Math.min(1, Math.max(0, nilaiAktif / totalNilai)) : 0;
-
-        const sudutAwalChart = -Math.PI / 2;
-        const bentangAktif = rasioAktif * Math.PI * 2;
-        const sudutAkhirAktif = sudutAwalChart + bentangAktif;
-
-        const bufferRad = 0.14;
-        const mulaiSisa = sudutAkhirAktif + bufferRad;
-        const akhirSisa = sudutAwalChart + Math.PI * 2 - bufferRad;
-
-        if (akhirSisa <= mulaiSisa) return;
-
-        const cx = (chartArea.left + chartArea.right) / 2;
-        const cy = (chartArea.top + chartArea.bottom) / 2;
-        const radiusLuar = Math.min(chartArea.width, chartArea.height) / 2 - 1;
-        const radiusDalam = radiusLuar - 12;
-        const jumlahTickPenuh = 36;
-        const langkahSudut = (Math.PI * 2) / jumlahTickPenuh;
-
-        ctx.save();
-        ctx.strokeStyle = pluginOptions.tickColor || "#b8b8c2";
-        ctx.lineWidth = 1.65;
-        ctx.lineCap = "round";
-
-        for (let i = 0; i < jumlahTickPenuh; i++) {
-          const sudut = sudutAwalChart + i * langkahSudut;
-          let sudutNorm = sudut;
-          while (sudutNorm < sudutAwalChart) sudutNorm += Math.PI * 2;
-          while (sudutNorm >= sudutAwalChart + Math.PI * 2) sudutNorm -= Math.PI * 2;
-
-          if (sudutNorm >= mulaiSisa && sudutNorm <= akhirSisa) {
-            const x1 = cx + Math.cos(sudutNorm) * radiusDalam;
-            const y1 = cy + Math.sin(sudutNorm) * radiusDalam;
-            const x2 = cx + Math.cos(sudutNorm) * radiusLuar;
-            const y2 = cy + Math.sin(sudutNorm) * radiusLuar;
-
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
-          }
-        }
-        ctx.restore();
-      }
-    };
 
     const pluginLabelNilaiBatang = {
       id: "labelNilaiBatang",
@@ -1276,7 +1275,42 @@
       }
     };
 
-    Chart.register(pluginGaugeGarisRadial, pluginLabelNilaiBatang);
+    Chart.register(pluginLabelNilaiBatang);
+
+    function buatKonfigurasiDonatGambar2(item, total, warnaAktif, cutoutPersen, tebalRadius) {
+      const sisa = Math.max(0, total - item.jumlah);
+      return {
+        type: "doughnut",
+        data: {
+          labels: [item.label, "Sisanya"],
+          datasets: [{
+            data: [item.jumlah, sisa],
+            backgroundColor: [warnaAktif, "#eef0f4"],
+            borderWidth: 0,
+            borderRadius: [tebalRadius, 0]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: cutoutPersen,
+          rotation: 0,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              yAlign: "bottom",
+              caretPadding: 6,
+              callbacks: {
+                label: (ctx) => {
+                  const val = ctx.parsed || 0;
+                  return ` ${ctx.label}: ${formatAngka(val)} (${formatPersen(val, total)})`;
+                }
+              }
+            }
+          }
+        }
+      };
+    }
 
     function renderApproval(items) {
       sembunyikanError("errorApproval");
@@ -1303,65 +1337,57 @@
       if (elPillHighlight) elPillHighlight.textContent = `Terbanyak: ${sorted[0].label} • ${formatAngka(sorted[0].jumlah)}`;
 
       if (elGrid) {
-        elGrid.innerHTML = sorted.map((item, idx) => {
-          const canvasId = `gaugeApproval_${idx}`;
-          const pctAngka = totalDataApproval > 0 ? (item.jumlah / totalDataApproval) * 100 : 0;
-          const pctLabel = `${pctAngka.toFixed(1)}%`;
-          return `
-            <div class="approval-item-card" style="min-width: 130px;">
-              <div class="small fw-medium text-truncate w-100" title="${item.label}">${item.label}</div>
-              <div class="ring-gauge-wrap">
-                <canvas id="${canvasId}"></canvas>
-                <div class="ring-gauge-center">
-                  <span class="ring-gauge-value">${formatAngka(item.jumlah)}</span>
-                  <span class="ring-gauge-sub">${pctLabel}</span>
-                </div>
+        const utama = sorted[0];
+        const sekunder = sorted.slice(1);
+        const pctUtama = totalDataApproval > 0 ? `${((utama.jumlah / totalDataApproval) * 100).toFixed(1)}%` : "0%";
+        const canvasUtamaId = "gaugeApproval_utama";
+
+        const htmlUtama = `
+          <div class="donat-utama-blok">
+            <div class="donat-utama-label">${utama.label}</div>
+            <div class="ring-hero-wrap">
+              <canvas id="${canvasUtamaId}"></canvas>
+              <div class="ring-gauge-center">
+                <span class="ring-hero-value">${formatAngka(utama.jumlah)}</span>
+                <span class="ring-hero-sub">${pctUtama}</span>
+                <span class="ring-hero-total">dari ${formatAngka(totalDataApproval)}</span>
               </div>
-              <div class="small text-muted">Approval</div>
             </div>
-          `;
-        }).join("");
+          </div>
+        `;
 
-        sorted.forEach((item, idx) => {
-          const canvasId = `gaugeApproval_${idx}`;
-          const warnaAktif = tentukanWarnaStatusApproval(item.label, idx);
-          const sisa = Math.max(0, totalDataApproval - item.jumlah);
+        const htmlSekunder = sekunder.length
+          ? `<div class="donat-sekunder-row">${sekunder.map((item, idx) => {
+              const canvasId = `gaugeApproval_sek_${idx}`;
+              const pctItem = totalDataApproval > 0 ? `${((item.jumlah / totalDataApproval) * 100).toFixed(1)}%` : "0%";
+              return `
+                <div class="donat-sekunder-blok">
+                  <div class="ring-gauge-wrap">
+                    <canvas id="${canvasId}"></canvas>
+                    <div class="ring-gauge-center">
+                      <span class="ring-gauge-value">${formatAngka(item.jumlah)}</span>
+                      <span class="ring-gauge-sub">${pctItem}</span>
+                    </div>
+                  </div>
+                  <div class="donat-sekunder-label" title="${item.label}">${item.label}</div>
+                </div>
+              `;
+            }).join("")}</div>`
+          : "";
 
-          buatAtauPerbaruiChart(canvasId, {
-            type: "doughnut",
-            data: {
-              labels: [item.label, "Sisanya"],
-              datasets: [{
-                data: [item.jumlah, sisa],
-                backgroundColor: [warnaAktif, "rgba(0,0,0,0)"],
-                borderWidth: 0,
-                borderRadius: [12, 0]
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              cutout: "75%",
-              rotation: 0,
-              plugins: {
-                legend: { display: false },
-                tooltip: {
-                  callbacks: {
-                    label: (ctx) => {
-                      const val = ctx.parsed || 0;
-                      return ` ${ctx.label}: ${formatAngka(val)} (${formatPersen(val, totalDataApproval)})`;
-                    }
-                  }
-                },
-                gaugeGarisRadial: {
-                  enabled: true,
-                  value: item.jumlah,
-                  total: totalDataApproval,
-                  tickColor: "#b8b8c2"
-                }
-              }
-            }
-          });
+        elGrid.innerHTML = htmlUtama + htmlSekunder;
+
+        buatAtauPerbaruiChart(
+          canvasUtamaId,
+          buatKonfigurasiDonatGambar2(utama, totalDataApproval, tentukanWarnaStatusApproval(utama.label, 0), "78%", 14)
+        );
+
+        sekunder.forEach((item, idx) => {
+          const canvasId = `gaugeApproval_sek_${idx}`;
+          buatAtauPerbaruiChart(
+            canvasId,
+            buatKonfigurasiDonatGambar2(item, totalDataApproval, tentukanWarnaStatusApproval(item.label, idx + 1), "76%", 10)
+          );
         });
       }
 
