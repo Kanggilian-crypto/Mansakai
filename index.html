@@ -359,14 +359,12 @@
       max-width: 120px;
     }
 
-    /* Grafik Desil Glass Capsule + Lingkaran Nilai */
+    /* Grafik Batang Vertikal Bergaya Gradasi (Seperti Grafik Kecamatan, Arah Vertikal) */
     .desil-glass-stage {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(243, 232, 255, 0.35));
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.38);
       border: 1px solid rgba(255, 255, 255, 0.85);
       border-radius: 20px;
-      padding: 1rem 0.9rem 0.75rem;
+      padding: 1.15rem 1rem 0.8rem;
       overflow-x: auto;
     }
 
@@ -374,16 +372,16 @@
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      gap: 0.65rem;
-      min-height: 255px;
-      min-width: 520px;
-      padding: 1.35rem 0.25rem 0.4rem;
-      border-bottom: 1.5px solid rgba(76, 29, 149, 0.22);
+      gap: 0.85rem;
+      min-height: 245px;
+      min-width: 480px;
+      padding: 1.65rem 0.35rem 0.55rem;
+      border-bottom: 1.5px solid rgba(148, 163, 184, 0.35);
     }
 
     .desil-col-item {
       flex: 1 1 0;
-      min-width: 54px;
+      min-width: 58px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -392,80 +390,49 @@
     .desil-track-glass {
       position: relative;
       width: 100%;
-      max-width: 52px;
-      height: 205px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.36);
-      border: 1px solid rgba(255, 255, 255, 0.75);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88);
+      max-width: 40px;
+      height: 185px;
+      border-radius: 14px;
+      background: rgba(226, 232, 240, 0.38);
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      padding: 3px;
     }
 
     .desil-bar-glass {
       position: relative;
       width: 100%;
-      min-height: 18%;
-      border-radius: 999px;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.65);
-      box-shadow: 0 10px 20px rgba(76, 29, 149, 0.16);
+      min-height: 16%;
+      border-radius: 12px;
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.16);
       transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1);
       display: flex;
       justify-content: center;
     }
 
-    .desil-halo-ring {
+    .desil-nilai-atas {
       position: absolute;
-      top: -17px;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    }
-
-    .desil-node-glass {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.86);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 2px solid var(--bar-warna, #7e22ce);
-      box-shadow:
-        0 6px 14px rgba(20, 20, 22, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.96);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.68rem;
+      top: -1.45rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      color: #141416;
+      color: #1f2937;
+      white-space: nowrap;
       line-height: 1;
-      padding: 0 2px;
-      text-align: center;
     }
 
     .desil-label-bawah {
-      margin-top: 0.5rem;
-      font-size: 0.72rem;
-      font-weight: 500;
+      margin-top: 0.55rem;
+      font-size: 0.76rem;
+      font-weight: 600;
       color: #1f2937;
       text-align: center;
       line-height: 1.2;
-      max-width: 76px;
     }
 
     .desil-persen-bawah {
-      font-size: 0.65rem;
-      color: #6b7280;
-      margin-top: 0.08rem;
+      font-size: 0.68rem;
+      color: var(--teks-redup);
+      margin-top: 0.1rem;
     }
 
     .donat-tengah-wrap {
@@ -1576,12 +1543,12 @@
       pembuanganTinja: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1623186494&single=true&output=csv"
     };
 
-    const PALET_GLASS_DESIL = [
-      { grad: "linear-gradient(180deg, rgba(126, 34, 206, 0.72) 0%, rgba(76, 29, 149, 0.92) 100%)", warna: "#7e22ce", halo: "rgba(126, 34, 206, 0.25)" },
-      { grad: "linear-gradient(180deg, rgba(37, 99, 235, 0.72) 0%, rgba(30, 64, 175, 0.92) 100%)", warna: "#2563eb", halo: "rgba(37, 99, 235, 0.25)" },
-      { grad: "linear-gradient(180deg, rgba(139, 92, 246, 0.72) 0%, rgba(91, 33, 182, 0.92) 100%)", warna: "#8b5cf6", halo: "rgba(139, 92, 246, 0.25)" },
-      { grad: "linear-gradient(180deg, rgba(249, 115, 22, 0.72) 0%, rgba(194, 65, 12, 0.92) 100%)", warna: "#f97316", halo: "rgba(249, 115, 22, 0.25)" },
-      { grad: "linear-gradient(180deg, rgba(14, 165, 233, 0.72) 0%, rgba(3, 105, 161, 0.92) 100%)", warna: "#0ea5e9", halo: "rgba(14, 165, 233, 0.25)" }
+    const PALET_BATANG_DESIL = [
+      { grad: "linear-gradient(180deg, #93c5fd 0%, #2563eb 52%, #4c1d95 100%)" },
+      { grad: "linear-gradient(180deg, #bfdbfe 0%, #3b82f6 55%, #1d4ed8 100%)" },
+      { grad: "linear-gradient(180deg, #c4b5fd 0%, #6366f1 55%, #4c1d95 100%)" },
+      { grad: "linear-gradient(180deg, #93c5fd 0%, #2563eb 58%, #3730a3 100%)" },
+      { grad: "linear-gradient(180deg, #bae6fd 0%, #0284c7 55%, #1e40af 100%)" }
     ];
 
     const chartInstances = {};
@@ -1853,21 +1820,19 @@
 
       const htmlKolom = items.map((d, idx) => {
         const nilai = Number(d.jumlah) || 0;
-        const tinggiPct = Math.max(18, Math.round((nilai / maks) * 100));
+        const tinggiPct = Math.max(16, Math.round((nilai / maks) * 100));
         const pctTotal = formatPersen(nilai, total);
-        const skema = PALET_GLASS_DESIL[idx % PALET_GLASS_DESIL.length];
+        const skema = PALET_BATANG_DESIL[idx % PALET_BATANG_DESIL.length];
 
         return `
           <div class="desil-col-item">
             <div class="desil-track-glass">
               <div
                 class="desil-bar-glass"
-                style="height: ${tinggiPct}%; background: ${skema.grad}; --bar-warna: ${skema.warna};"
+                style="height: ${tinggiPct}%; background: ${skema.grad};"
                 title="${d.label}: ${formatAngka(nilai)} (${pctTotal})"
               >
-                <div class="desil-halo-ring" style="background: radial-gradient(circle, ${skema.halo} 0%, rgba(255,255,255,0) 72%);">
-                  <div class="desil-node-glass">${formatAngka(nilai)}</div>
-                </div>
+                <span class="desil-nilai-atas">${formatAngka(nilai)}</span>
               </div>
             </div>
             <div class="desil-label-bawah">${d.label}</div>
