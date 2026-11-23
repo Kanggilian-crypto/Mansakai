@@ -17,6 +17,8 @@
       --ungu-pekat: #4a0e4e;
       --ungu-gelap: #4c1d95;
       --ungu-lembut: #f3e8ff;
+      --biru-aksen: #2563eb;
+      --orange-aksen: #f97316;
       --kuning-aksen: #facc15;
       --gelap-pill: #18181b;
       --teks-utama: #141416;
@@ -31,10 +33,10 @@
       padding: 1.35rem 0 2.75rem;
       background-color: #eef0f8;
       background-image:
-        radial-gradient(circle at 12% 15%, rgba(168, 85, 247, 0.24) 0%, transparent 42%),
-        radial-gradient(circle at 88% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 45%),
-        radial-gradient(circle at 75% 88%, rgba(250, 204, 21, 0.2) 0%, transparent 45%),
-        linear-gradient(135deg, #f5f3ff 0%, #eef2ff 50%, #fefce8 100%);
+        radial-gradient(circle at 12% 14%, rgba(124, 58, 237, 0.24) 0%, transparent 42%),
+        radial-gradient(circle at 88% 18%, rgba(37, 99, 235, 0.2) 0%, transparent 45%),
+        radial-gradient(circle at 78% 88%, rgba(249, 115, 22, 0.18) 0%, transparent 45%),
+        linear-gradient(135deg, #f5f3ff 0%, #eef2ff 52%, #fff7ed 100%);
       background-attachment: fixed;
       -webkit-font-smoothing: antialiased;
     }
@@ -46,32 +48,32 @@
     }
 
     .glass-container {
-      background: rgba(255, 255, 255, 0.52);
-      backdrop-filter: blur(20px) saturate(150%);
-      -webkit-backdrop-filter: blur(20px) saturate(150%);
-      border: 1px solid rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.54);
+      backdrop-filter: blur(22px) saturate(155%);
+      -webkit-backdrop-filter: blur(22px) saturate(155%);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       border-radius: 30px;
       padding: 1.65rem;
       box-shadow:
         0 24px 60px rgba(76, 29, 149, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.88);
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
     }
 
     .sticky-header-glass {
       position: sticky;
       top: 0.5rem;
       z-index: 1030;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(16px) saturate(150%);
-      -webkit-backdrop-filter: blur(16px) saturate(150%);
-      border: 1px solid rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(18px) saturate(155%);
+      -webkit-backdrop-filter: blur(18px) saturate(155%);
+      border: 1px solid rgba(255, 255, 255, 0.9);
       border-radius: 22px;
       padding: 0.65rem 0.9rem;
       box-shadow: 0 10px 26px rgba(76, 29, 149, 0.08);
     }
 
     .brand-pill {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.9);
       border: 1px solid rgba(233, 213, 255, 0.95);
       border-radius: 999px;
       padding: 0.35rem 1.05rem 0.35rem 0.5rem;
@@ -116,15 +118,15 @@
       border-radius: 50%;
       object-fit: cover;
       object-position: center 10%;
-      border: 2px solid rgba(255, 255, 255, 0.92);
+      border: 2px solid rgba(255, 255, 255, 0.94);
       box-shadow: 0 4px 12px rgba(76, 29, 149, 0.14);
       flex-shrink: 0;
     }
 
     .btn-minta-akses-glass {
-      background: rgba(243, 232, 255, 0.85);
+      background: rgba(243, 232, 255, 0.88);
       color: var(--ungu-utama);
-      border: 1px solid rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.92);
       font-size: 0.76rem;
       font-weight: 500;
       display: inline-flex;
@@ -138,12 +140,11 @@
       color: var(--ungu-gelap);
     }
 
-    /* Tab Pil ala Gambar 1 */
     .tab-pil-utama {
-      background: rgba(255, 255, 255, 0.68);
+      background: rgba(255, 255, 255, 0.72);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.92);
       border-radius: 999px;
       padding: 0.28rem;
       display: inline-flex;
@@ -165,7 +166,7 @@
 
     .tab-pil-utama .nav-link:hover {
       color: var(--ungu-gelap);
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.65);
     }
 
     .tab-pil-utama .nav-link.active {
@@ -175,10 +176,10 @@
     }
 
     .glass-card {
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.74);
       backdrop-filter: blur(16px) saturate(150%);
       -webkit-backdrop-filter: blur(16px) saturate(150%);
-      border: 1px solid rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.92);
       border-radius: 22px;
       padding: 1.25rem;
       height: 100%;
@@ -187,17 +188,25 @@
       justify-content: space-between;
       box-shadow:
         0 10px 26px rgba(76, 29, 149, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.92);
+        inset 0 1px 0 rgba(255, 255, 255, 0.94);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 16px 32px rgba(76, 29, 149, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.96);
     }
 
     .glass-card-dark {
-      background: #18181b;
+      background: linear-gradient(160deg, #1f1b2e 0%, #141418 100%);
       color: #ffffff;
-      border: 1px solid #27272a;
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 22px;
       padding: 1.25rem;
       height: 100%;
-      box-shadow: 0 14px 30px rgba(24, 24, 27, 0.18);
+      box-shadow: 0 14px 32px rgba(20, 20, 24, 0.2);
     }
 
     .beranda-banner-card {
@@ -206,7 +215,8 @@
       overflow: hidden;
       height: 100%;
       min-height: 100%;
-      background: linear-gradient(180deg, rgba(24, 24, 27, 0.05) 38%, rgba(24, 24, 27, 0.56) 72%, rgba(24, 24, 27, 0.92) 100%),
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      background: linear-gradient(180deg, rgba(24, 24, 27, 0.05) 38%, rgba(24, 24, 27, 0.58) 72%, rgba(24, 24, 27, 0.92) 100%),
                   url("Beranda.jpg") center/cover no-repeat;
       color: #ffffff;
       padding: 1.45rem 1.2rem 1.2rem;
@@ -319,6 +329,56 @@
       line-height: 1.2;
     }
 
+    .donat-tengah-wrap {
+      position: relative;
+      width: 196px;
+      height: 196px;
+      margin: 0 auto;
+    }
+
+    .donat-tengah-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      text-align: center;
+      padding: 0 1.2rem;
+    }
+
+    .donat-tengah-angka {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--teks-utama);
+      line-height: 1.1;
+    }
+
+    .donat-tengah-ket {
+      font-size: 0.68rem;
+      color: var(--teks-redup);
+      margin-top: 0.15rem;
+    }
+
+    .grafik-footer-meta {
+      margin-top: 0.85rem;
+      padding-top: 0.65rem;
+      border-top: 1px dashed rgba(126, 34, 206, 0.18);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      color: var(--teks-redup);
+    }
+
+    .grafik-footer-meta strong {
+      color: var(--ungu-gelap);
+      font-weight: 500;
+    }
+
     .pill-meter-track {
       height: 32px;
       border-radius: 999px;
@@ -385,7 +445,7 @@
       border-radius: 18px;
       overflow: hidden;
       margin-bottom: 0.9rem;
-      background: linear-gradient(135deg, rgba(76, 29, 149, 0.16), rgba(59, 130, 246, 0.16), rgba(250, 204, 21, 0.16));
+      background: linear-gradient(135deg, rgba(76, 29, 149, 0.16), rgba(37, 99, 235, 0.16), rgba(249, 115, 22, 0.16));
       border: 1px solid rgba(255, 255, 255, 0.88);
     }
 
@@ -489,7 +549,7 @@
         </div>
       </div>
 
-      <!-- Baris Navigasi Tab Utama ala Gambar 1 -->
+      <!-- Baris Navigasi Tab Utama -->
       <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
         <ul class="nav tab-pil-utama" id="tabUtamaMmc" role="tablist">
           <li class="nav-item" role="presentation">
@@ -539,9 +599,8 @@
           <div id="gridLamanSemua" class="row g-4"></div>
         </div>
 
-        <!-- ================= TAB 2: DASHBOARD (PERSIS SUSUNAN GAMBAR 2) ================= -->
+        <!-- ================= TAB 2: DASHBOARD ================= -->
         <div class="tab-pane fade show active" id="pane-dashboard" role="tabpanel" tabindex="0">
-          <!-- Header & Indikator Utama ala Gambar 2 -->
           <section class="row g-4 align-items-start mb-4">
             <div class="col-lg-5">
               <h1 class="fs-2 mb-1">Dashboard Rekapitulasi Mansakai</h1>
@@ -595,7 +654,7 @@
             </div>
           </section>
 
-          <!-- Baris Utama ala Gambar 2: Kartu Beranda + Donat Approval (Ungu Tua, Biru, Orange) + Ringkasan Gelap -->
+          <!-- Baris Utama: Banner + Donat Approval (Ungu Tua, Biru, Orange) + Ringkasan Gelap -->
           <div class="row g-4 align-items-stretch mb-4">
             <div class="col-lg-3">
               <div class="beranda-banner-card">
@@ -645,13 +704,13 @@
             </div>
           </div>
 
-          <!-- Ringkasan Grafik Kategori di Bawah Dashboard -->
+          <!-- Ringkasan Grafik Utama di Dashboard -->
           <div class="row g-4">
             <div class="col-lg-6">
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Ringkasan Perencanaan</span>
+                    <span class="small" style="color: var(--teks-redup);">Grafik 2 • Sebaran Ekonomi</span>
                     <h2 class="h5 mb-0">Sebaran Menurut Desil</h2>
                   </div>
                   <span id="statusDesil" class="badge-status">Memuat...</span>
@@ -660,6 +719,7 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 290px;">
                   <canvas id="chartDesil"></canvas>
                 </div>
+                <div id="metaDesil" class="grafik-footer-meta">Memuat ringkasan desil...</div>
               </div>
             </div>
 
@@ -667,7 +727,7 @@
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Ringkasan Wilayah</span>
+                    <span class="small" style="color: var(--teks-redup);">Grafik 3 • Urutan Terbanyak</span>
                     <h2 class="h5 mb-0">Sebaran Menurut Kecamatan</h2>
                   </div>
                   <span id="statusKecamatan" class="badge-status">Memuat...</span>
@@ -676,6 +736,7 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 290px;">
                   <canvas id="chartKecamatan"></canvas>
                 </div>
+                <div id="metaKecamatan" class="grafik-footer-meta">Memuat ringkasan kecamatan...</div>
               </div>
             </div>
           </div>
@@ -686,7 +747,7 @@
           <div class="mb-4">
             <h2 class="h3 mb-1 fw-normal">Kategori Perencanaan</h2>
             <p class="small mb-0" style="color: var(--teks-redup);">
-              Grafik sebaran data perencanaan wilayah & sasaran serta modul perencanaan terkait.
+              Analisis sebaran sasaran menurut Desil dan Kecamatan beserta modul perencanaan terkait.
             </p>
           </div>
 
@@ -703,6 +764,7 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 300px;">
                   <canvas id="chartDesilPerencanaan"></canvas>
                 </div>
+                <div id="metaDesilPerencanaan" class="grafik-footer-meta">Memuat ringkasan desil...</div>
               </div>
             </div>
 
@@ -718,6 +780,7 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 300px;">
                   <canvas id="chartKecamatanPerencanaan"></canvas>
                 </div>
+                <div id="metaKecamatanPerencanaan" class="grafik-footer-meta">Memuat ringkasan kecamatan...</div>
               </div>
             </div>
           </div>
@@ -728,31 +791,36 @@
         <!-- ================= TAB 4: ADMINISTRASI ================= -->
         <div class="tab-pane fade" id="pane-administrasi" role="tabpanel" tabindex="0">
           <div class="mb-4">
-            <h2 class="h3 mb-1 fw-normal">Kategori Administrasi, Kesejahteraan & Sarana</h2>
+            <h2 class="h3 mb-1 fw-normal">Kategori Administrasi, Perumahan & Sarana</h2>
             <p class="small mb-0" style="color: var(--teks-redup);">
-              Grafik PBI, perumahan, infrastruktur, dan sanitasi beserta modul administrasi terkait.
+              Rekap PBI, kondisi bangunan tempat tinggal, infrastruktur dasar, dan sanitasi.
             </p>
           </div>
 
+          <!-- PBI Nasional & PBI Pemda -->
           <div class="row g-4 mb-4">
             <div class="col-lg-6">
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Administrasi • Grafik 1</span>
+                    <span class="small" style="color: var(--teks-redup);">Bantuan & Jaminan • Grafik 1</span>
                     <h3 class="h5 mb-0">Sebaran Menurut PBI Nasional</h3>
                   </div>
                   <span id="statusPbiNasional" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorPbiNasional" class="alert alert-danger py-2 small d-none"></div>
                 <div class="row align-items-center g-3 flex-grow-1">
-                  <div class="col-sm-6" style="position: relative; min-height: 220px;">
-                    <canvas id="chartPbiNasional"></canvas>
+                  <div class="col-sm-6">
+                    <div class="donat-tengah-wrap">
+                      <canvas id="chartPbiNasional"></canvas>
+                      <div id="centerPbiNasional" class="donat-tengah-label"></div>
+                    </div>
                   </div>
                   <div class="col-sm-6">
                     <div id="ringkasPbiNasional" class="d-flex flex-column gap-2 small"></div>
                   </div>
                 </div>
+                <div id="metaPbiNasional" class="grafik-footer-meta">Memuat ringkasan PBI Nasional...</div>
               </div>
             </div>
 
@@ -760,24 +828,29 @@
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Administrasi • Grafik 2</span>
+                    <span class="small" style="color: var(--teks-redup);">Bantuan & Jaminan • Grafik 2</span>
                     <h3 class="h5 mb-0">Sebaran Menurut PBI Pemda</h3>
                   </div>
                   <span id="statusPbiPemda" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorPbiPemda" class="alert alert-danger py-2 small d-none"></div>
                 <div class="row align-items-center g-3 flex-grow-1">
-                  <div class="col-sm-6" style="position: relative; min-height: 220px;">
-                    <canvas id="chartPbiPemda"></canvas>
+                  <div class="col-sm-6">
+                    <div class="donat-tengah-wrap">
+                      <canvas id="chartPbiPemda"></canvas>
+                      <div id="centerPbiPemda" class="donat-tengah-label"></div>
+                    </div>
                   </div>
                   <div class="col-sm-6">
                     <div id="ringkasPbiPemda" class="d-flex flex-column gap-2 small"></div>
                   </div>
                 </div>
+                <div id="metaPbiPemda" class="grafik-footer-meta">Memuat ringkasan PBI Pemda...</div>
               </div>
             </div>
           </div>
 
+          <!-- Kepemilikan Rumah & Jenis Lantai -->
           <div class="row g-4 mb-4">
             <div class="col-lg-6">
               <div class="glass-card d-flex flex-column">
@@ -790,13 +863,17 @@
                 </div>
                 <div id="errorKepemilikanRumah" class="alert alert-danger py-2 small d-none"></div>
                 <div class="row align-items-center g-3 flex-grow-1">
-                  <div class="col-sm-6" style="position: relative; min-height: 220px;">
-                    <canvas id="chartKepemilikanRumah"></canvas>
+                  <div class="col-sm-6">
+                    <div class="donat-tengah-wrap">
+                      <canvas id="chartKepemilikanRumah"></canvas>
+                      <div id="centerKepemilikanRumah" class="donat-tengah-label"></div>
+                    </div>
                   </div>
                   <div class="col-sm-6">
                     <div id="ringkasKepemilikanRumah" class="d-flex flex-column gap-2 small"></div>
                   </div>
                 </div>
+                <div id="metaKepemilikanRumah" class="grafik-footer-meta">Memuat ringkasan kepemilikan rumah...</div>
               </div>
             </div>
 
@@ -813,10 +890,12 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartJenisLantai"></canvas>
                 </div>
+                <div id="metaJenisLantai" class="grafik-footer-meta">Memuat ringkasan jenis lantai...</div>
               </div>
             </div>
           </div>
 
+          <!-- Jenis Atap & Jenis Dinding -->
           <div class="row g-4 mb-4">
             <div class="col-lg-6">
               <div class="glass-card d-flex flex-column">
@@ -831,6 +910,7 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartJenisAtap"></canvas>
                 </div>
+                <div id="metaJenisAtap" class="grafik-footer-meta">Memuat ringkasan jenis atap...</div>
               </div>
             </div>
 
@@ -847,10 +927,12 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartJenisDinding"></canvas>
                 </div>
+                <div id="metaJenisDinding" class="grafik-footer-meta">Memuat ringkasan jenis dinding...</div>
               </div>
             </div>
           </div>
 
+          <!-- Infrastruktur (3 Grafik) -->
           <div class="row g-4 mb-4">
             <div class="col-lg-4">
               <div class="glass-card d-flex flex-column">
@@ -865,6 +947,7 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartSumberAirMinum"></canvas>
                 </div>
+                <div id="metaSumberAirMinum" class="grafik-footer-meta">Memuat ringkasan air minum...</div>
               </div>
             </div>
 
@@ -881,6 +964,7 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartSumberPenerangan"></canvas>
                 </div>
+                <div id="metaSumberPenerangan" class="grafik-footer-meta">Memuat ringkasan penerangan...</div>
               </div>
             </div>
 
@@ -897,10 +981,12 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartBahanBakarMasak"></canvas>
                 </div>
+                <div id="metaBahanBakarMasak" class="grafik-footer-meta">Memuat ringkasan bahan bakar...</div>
               </div>
             </div>
           </div>
 
+          <!-- Sanitasi (3 Grafik) -->
           <div class="row g-4 mb-4">
             <div class="col-lg-4">
               <div class="glass-card d-flex flex-column">
@@ -915,6 +1001,7 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartFasilitasBab"></canvas>
                 </div>
+                <div id="metaFasilitasBab" class="grafik-footer-meta">Memuat ringkasan fasilitas BAB...</div>
               </div>
             </div>
 
@@ -931,6 +1018,7 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartJenisKloset"></canvas>
                 </div>
+                <div id="metaJenisKloset" class="grafik-footer-meta">Memuat ringkasan jenis kloset...</div>
               </div>
             </div>
 
@@ -947,6 +1035,7 @@
                 <div class="flex-grow-1" style="position: relative; min-height: 260px;">
                   <canvas id="chartPembuanganTinja"></canvas>
                 </div>
+                <div id="metaPembuanganTinja" class="grafik-footer-meta">Memuat ringkasan pembuangan tinja...</div>
               </div>
             </div>
           </div>
@@ -1489,6 +1578,19 @@
       return chartInstances[canvasId];
     }
 
+    function setMetaGrafik(metaIds, sortedItems, total) {
+      if (!sortedItems.length) return;
+      const teratas = [...sortedItems].sort((a, b) => b.jumlah - a.jumlah)[0];
+      const html = `
+        <span>Dominan: <strong>${teratas.label}</strong> (${formatPersen(teratas.jumlah, total)})</span>
+        <span>Total: <strong>${formatAngka(total)}</strong></span>
+      `;
+      metaIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = html;
+      });
+    }
+
     function perbaruiRingkasanKPI() {
       const elTotalData = document.getElementById("kpiTotalData");
       const elTotalApproval = document.getElementById("kpiTotalApproval");
@@ -1666,10 +1768,13 @@
       }
 
       if (elDaftar) {
-        elDaftar.innerHTML = sorted.map((item) => `
+        elDaftar.innerHTML = sorted.map((item, idx) => `
           <div class="dark-item-row d-flex justify-content-between align-items-center gap-2 small">
-            <span class="text-truncate">${item.label}</span>
-            <span class="fw-medium" style="color: var(--kuning-aksen);">${formatAngka(item.jumlah)} (${formatPersen(item.jumlah, totalDataApproval)})</span>
+            <span class="d-flex align-items-center gap-2 text-truncate">
+              <span style="width:9px;height:9px;border-radius:50%;background:${tentukanWarnaStatusApproval(idx)};display:inline-block;flex-shrink:0;"></span>
+              <span class="text-truncate">${item.label}</span>
+            </span>
+            <span class="fw-medium text-nowrap" style="color: var(--kuning-aksen);">${formatAngka(item.jumlah)} (${formatPersen(item.jumlah, totalDataApproval)})</span>
           </div>
         `).join("");
       }
@@ -1679,7 +1784,7 @@
 
     function buatGradasiDesilVertikal(ctx, chartArea) {
       const gradasi = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-      gradasi.addColorStop(0, "#4a0e4e");
+      gradasi.addColorStop(0, "#4c1d95");
       gradasi.addColorStop(0.55, "#7e22ce");
       gradasi.addColorStop(1, "#e9d5ff");
       return gradasi;
@@ -1687,9 +1792,9 @@
 
     function buatGradasiBarHorizontal(ctx, chartArea) {
       const gradasi = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-      gradasi.addColorStop(0, "#e9d5ff");
-      gradasi.addColorStop(0.45, "#7e22ce");
-      gradasi.addColorStop(1, "#4a0e4e");
+      gradasi.addColorStop(0, "#dbeafe");
+      gradasi.addColorStop(0.45, "#2563eb");
+      gradasi.addColorStop(1, "#4c1d95");
       return gradasi;
     }
 
@@ -1703,13 +1808,13 @@
             data: dataChart.map((d) => d.jumlah),
             backgroundColor: (context) => {
               const { ctx, chartArea } = context.chart;
-              if (!chartArea) return "#7e22ce";
+              if (!chartArea) return isDesil ? "#7e22ce" : "#2563eb";
               return isDesil
                 ? buatGradasiDesilVertikal(ctx, chartArea)
                 : buatGradasiBarHorizontal(ctx, chartArea);
             },
             borderRadius: 8,
-            maxBarThickness: isDesil ? 54 : 26
+            maxBarThickness: isDesil ? 52 : 24
           }]
         },
         options: {
@@ -1751,7 +1856,7 @@
       };
     }
 
-    function renderBarChart(key, items, canvasId, errorId, statusId, salinanIds = []) {
+    function renderBarChart(key, items, canvasId, errorId, statusId, salinanIds = [], metaIds = []) {
       if (errorId) sembunyikanError(errorId);
       const elStatus = document.getElementById(statusId);
       if (!items.length) {
@@ -1774,17 +1879,21 @@
       daftarCanvas.forEach((id) => {
         const canvas = document.getElementById(id);
         if (canvas && canvas.parentElement) {
-          const tinggiDinamis = isDesil ? 290 : Math.max(280, dataChart.length * 34);
+          const tinggiDinamis = isDesil ? 290 : Math.max(260, dataChart.length * 32);
           canvas.parentElement.style.minHeight = `${tinggiDinamis}px`;
         }
         buatAtauPerbaruiChart(id, konfigurasiBarChart(isDesil, dataChart, total));
       });
+
+      setMetaGrafik(metaIds, dataChart, total);
     }
 
-    function renderDoughnutRingkasan(items, canvasId, ringkasId, errorId, statusId) {
+    function renderDoughnutRingkasan(items, canvasId, ringkasId, errorId, statusId, centerId = "", metaIds = []) {
       sembunyikanError(errorId);
       const elStatus = document.getElementById(statusId);
       const elRingkas = document.getElementById(ringkasId);
+      const elCenter = centerId ? document.getElementById(centerId) : null;
+
       if (!items.length) {
         if (elStatus) elStatus.textContent = "Kosong";
         return;
@@ -1796,7 +1905,7 @@
 
       const palet = sortedItems.length === 2
         ? ["#4c1d95", "#f97316"]
-        : ["#4c1d95", "#2563eb", "#f97316", "#7e22ce", "#facc15", "#a855f7", "#18181b"];
+        : ["#4c1d95", "#2563eb", "#f97316", "#7e22ce", "#0ea5e9", "#f59e0b", "#18181b"];
 
       buatAtauPerbaruiChart(canvasId, {
         type: "doughnut",
@@ -1812,7 +1921,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          cutout: "62%",
+          cutout: "66%",
           plugins: {
             legend: { display: false },
             tooltip: {
@@ -1827,9 +1936,16 @@
         }
       });
 
+      if (elCenter) {
+        elCenter.innerHTML = `
+          <span class="donat-tengah-angka">${formatAngka(total)}</span>
+          <span class="donat-tengah-ket">Total Data</span>
+        `;
+      }
+
       if (elRingkas) {
         elRingkas.innerHTML = sortedItems.map((d, i) => `
-          <div class="d-flex justify-content-between align-items-center gap-2 p-2 rounded-3" style="background: rgba(250, 245, 255, 0.85);">
+          <div class="d-flex justify-content-between align-items-center gap-2 p-2 rounded-3" style="background: rgba(250, 245, 255, 0.88);">
             <span class="d-flex align-items-center gap-2 text-truncate">
               <span style="width:10px;height:10px;border-radius:50%;background:${palet[i % palet.length]};display:inline-block;flex-shrink:0;"></span>
               <span class="text-truncate">${d.label}</span>
@@ -1838,7 +1954,19 @@
           </div>
         `).join("");
       }
+
+      setMetaGrafik(metaIds, sortedItems, total);
     }
+
+    document.querySelectorAll('#tabUtamaMmc button[data-bs-toggle="pill"]').forEach((btn) => {
+      btn.addEventListener("shown.bs.tab", () => {
+        Object.values(chartInstances).forEach((inst) => {
+          if (inst && typeof inst.resize === "function") {
+            inst.resize();
+          }
+        });
+      });
+    });
 
     async function muatSemuaGrafik() {
       const elGlobal = document.getElementById("statusGlobal");
@@ -1853,37 +1981,37 @@
           if (key === "approval") {
             renderApproval(data);
           } else if (key === "desil") {
-            renderBarChart(key, data, "chartDesil", "errorDesil", "statusDesil", ["chartDesilPerencanaan"]);
+            renderBarChart(key, data, "chartDesil", "errorDesil", "statusDesil", ["chartDesilPerencanaan"], ["metaDesil", "metaDesilPerencanaan"]);
             const elStatP = document.getElementById("statusDesilPerencanaan");
             if (elStatP) elStatP.textContent = "Terhubung";
           } else if (key === "kecamatan") {
-            renderBarChart(key, data, "chartKecamatan", "errorKecamatan", "statusKecamatan", ["chartKecamatanPerencanaan"]);
+            renderBarChart(key, data, "chartKecamatan", "errorKecamatan", "statusKecamatan", ["chartKecamatanPerencanaan"], ["metaKecamatan", "metaKecamatanPerencanaan"]);
             const elStatK = document.getElementById("statusKecamatanPerencanaan");
             if (elStatK) elStatK.textContent = "Terhubung";
           } else if (key === "pbiNasional") {
-            renderDoughnutRingkasan(data, "chartPbiNasional", "ringkasPbiNasional", "errorPbiNasional", "statusPbiNasional");
+            renderDoughnutRingkasan(data, "chartPbiNasional", "ringkasPbiNasional", "errorPbiNasional", "statusPbiNasional", "centerPbiNasional", ["metaPbiNasional"]);
           } else if (key === "pbiPemda") {
-            renderDoughnutRingkasan(data, "chartPbiPemda", "ringkasPbiPemda", "errorPbiPemda", "statusPbiPemda");
+            renderDoughnutRingkasan(data, "chartPbiPemda", "ringkasPbiPemda", "errorPbiPemda", "statusPbiPemda", "centerPbiPemda", ["metaPbiPemda"]);
           } else if (key === "statusKepemilikanRumah") {
-            renderDoughnutRingkasan(data, "chartKepemilikanRumah", "ringkasKepemilikanRumah", "errorKepemilikanRumah", "statusKepemilikanRumah");
+            renderDoughnutRingkasan(data, "chartKepemilikanRumah", "ringkasKepemilikanRumah", "errorKepemilikanRumah", "statusKepemilikanRumah", "centerKepemilikanRumah", ["metaKepemilikanRumah"]);
           } else if (key === "jenisLantai") {
-            renderBarChart(key, data, "chartJenisLantai", "errorJenisLantai", "statusJenisLantai");
+            renderBarChart(key, data, "chartJenisLantai", "errorJenisLantai", "statusJenisLantai", [], ["metaJenisLantai"]);
           } else if (key === "jenisAtap") {
-            renderBarChart(key, data, "chartJenisAtap", "errorJenisAtap", "statusJenisAtap");
+            renderBarChart(key, data, "chartJenisAtap", "errorJenisAtap", "statusJenisAtap", [], ["metaJenisAtap"]);
           } else if (key === "jenisDinding") {
-            renderBarChart(key, data, "chartJenisDinding", "errorJenisDinding", "statusJenisDinding");
+            renderBarChart(key, data, "chartJenisDinding", "errorJenisDinding", "statusJenisDinding", [], ["metaJenisDinding"]);
           } else if (key === "sumberAirMinum") {
-            renderBarChart(key, data, "chartSumberAirMinum", "errorSumberAirMinum", "statusSumberAirMinum");
+            renderBarChart(key, data, "chartSumberAirMinum", "errorSumberAirMinum", "statusSumberAirMinum", [], ["metaSumberAirMinum"]);
           } else if (key === "sumberPenerangan") {
-            renderBarChart(key, data, "chartSumberPenerangan", "errorSumberPenerangan", "statusSumberPenerangan");
+            renderBarChart(key, data, "chartSumberPenerangan", "errorSumberPenerangan", "statusSumberPenerangan", [], ["metaSumberPenerangan"]);
           } else if (key === "bahanBakarMasak") {
-            renderBarChart(key, data, "chartBahanBakarMasak", "errorBahanBakarMasak", "statusBahanBakarMasak");
+            renderBarChart(key, data, "chartBahanBakarMasak", "errorBahanBakarMasak", "statusBahanBakarMasak", [], ["metaBahanBakarMasak"]);
           } else if (key === "fasilitasBab") {
-            renderBarChart(key, data, "chartFasilitasBab", "errorFasilitasBab", "statusFasilitasBab");
+            renderBarChart(key, data, "chartFasilitasBab", "errorFasilitasBab", "statusFasilitasBab", [], ["metaFasilitasBab"]);
           } else if (key === "jenisKloset") {
-            renderBarChart(key, data, "chartJenisKloset", "errorJenisKloset", "statusJenisKloset");
+            renderBarChart(key, data, "chartJenisKloset", "errorJenisKloset", "statusJenisKloset", [], ["metaJenisKloset"]);
           } else if (key === "pembuanganTinja") {
-            renderBarChart(key, data, "chartPembuanganTinja", "errorPembuanganTinja", "statusPembuanganTinja");
+            renderBarChart(key, data, "chartPembuanganTinja", "errorPembuanganTinja", "statusPembuanganTinja", [], ["metaPembuanganTinja"]);
           }
         } catch (err) {
           const mapErr = {
