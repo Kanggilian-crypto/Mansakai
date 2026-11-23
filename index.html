@@ -114,6 +114,21 @@
       flex-shrink: 0;
     }
 
+    .aksi-akses-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.15;
+    }
+
+    .indikator-jumlah-akses {
+      font-size: 0.65rem;
+      color: var(--ungu-gelap);
+      margin-top: 3px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
     .nav-pills-wrap {
       background: #faf5ff;
       border: 1px solid #ede9fe;
@@ -274,6 +289,27 @@
       border-radius: 14px;
       padding: 0.65rem 0.9rem;
     }
+
+    .sukses-terkirim-box {
+      background: #faf5ff;
+      border: 1px solid #e9d5ff;
+      border-radius: 18px;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+    }
+
+    .ikon-sukses-bulat {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--ungu-lembut);
+      color: var(--ungu-utama);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
   </style>
 </head>
 <body>
@@ -308,17 +344,20 @@
           </li>
         </ul>
 
-        <!-- Status CSV, Tombol Minta Akses & Foto di Paling Kanan Header -->
+        <!-- Status CSV, Tombol Minta Akses + Indikator Jumlah & Foto di Paling Kanan Header -->
         <div class="d-flex align-items-center gap-2 ms-auto ms-lg-0">
-          <button
-            type="button"
-            class="btn btn-sm rounded-pill px-3"
-            style="background: var(--ungu-lembut); color: var(--ungu-utama); border: 1px solid #e9d5ff; font-size: 0.76rem;"
-            data-bs-toggle="modal"
-            data-bs-target="#modalMintaAkses"
-          >
-            <i class="fa-solid fa-user-plus me-1"></i> Minta Akses
-          </button>
+          <div class="aksi-akses-wrap">
+            <button
+              type="button"
+              class="btn btn-sm rounded-pill px-3"
+              style="background: var(--ungu-lembut); color: var(--ungu-utama); border: 1px solid #e9d5ff; font-size: 0.76rem;"
+              data-bs-toggle="modal"
+              data-bs-target="#modalMintaAkses"
+            >
+              <i class="fa-solid fa-user-plus me-1"></i> Minta Akses
+            </button>
+            <span id="indikatorJumlahPermintaan" class="indikator-jumlah-akses">0 permintaan terkirim</span>
+          </div>
           <span id="statusGlobal" class="badge-status">
             <i class="fa-solid fa-rotate me-1"></i> Memuat 15 sumber CSV...
           </span>
@@ -767,6 +806,27 @@
             </button>
           </div>
         </form>
+
+        <!-- Tampilan Pengganti Setelah Form Terkirim -->
+        <div id="panelPermintaanTerkirim" class="modal-body d-none">
+          <div class="sukses-terkirim-box">
+            <div class="ikon-sukses-bulat">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <h6 class="fw-semibold mb-1">Permintaan Terkirim</h6>
+            <p id="detailPermintaanTerkirim" class="small text-muted mb-3">
+              Pengajuan akses Anda telah dicatat dan menunggu verifikasi admin.
+            </p>
+            <div class="d-flex justify-content-center gap-2">
+              <button type="button" id="btnAjukanLagi" class="btn btn-sm rounded-pill px-3" style="background: var(--ungu-lembut); color: var(--ungu-utama); border: 1px solid #e9d5ff;">
+                Kirim Permintaan Lagi
+              </button>
+              <button type="button" class="btn btn-sm btn-dark rounded-pill px-4" data-bs-dismiss="modal">
+                Selesai
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -774,6 +834,52 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const URL_WEB_APP_AKSES = "https://script.google.com/macros/s/AKfycbyx7cqWcizD_Q81jvW8bssSDzBdvos6X0soIHJpppPt7b9jxuTnoFpOfe38k7zxInLCqQ/exec";
+    const KUNCI_JUMLAH_PERMINTAAN = "mansakai_jumlah_permintaan_akses";
+
+    function ambilJumlahPermintaan() {
+      const nilai = Number(localStorage.getItem(KUNCI_JUMLAH_PERMINTAAN) || "0");
+      return Number.isFinite(nilai) && nilai >= 0 ? nilai : 0;
+    }
+
+    function perbaruiIndikatorPermintaan() {
+      const elIndikator = document.getElementById("indikatorJumlahPermintaan");
+      const jumlah = ambilJumlahPermintaan();
+      if (elIndikator) {
+        elIndikator.textContent = `${jumlah} permintaan terkirim`;
+      }
+    }
+
+    function tampilkanPanelTerkirim(pesan) {
+      const form = document.getElementById("formMintaAkses");
+      const panel = document.getElementById("panelPermintaanTerkirim");
+      const detail = document.getElementById("detailPermintaanTerkirim");
+      if (form) form.classList.add("d-none");
+      if (panel) panel.classList.remove("d-none");
+      if (detail && pesan) detail.textContent = pesan;
+    }
+
+    function tampilkanFormPermintaan() {
+      const form = document.getElementById("formMintaAkses");
+      const panel = document.getElementById("panelPermintaanTerkirim");
+      const notif = document.getElementById("notifMintaAkses");
+      if (notif) {
+        notif.classList.add("d-none");
+        notif.textContent = "";
+      }
+      if (panel) panel.classList.add("d-none");
+      if (form) {
+        form.reset();
+        form.classList.remove("d-none");
+      }
+    }
+
+    document.getElementById("btnAjukanLagi")?.addEventListener("click", tampilkanFormPermintaan);
+    document.getElementById("modalMintaAkses")?.addEventListener("hidden.bs.modal", function () {
+      const panel = document.getElementById("panelPermintaanTerkirim");
+      if (panel && !panel.classList.contains("d-none")) {
+        tampilkanFormPermintaan();
+      }
+    });
 
     document.getElementById("formMintaAkses")?.addEventListener("submit", async function (e) {
       e.preventDefault();
@@ -802,12 +908,14 @@
         });
         const hasil = await res.json();
 
-        notif.classList.remove("d-none", "alert-danger", "alert-success");
         if (hasil.status === "success") {
-          notif.classList.add("alert-success");
-          notif.textContent = hasil.message || "Permintaan akses berhasil dikirim.";
+          const jumlahBaru = ambilJumlahPermintaan() + 1;
+          localStorage.setItem(KUNCI_JUMLAH_PERMINTAAN, String(jumlahBaru));
+          perbaruiIndikatorPermintaan();
           form.reset();
+          tampilkanPanelTerkirim(hasil.message || "Permintaan terkirim. Pengajuan Anda sedang menunggu verifikasi admin.");
         } else {
+          notif.classList.remove("d-none", "alert-success");
           notif.classList.add("alert-danger");
           notif.textContent = hasil.message || "Gagal mengirim permintaan.";
         }
@@ -820,6 +928,8 @@
         btn.textContent = "Kirim Permintaan";
       }
     });
+
+    perbaruiIndikatorPermintaan();
   </script>
   <script>
     const SUMBER_CSV = {
