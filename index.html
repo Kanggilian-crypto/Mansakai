@@ -225,7 +225,6 @@
       justify-content: flex-end;
     }
 
-    /* Perapian Baris KPI */
     .kpi-kolom-item {
       display: flex;
       flex-direction: column;
@@ -253,7 +252,6 @@
       }
     }
 
-    /* Grafik 1 • Status Approval (Profesional: Hero Bar + 3 Kartu Metrik) */
     .approval-pro-wrap {
       display: flex;
       flex-direction: column;
@@ -365,7 +363,6 @@
       line-height: 1.25;
     }
 
-    /* Grafik Batang Vertikal Bergaya Gradasi (Desil) */
     .desil-glass-stage {
       background: rgba(255, 255, 255, 0.38);
       border: 1px solid rgba(255, 255, 255, 0.85);
@@ -641,23 +638,23 @@
       <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
         <ul class="nav tab-pil-utama" id="tabUtamaMmc" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-semua-6" data-bs-toggle="pill" data-bs-target="#pane-semua-6" type="button" role="tab">
-              Semua (6)
+            <button class="nav-link" id="tab-all" data-bs-toggle="pill" data-bs-target="#pane-all" type="button" role="tab">
+              All
             </button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="tab-dashboard" data-bs-toggle="pill" data-bs-target="#pane-dashboard" type="button" role="tab">
-              Dashboard
+            <button class="nav-link active" id="tab-dash" data-bs-toggle="pill" data-bs-target="#pane-dash" type="button" role="tab">
+              Dash
             </button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-perencanaan" data-bs-toggle="pill" data-bs-target="#pane-perencanaan" type="button" role="tab">
-              Perencanaan
+            <button class="nav-link" id="tab-perum" data-bs-toggle="pill" data-bs-target="#pane-perum" type="button" role="tab">
+              Perum
             </button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-administrasi" data-bs-toggle="pill" data-bs-target="#pane-administrasi" type="button" role="tab">
-              Administrasi
+            <button class="nav-link" id="tab-infra" data-bs-toggle="pill" data-bs-target="#pane-infra" type="button" role="tab">
+              Infra
             </button>
           </li>
         </ul>
@@ -665,8 +662,8 @@
 
       <!-- Isi Tab -->
       <div class="tab-content" id="tabUtamaMmcContent">
-        <!-- ================= TAB 1: SEMUA (6 KARTU GLASS MODE + FOTO) ================= -->
-        <div class="tab-pane fade" id="pane-semua-6" role="tabpanel" tabindex="0">
+        <!-- ================= TAB 1: ALL (6 KARTU GLASS MODE + FOTO) ================= -->
+        <div class="tab-pane fade" id="pane-all" role="tabpanel" tabindex="0">
           <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
             <div>
               <h2 class="h3 mb-1 fw-normal">Semua Laman MMC (6 Kartu)</h2>
@@ -687,8 +684,8 @@
           <div id="gridLamanSemua" class="row g-4"></div>
         </div>
 
-        <!-- ================= TAB 2: DASHBOARD ================= -->
-        <div class="tab-pane fade show active" id="pane-dashboard" role="tabpanel" tabindex="0">
+        <!-- ================= TAB 2: DASH ================= -->
+        <div class="tab-pane fade show active" id="pane-dash" role="tabpanel" tabindex="0">
           <section class="row g-4 align-items-start mb-4">
             <div class="col-lg-5">
               <h1 class="fs-2 mb-1">Dashboard Rekapitulasi Mansakai</h1>
@@ -775,8 +772,8 @@
             </div>
           </div>
 
-          <!-- Ringkasan Grafik Utama di Dashboard -->
-          <div class="row g-4">
+          <!-- Grafik Desil & Kecamatan -->
+          <div class="row g-4 mb-4">
             <div class="col-lg-6">
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
@@ -813,73 +810,15 @@
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- ================= TAB 3: PERENCANAAN ================= -->
-        <div class="tab-pane fade" id="pane-perencanaan" role="tabpanel" tabindex="0">
-          <div class="mb-4">
-            <h2 class="h3 mb-1 fw-normal">Kategori Perencanaan</h2>
-            <p class="small mb-0" style="color: var(--teks-redup);">
-              Analisis sebaran sasaran menurut Desil dan Kecamatan beserta modul perencanaan terkait.
-            </p>
-          </div>
-
-          <div class="row g-4 mb-4">
+          <!-- Tambahan di Dash: Sebaran Menurut PBI Nasional & PBI Pemda -->
+          <div class="row g-4">
             <div class="col-lg-6">
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Perencanaan • Grafik 1</span>
-                    <h3 class="h5 mb-0">Sebaran Menurut Desil</h3>
-                  </div>
-                  <span id="statusDesilPerencanaan" class="badge-status">Memuat...</span>
-                </div>
-                <div class="desil-glass-stage flex-grow-1">
-                  <div id="desilCapsuleChartPerencanaan" class="desil-capsule-chart">
-                    <div class="text-center small py-5 w-100" style="color: var(--teks-redup);">Memuat grafik desil...</div>
-                  </div>
-                </div>
-                <div id="metaDesilPerencanaan" class="grafik-footer-meta">Memuat ringkasan desil...</div>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Perencanaan • Grafik 2</span>
-                    <h3 class="h5 mb-0">Sebaran Menurut Kecamatan</h3>
-                  </div>
-                  <span id="statusKecamatanPerencanaan" class="badge-status">Memuat...</span>
-                </div>
-                <div class="flex-grow-1" style="position: relative; min-height: 300px;">
-                  <canvas id="chartKecamatanPerencanaan"></canvas>
-                </div>
-                <div id="metaKecamatanPerencanaan" class="grafik-footer-meta">Memuat ringkasan kecamatan...</div>
-              </div>
-            </div>
-          </div>
-
-          <div id="gridLamanPerencanaan" class="row g-4"></div>
-        </div>
-
-        <!-- ================= TAB 4: ADMINISTRASI ================= -->
-        <div class="tab-pane fade" id="pane-administrasi" role="tabpanel" tabindex="0">
-          <div class="mb-4">
-            <h2 class="h3 mb-1 fw-normal">Kategori Administrasi, Perumahan & Sarana</h2>
-            <p class="small mb-0" style="color: var(--teks-redup);">
-              Rekap PBI, kondisi bangunan tempat tinggal, infrastruktur dasar, dan sanitasi.
-            </p>
-          </div>
-
-          <!-- PBI Nasional & PBI Pemda -->
-          <div class="row g-4 mb-4">
-            <div class="col-lg-6">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Bantuan & Jaminan • Grafik 1</span>
-                    <h3 class="h5 mb-0">Sebaran Menurut PBI Nasional</h3>
+                    <span class="small" style="color: var(--teks-redup);">Grafik 4 • Bantuan & Jaminan</span>
+                    <h2 class="h5 mb-0">Sebaran Menurut PBI Nasional</h2>
                   </div>
                   <span id="statusPbiNasional" class="badge-status">Memuat...</span>
                 </div>
@@ -903,8 +842,8 @@
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Bantuan & Jaminan • Grafik 2</span>
-                    <h3 class="h5 mb-0">Sebaran Menurut PBI Pemda</h3>
+                    <span class="small" style="color: var(--teks-redup);">Grafik 5 • Bantuan & Jaminan</span>
+                    <h2 class="h5 mb-0">Sebaran Menurut PBI Pemda</h2>
                   </div>
                   <span id="statusPbiPemda" class="badge-status">Memuat...</span>
                 </div>
@@ -924,14 +863,24 @@
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Kepemilikan Rumah & Jenis Lantai -->
+        <!-- ================= TAB 3: PERUM ================= -->
+        <div class="tab-pane fade" id="pane-perum" role="tabpanel" tabindex="0">
+          <div class="mb-4">
+            <h2 class="h3 mb-1 fw-normal">Kategori Perumahan (Perum)</h2>
+            <p class="small mb-0" style="color: var(--teks-redup);">
+              Rekap status kepemilikan rumah serta kondisi lantai, atap, dan dinding terluas.
+            </p>
+          </div>
+
+          <!-- Status Kepemilikan Rumah & Jenis Lantai -->
           <div class="row g-4 mb-4">
             <div class="col-lg-6">
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Perumahan • Grafik 3</span>
+                    <span class="small" style="color: var(--teks-redup);">Perum • Grafik 1</span>
                     <h3 class="h5 mb-0">Status Kepemilikan Rumah</h3>
                   </div>
                   <span id="statusKepemilikanRumah" class="badge-status">Memuat...</span>
@@ -956,7 +905,7 @@
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Perumahan • Grafik 4</span>
+                    <span class="small" style="color: var(--teks-redup);">Perum • Grafik 2</span>
                     <h3 class="h5 mb-0">Jenis Lantai Terluas</h3>
                   </div>
                   <span id="statusJenisLantai" class="badge-status">Memuat...</span>
@@ -976,7 +925,7 @@
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Perumahan • Grafik 5</span>
+                    <span class="small" style="color: var(--teks-redup);">Perum • Grafik 3</span>
                     <h3 class="h5 mb-0">Jenis Atap Terluas</h3>
                   </div>
                   <span id="statusJenisAtap" class="badge-status">Memuat...</span>
@@ -993,7 +942,7 @@
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Perumahan • Grafik 6</span>
+                    <span class="small" style="color: var(--teks-redup);">Perum • Grafik 4</span>
                     <h3 class="h5 mb-0">Jenis Dinding Terluas</h3>
                   </div>
                   <span id="statusJenisDinding" class="badge-status">Memuat...</span>
@@ -1007,13 +956,25 @@
             </div>
           </div>
 
+          <div id="gridLamanPerum" class="row g-4"></div>
+        </div>
+
+        <!-- ================= TAB 4: INFRA ================= -->
+        <div class="tab-pane fade" id="pane-infra" role="tabpanel" tabindex="0">
+          <div class="mb-4">
+            <h2 class="h3 mb-1 fw-normal">Kategori Infrastruktur & Sanitasi (Infra)</h2>
+            <p class="small mb-0" style="color: var(--teks-redup);">
+              Rekap sumber air minum, penerangan, bahan bakar masak, fasilitas BAB, jenis kloset, dan pembuangan akhir tinja.
+            </p>
+          </div>
+
           <!-- Infrastruktur (3 Grafik) -->
           <div class="row g-4 mb-4">
             <div class="col-lg-4">
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Infrastruktur • Grafik 7</span>
+                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 1</span>
                     <h3 class="h5 mb-0">Sumber Air Minum Utama</h3>
                   </div>
                   <span id="statusSumberAirMinum" class="badge-status">Memuat...</span>
@@ -1030,7 +991,7 @@
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Infrastruktur • Grafik 8</span>
+                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 2</span>
                     <h3 class="h5 mb-0">Sumber Penerangan Utama</h3>
                   </div>
                   <span id="statusSumberPenerangan" class="badge-status">Memuat...</span>
@@ -1047,7 +1008,7 @@
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Infrastruktur • Grafik 9</span>
+                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 3</span>
                     <h3 class="h5 mb-0">Bahan Bakar Utama untuk Masak</h3>
                   </div>
                   <span id="statusBahanBakarMasak" class="badge-status">Memuat...</span>
@@ -1067,7 +1028,7 @@
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Sanitasi • Grafik 10</span>
+                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 4</span>
                     <h3 class="h5 mb-0">Fasilitas Buang Air Besar</h3>
                   </div>
                   <span id="statusFasilitasBab" class="badge-status">Memuat...</span>
@@ -1084,7 +1045,7 @@
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Sanitasi • Grafik 11</span>
+                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 5</span>
                     <h3 class="h5 mb-0">Jenis Kloset</h3>
                   </div>
                   <span id="statusJenisKloset" class="badge-status">Memuat...</span>
@@ -1101,7 +1062,7 @@
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                   <div>
-                    <span class="small" style="color: var(--teks-redup);">Sanitasi • Grafik 12</span>
+                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 6</span>
                     <h3 class="h5 mb-0">Pembuangan Akhir Tinja</h3>
                   </div>
                   <span id="statusPembuanganTinja" class="badge-status">Memuat...</span>
@@ -1115,7 +1076,7 @@
             </div>
           </div>
 
-          <div id="gridLamanAdministrasi" class="row g-4"></div>
+          <div id="gridLamanInfra" class="row g-4"></div>
         </div>
       </div>
     </div>
@@ -1225,17 +1186,17 @@
     const DATA_6_LAMAN_MMC = [
       {
         judul: "Dashboard Rekapitulasi Mansakai",
-        kategori: "Dashboard",
-        deskripsi: "Rekap status approval, sebaran desil, kecamatan, PBI, perumahan, serta infrastruktur dan sanitasi.",
+        kategori: "Dash",
+        deskripsi: "Rekap status approval, sebaran desil, kecamatan, serta PBI Nasional dan PBI Pemda.",
         foto: "Beranda.jpg",
         ikon: "fa-chart-pie",
-        url: "#tab-dashboard",
+        url: "#tab-dash",
         tabBaru: false,
-        targetTab: "#tab-dashboard"
+        targetTab: "#tab-dash"
       },
       {
         judul: "Monitoring RKPD & APBD",
-        kategori: "Perencanaan",
+        kategori: "Perum",
         deskripsi: "Pemantauan program dan klasifikasi belanja daerah lintas tahun berbasis data terstruktur.",
         foto: "mmc-rkpd.jpg",
         ikon: "fa-coins",
@@ -1244,7 +1205,7 @@
       },
       {
         judul: "Verifikasi & Dokumentasi Foto",
-        kategori: "Dashboard",
+        kategori: "Dash",
         deskripsi: "Rekap verifikasi lapangan, dokumentasi foto rumah tangga, dan kelengkapan data.",
         foto: "mmc-verifikasi.jpg",
         ikon: "fa-camera-retro",
@@ -1253,7 +1214,7 @@
       },
       {
         judul: "Administrasi & Berita Acara (BAST)",
-        kategori: "Administrasi",
+        kategori: "Infra",
         deskripsi: "Akses formulir serah terima, penomoran otomatis, dan pembuatan dokumen administrasi.",
         foto: "mmc-bast.jpg",
         ikon: "fa-file-signature",
@@ -1262,7 +1223,7 @@
       },
       {
         judul: "Perencanaan Strategis (RENSTRA & IDP)",
-        kategori: "Perencanaan",
+        kategori: "Perum",
         deskripsi: "Dokumen acuan rencana strategis unit kerja dan rencana pengembangan kompetensi.",
         foto: "mmc-renstra.jpg",
         ikon: "fa-compass-drafting",
@@ -1271,7 +1232,7 @@
       },
       {
         judul: "Panduan & Pusat Informasi MMC",
-        kategori: "Administrasi",
+        kategori: "Infra",
         deskripsi: "Informasi alur kerja, ketentuan penggunaan modul, dan panduan operasional MMC.",
         foto: "Foto.png",
         ikon: "fa-book-open",
@@ -1346,19 +1307,19 @@
     }
 
     function renderGridPerKategori() {
-      const elPerencanaan = document.getElementById("gridLamanPerencanaan");
-      const elAdministrasi = document.getElementById("gridLamanAdministrasi");
+      const elPerum = document.getElementById("gridLamanPerum");
+      const elInfra = document.getElementById("gridLamanInfra");
 
-      if (elPerencanaan) {
-        elPerencanaan.innerHTML = DATA_6_LAMAN_MMC
-          .filter((item) => item.kategori === "Perencanaan")
+      if (elPerum) {
+        elPerum.innerHTML = DATA_6_LAMAN_MMC
+          .filter((item) => item.kategori === "Perum")
           .map(buatKartuLamanHtml)
           .join("");
       }
 
-      if (elAdministrasi) {
-        elAdministrasi.innerHTML = DATA_6_LAMAN_MMC
-          .filter((item) => item.kategori === "Administrasi")
+      if (elInfra) {
+        elInfra.innerHTML = DATA_6_LAMAN_MMC
+          .filter((item) => item.kategori === "Infra")
           .map(buatKartuLamanHtml)
           .join("");
       }
@@ -2042,14 +2003,12 @@
           } else if (key === "desil") {
             renderGrafikDesilGlass(
               data,
-              ["desilCapsuleChart", "desilCapsuleChartPerencanaan"],
-              ["statusDesil", "statusDesilPerencanaan"],
-              ["metaDesil", "metaDesilPerencanaan"]
+              ["desilCapsuleChart"],
+              ["statusDesil"],
+              ["metaDesil"]
             );
           } else if (key === "kecamatan") {
-            renderBarHorizontalChart(data, "chartKecamatan", "errorKecamatan", "statusKecamatan", ["chartKecamatanPerencanaan"], ["metaKecamatan", "metaKecamatanPerencanaan"]);
-            const elStatK = document.getElementById("statusKecamatanPerencanaan");
-            if (elStatK) elStatK.textContent = "Terhubung";
+            renderBarHorizontalChart(data, "chartKecamatan", "errorKecamatan", "statusKecamatan", [], ["metaKecamatan"]);
           } else if (key === "pbiNasional") {
             renderDoughnutRingkasan(data, "chartPbiNasional", "ringkasPbiNasional", "errorPbiNasional", "statusPbiNasional", "centerPbiNasional", ["metaPbiNasional"]);
           } else if (key === "pbiPemda") {
