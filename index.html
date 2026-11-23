@@ -437,8 +437,8 @@
 
     .donat-tengah-wrap {
       position: relative;
-      width: 196px;
-      height: 196px;
+      width: 188px;
+      height: 188px;
       margin: 0 auto;
     }
 
@@ -451,20 +451,55 @@
       justify-content: center;
       pointer-events: none;
       text-align: center;
-      padding: 0 1.2rem;
+      padding: 0 1.35rem;
+      z-index: 2;
     }
 
     .donat-tengah-angka {
-      font-size: 1.25rem;
-      font-weight: 500;
+      font-family: "Outfit", "DM Sans", sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
       color: var(--teks-utama);
-      line-height: 1.1;
+      line-height: 1.15;
+      background: rgba(255, 255, 255, 0.82);
+      padding: 0.12rem 0.45rem;
+      border-radius: 8px;
     }
 
     .donat-tengah-ket {
       font-size: 0.68rem;
+      font-weight: 500;
       color: var(--teks-redup);
-      margin-top: 0.15rem;
+      margin-top: 0.2rem;
+    }
+
+    .item-rincian-pro {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(233, 213, 255, 0.75);
+      border-radius: 12px;
+      padding: 0.5rem 0.7rem;
+    }
+
+    .item-rincian-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.32rem;
+    }
+
+    .item-rincian-track {
+      width: 100%;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.2);
+      overflow: hidden;
+    }
+
+    .item-rincian-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.45s ease;
     }
 
     .grafik-footer-meta {
@@ -1514,6 +1549,7 @@
     const pluginLabelNilaiBatang = {
       id: "labelNilaiBatang",
       afterDatasetsDraw(chart) {
+        if (chart.config.type === "doughnut") return;
         const { ctx, chartArea } = chart;
         if (!chartArea) return;
 
@@ -1696,16 +1732,23 @@
             data: sortedItems.map((d) => d.jumlah),
             backgroundColor: sortedItems.map((_, i) => palet[i % palet.length]),
             borderWidth: 2,
-            borderColor: "#ffffff"
+            borderColor: "#ffffff",
+            hoverOffset: 4
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          cutout: "66%",
+          cutout: "68%",
           plugins: {
             legend: { display: false },
             tooltip: {
+              enabled: true,
+              backgroundColor: "#18181b",
+              titleColor: "#ffffff",
+              bodyColor: "#f8fafc",
+              padding: 10,
+              cornerRadius: 10,
               callbacks: {
                 label: (ctx) => {
                   const val = ctx.parsed || 0;
@@ -1725,15 +1768,26 @@
       }
 
       if (elRingkas) {
-        elRingkas.innerHTML = sortedItems.map((d, i) => `
-          <div class="d-flex justify-content-between align-items-center gap-2 p-2 rounded-3" style="background: rgba(250, 245, 255, 0.88);">
-            <span class="d-flex align-items-center gap-2 text-truncate">
-              <span style="width:10px;height:10px;border-radius:50%;background:${palet[i % palet.length]};display:inline-block;flex-shrink:0;"></span>
-              <span class="text-truncate">${d.label}</span>
-            </span>
-            <span class="fw-medium text-nowrap">${formatAngka(d.jumlah)} (${formatPersen(d.jumlah, total)})</span>
-          </div>
-        `).join("");
+        elRingkas.innerHTML = sortedItems.map((d, i) => {
+          const warna = palet[i % palet.length];
+          const pctAngka = total > 0 ? Math.min(100, (d.jumlah / total) * 100) : 0;
+          const lebarBar = d.jumlah > 0 ? Math.max(3, pctAngka) : 0;
+
+          return `
+            <div class="item-rincian-pro">
+              <div class="item-rincian-top">
+                <span class="d-flex align-items-center gap-2 text-truncate">
+                  <span style="width:9px;height:9px;border-radius:50%;background:${warna};display:inline-block;flex-shrink:0;"></span>
+                  <span class="text-truncate fw-medium">${d.label}</span>
+                </span>
+                <span class="fw-medium text-nowrap">${formatAngka(d.jumlah)} <span style="color: var(--teks-redup);">(${formatPersen(d.jumlah, total)})</span></span>
+              </div>
+              <div class="item-rincian-track">
+                <div class="item-rincian-fill" style="width: ${lebarBar}%; background: ${warna};"></div>
+              </div>
+            </div>
+          `;
+        }).join("");
       }
 
       setMetaGrafik(metaIds, sortedItems, total);
