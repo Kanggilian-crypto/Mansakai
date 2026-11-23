@@ -308,8 +308,17 @@
           </li>
         </ul>
 
-        <!-- Status CSV & Foto di Paling Kanan Header -->
+        <!-- Status CSV, Tombol Minta Akses & Foto di Paling Kanan Header -->
         <div class="d-flex align-items-center gap-2 ms-auto ms-lg-0">
+          <button
+            type="button"
+            class="btn btn-sm rounded-pill px-3"
+            style="background: var(--ungu-lembut); color: var(--ungu-utama); border: 1px solid #e9d5ff; font-size: 0.76rem;"
+            data-bs-toggle="modal"
+            data-bs-target="#modalMintaAkses"
+          >
+            <i class="fa-solid fa-user-plus me-1"></i> Minta Akses
+          </button>
           <span id="statusGlobal" class="badge-status">
             <i class="fa-solid fa-rotate me-1"></i> Memuat 15 sumber CSV...
           </span>
@@ -693,7 +702,125 @@
     </div>
   </div>
 
+  <!-- Modal Pendaftaran Permintaan Akses MMC -->
+  <div class="modal fade" id="modalMintaAkses" tabindex="-1" aria-labelledby="labelMintaAkses" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius: 22px; border: 1px solid #ede9fe;">
+        <div class="modal-header border-0 pb-0">
+          <div>
+            <h5 class="modal-title" id="labelMintaAkses">Permintaan Akses MMC & Mansakai</h5>
+            <p class="small text-muted mb-0">Ajukan akun untuk diverifikasi oleh admin.</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+
+        <form id="formMintaAkses">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label small">Nama Lengkap</label>
+              <input type="text" name="nama" class="form-control" required placeholder="Contoh: Budi Santoso" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small">Email Google (Akun AppSheet)</label>
+              <input type="email" name="email" class="form-control" required placeholder="nama@gmail.com" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small">Unit Kerja / OPD / Wilayah</label>
+              <input type="text" name="unit" class="form-control" placeholder="Contoh: OPD / Bidang / Kecamatan / Desa" />
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-sm-6">
+                <label class="form-label small">Modul / Aplikasi</label>
+                <select name="modul" class="form-select" required>
+                  <option value="Mansakai">Mansakai</option>
+                  <option value="RKPD">RKPD</option>
+                  <option value="APBD">APBD</option>
+                  <option value="Semua Modul MMC">Semua Modul MMC</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label small">Role yang Diajukan</label>
+                <select name="role" class="form-select" required>
+                  <option value="">-- Pilih Role --</option>
+                  <option value="Operator / Pencacah">Operator / Pencacah</option>
+                  <option value="Verifikator">Verifikator</option>
+                  <option value="Pimpinan / Viewer">Pimpinan / Viewer</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label small">Keperluan / Catatan Singkat</label>
+              <textarea name="alasan" class="form-control" rows="2" placeholder="Jelaskan kebutuhan akses Anda..."></textarea>
+            </div>
+
+            <div id="notifMintaAkses" class="alert d-none small py-2 mt-3 mb-0"></div>
+          </div>
+
+          <div class="modal-footer border-0 pt-0">
+            <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Batal</button>
+            <button type="submit" id="btnKirimAkses" class="btn rounded-pill px-4 text-white" style="background: var(--ungu-utama);">
+              Kirim Permintaan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const URL_WEB_APP_AKSES = "https://script.google.com/macros/s/AKfycbyx7cqWcizD_Q81jvW8bssSDzBdvos6X0soIHJpppPt7b9jxuTnoFpOfe38k7zxInLCqQ/exec";
+
+    document.getElementById("formMintaAkses")?.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = document.getElementById("btnKirimAkses");
+      const notif = document.getElementById("notifMintaAkses");
+
+      const payload = {
+        nama: form.nama.value.trim(),
+        email: form.email.value.trim(),
+        unit: form.unit.value.trim(),
+        modul: form.modul.value,
+        role: form.role.value,
+        alasan: form.alasan.value.trim()
+      };
+
+      btn.disabled = true;
+      btn.textContent = "Mengirim...";
+      notif.classList.add("d-none");
+
+      try {
+        const res = await fetch(URL_WEB_APP_AKSES, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        const hasil = await res.json();
+
+        notif.classList.remove("d-none", "alert-danger", "alert-success");
+        if (hasil.status === "success") {
+          notif.classList.add("alert-success");
+          notif.textContent = hasil.message;
+          form.reset();
+        } else {
+          notif.classList.add("alert-danger");
+          notif.textContent = hasil.message || "Gagal mengirim permintaan.";
+        }
+      } catch (err) {
+        notif.classList.remove("d-none", "alert-success");
+        notif.classList.add("alert-danger");
+        notif.textContent = "Terjadi kesalahan jaringan saat mengirim permintaan.";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Kirim Permintaan";
+      }
+    });
+  </script>
   <script>
     const SUMBER_CSV = {
       approval: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=627777717&single=true&output=csv",
@@ -769,539 +896,3 @@
 
     async function ambilDataCSV(url) {
       const urlCacheBust = `${url}${url.includes("?") ? "&" : "?"}_t=${Date.now()}`;
-      const respon = await fetch(urlCacheBust);
-      if (!respon.ok) throw new Error(`HTTP ${respon.status}`);
-      const teks = await respon.text();
-      const rows = parseCSVUmum(teks);
-      if (rows.length === 0) throw new Error("Data CSV kosong atau format kolom belum terbaca.");
-      return rows;
-    }
-
-    function buatAtauPerbaruiChart(key, canvasId, config) {
-      const ctx = document.getElementById(canvasId).getContext("2d");
-      if (chartInstances[key]) {
-        chartInstances[key].destroy();
-      }
-      chartInstances[key] = new Chart(ctx, config);
-    }
-
-    function buatGradienBatangUngu(ctx, chartArea) {
-      if (!chartArea) return "#4a0e4e";
-      const grad = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-      grad.addColorStop(0, "#4a0e4e");
-      grad.addColorStop(0.68, "#7e22ce");
-      grad.addColorStop(1, "#f3e8ff");
-      return grad;
-    }
-
-    function buatGradienEmas(ctx, chartArea) {
-      if (!chartArea) return "#eab308";
-      const grad = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-      grad.addColorStop(0, "#facc15");
-      grad.addColorStop(0.65, "#eab308");
-      grad.addColorStop(1, "#fef08a");
-      return grad;
-    }
-
-    function perbaruiPersentaseApprovalTerhadapTotal() {
-      const persenTerhadapTotal = totalDataDesil > 0
-        ? ((totalDataApproval / totalDataDesil) * 100).toFixed(1)
-        : "0.0";
-
-      document.getElementById("kpiTotalData").textContent = totalDataDesil.toLocaleString("id-ID");
-      document.getElementById("kpiTotalApproval").textContent = totalDataApproval.toLocaleString("id-ID");
-      document.getElementById("kpiPersenApprovalTotal").textContent = `${persenTerhadapTotal}%`;
-
-      const barEl = document.getElementById("barPersenApprovalTotal");
-      const lebarBar = Math.min(Math.max(Number(persenTerhadapTotal), 16), 100);
-      barEl.style.width = `${lebarBar}%`;
-      barEl.textContent = `${persenTerhadapTotal}%`;
-    }
-
-    const tickRingPlugin = {
-      id: "tickRingPlugin",
-      afterDatasetsDraw(chart, args, opts) {
-        const meta = chart.getDatasetMeta(0);
-        const arc = meta && meta.data && meta.data[0];
-        if (!arc) return;
-
-        const { ctx } = chart;
-        const cx = arc.x;
-        const cy = arc.y;
-        const outerR = arc.outerRadius - 2;
-        const innerR = arc.innerRadius + 2;
-        const totalTicks = opts.ticks || 36;
-        const aktifEndAngle = arc.endAngle;
-        const aktifStartAngle = arc.startAngle;
-
-        ctx.save();
-        ctx.strokeStyle = opts.color || "#9ca3af";
-        ctx.lineWidth = 1.4;
-        ctx.lineCap = "round";
-
-        for (let i = 0; i < totalTicks; i++) {
-          const angle = -Math.PI / 2 + (i / totalTicks) * Math.PI * 2;
-          const normAngle = angle < aktifStartAngle ? angle + Math.PI * 2 : angle;
-          if (normAngle > aktifEndAngle + 0.06 && normAngle < aktifStartAngle + Math.PI * 2 - 0.06) {
-            const x1 = cx + Math.cos(angle) * innerR;
-            const y1 = cy + Math.sin(angle) * innerR;
-            const x2 = cx + Math.cos(angle) * outerR;
-            const y2 = cy + Math.sin(angle) * outerR;
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
-          }
-        }
-        ctx.restore();
-      }
-    };
-
-    const labelNilaiBarPlugin = {
-      id: "labelNilaiBarPlugin",
-      afterDatasetsDraw(chart) {
-        const meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data) return;
-        const { ctx } = chart;
-        const isHorizontal = chart.config.options.indexAxis === "y";
-
-        ctx.save();
-        ctx.font = '500 11px "Outfit", "DM Sans", sans-serif';
-        ctx.fillStyle = "#141416";
-
-        meta.data.forEach((barElement, idx) => {
-          const val = Number(chart.data.datasets[0].data[idx]) || 0;
-          const formattedVal = val.toLocaleString("id-ID");
-
-          if (isHorizontal) {
-            ctx.textAlign = "left";
-            ctx.textBaseline = "middle";
-            ctx.fillText(formattedVal, barElement.x + 6, barElement.y);
-          } else {
-            ctx.textAlign = "center";
-            ctx.textBaseline = "bottom";
-            ctx.fillText(formattedVal, barElement.x, barElement.y - 4);
-          }
-        });
-        ctx.restore();
-      }
-    };
-
-    function buatKonfigurasiBarSamping(rows, { isHorizontal = false, sorotIndex = -1 } = {}) {
-      const total = rows.reduce((acc, r) => acc + r.jumlah, 0);
-
-      return {
-        type: "bar",
-        data: {
-          labels: rows.map((r) => r.label),
-          datasets: [{
-            label: "Jumlah Data",
-            data: rows.map((r) => r.jumlah),
-            backgroundColor: (context) => {
-              const { ctx, chartArea, dataIndex } = context.chart;
-              if (!chartArea) return "#4a0e4e";
-              if (isHorizontal) {
-                const grad = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-                if (dataIndex === sorotIndex && rows.length > 1) {
-                  grad.addColorStop(0, "#fef08a");
-                  grad.addColorStop(0.55, "#eab308");
-                  grad.addColorStop(1, "#ca8a04");
-                  return grad;
-                }
-                grad.addColorStop(0, "#f3e8ff");
-                grad.addColorStop(0.35, "#7e22ce");
-                grad.addColorStop(1, "#4a0e4e");
-                return grad;
-              }
-              return dataIndex === sorotIndex && rows.length > 1
-                ? buatGradienEmas(ctx, chartArea)
-                : buatGradienBatangUngu(ctx, chartArea);
-            },
-            borderRadius: 6,
-            maxBarThickness: isHorizontal ? 20 : 46
-          }]
-        },
-        options: {
-          indexAxis: isHorizontal ? "y" : "x",
-          responsive: true,
-          maintainAspectRatio: false,
-          layout: {
-            padding: isHorizontal
-              ? { top: 4, right: 52, bottom: 4, left: 0 }
-              : { top: 20, right: 8, bottom: 4, left: 8 }
-          },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => {
-                  const val = Number(ctx.raw) || 0;
-                  const pct = total > 0 ? ((val / total) * 100).toFixed(1) : "0.0";
-                  return ` Jumlah: ${val.toLocaleString("id-ID")} (${pct}%)`;
-                }
-              }
-            }
-          },
-          scales: isHorizontal
-            ? {
-                x: {
-                  display: false,
-                  beginAtZero: true
-                },
-                y: {
-                  beginAtZero: true,
-                  grid: { display: false },
-                  border: { display: false },
-                  ticks: {
-                    color: "#141416",
-                    font: { size: 11 }
-                  }
-                }
-              }
-            : {
-                x: {
-                  beginAtZero: true,
-                  grid: { display: false },
-                  border: { display: false },
-                  ticks: {
-                    color: "#141416",
-                    font: { size: 11 }
-                  }
-                },
-                y: {
-                  display: false,
-                  beginAtZero: true
-                }
-              }
-        },
-        plugins: [labelNilaiBarPlugin]
-      };
-    }
-
-    function renderApproval(rows) {
-      totalDataApproval = rows.reduce((acc, r) => acc + r.jumlah, 0);
-      perbaruiPersentaseApprovalTerhadapTotal();
-
-      let maks = rows[0];
-      rows.forEach((r) => {
-        if (r.jumlah > maks.jumlah) maks = r;
-      });
-
-      const persenMaksInternal = totalDataApproval > 0
-        ? ((maks.jumlah / totalDataApproval) * 100).toFixed(1)
-        : "0.0";
-
-      document.getElementById("kpiStatusApprovalTerbanyak").textContent = `${maks.label} (${maks.jumlah.toLocaleString("id-ID")})`;
-      document.getElementById("barKategoriApproval").textContent = `${rows.length} Status Approval`;
-      document.getElementById("badgeTotalApproval").textContent = `${totalDataApproval.toLocaleString("id-ID")} Data`;
-      document.getElementById("pillHighlightApproval").textContent = `${maks.label}: ${maks.jumlah.toLocaleString("id-ID")} (${persenMaksInternal}%)`;
-
-      document.getElementById("daftarRingkasApproval").innerHTML = rows
-        .map((r) => {
-          const pct = totalDataApproval > 0 ? ((r.jumlah / totalDataApproval) * 100).toFixed(1) : "0.0";
-          return `
-            <div class="dark-item-row d-flex justify-content-between align-items-center">
-              <div>
-                <div class="small">${r.label}</div>
-                <div class="text-white-50" style="font-size: 0.74rem;">${pct}% dari approval</div>
-              </div>
-              <div>${r.jumlah.toLocaleString("id-ID")}</div>
-            </div>
-          `;
-        })
-        .join("");
-
-      Object.keys(chartInstances).forEach((k) => {
-        if (k.startsWith("approvalItem_")) {
-          chartInstances[k].destroy();
-          delete chartInstances[k];
-        }
-      });
-
-      const warnaCincin = ["#4a0e4e", "#eab308", "#7e22ce", "#facc15", "#a855f7"];
-      const lebarKolomPersen = rows.length > 0 ? (100 / rows.length).toFixed(2) : 100;
-
-      document.getElementById("gridApprovalItems").innerHTML = rows
-        .map((r, idx) => {
-          const pctNum = totalDataApproval > 0 ? (r.jumlah / totalDataApproval) * 100 : 0;
-          const pctText = pctNum.toFixed(1);
-          const canvasId = `gaugeApproval_${idx}`;
-          return `
-            <div style="flex: 0 0 calc(${lebarKolomPersen}% - 0.35rem); min-width: 118px;">
-              <div class="approval-item-card">
-                <div class="small text-truncate w-100" title="${r.label}">${r.label}</div>
-                <div class="ring-gauge-wrap">
-                  <canvas id="${canvasId}"></canvas>
-                  <div class="ring-gauge-center">
-                    <span class="ring-gauge-value">${r.jumlah.toLocaleString("id-ID")}</span>
-                    <span class="ring-gauge-sub">${pctText}%</span>
-                  </div>
-                </div>
-                <div class="small text-muted" style="font-size: 0.72rem;">Approval</div>
-              </div>
-            </div>
-          `;
-        })
-        .join("");
-
-      rows.forEach((r, idx) => {
-        const pctNum = totalDataApproval > 0 ? Math.min(Math.max((r.jumlah / totalDataApproval) * 100, 0), 100) : 0;
-        const sisa = Math.max(100 - pctNum, 0);
-        const aktifWarna = warnaCincin[idx % warnaCincin.length];
-        const key = `approvalItem_${idx}`;
-        const canvasId = `gaugeApproval_${idx}`;
-
-        buatAtauPerbaruiChart(key, canvasId, {
-          type: "doughnut",
-          data: {
-            labels: [r.label, "Sisanya"],
-            datasets: [{
-              data: [pctNum, sisa],
-              backgroundColor: [aktifWarna, "rgba(0, 0, 0, 0)"],
-              borderWidth: 0,
-              borderRadius: [20, 0]
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: "75%",
-            rotation: 0,
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                callbacks: {
-                  label: (ctx) => {
-                    if (ctx.dataIndex === 0) {
-                      return ` ${r.label}: ${r.jumlah.toLocaleString("id-ID")} (${pctNum.toFixed(1)}%)`;
-                    }
-                    return ` Bagian lain: ${(100 - pctNum).toFixed(1)}%`;
-                  }
-                }
-              },
-              tickRingPlugin: {
-                ticks: 36,
-                color: "#9ca3af"
-              }
-            }
-          },
-          plugins: [tickRingPlugin]
-        });
-      });
-    }
-
-    function renderDesil(rows) {
-      totalDataDesil = rows.reduce((acc, r) => acc + r.jumlah, 0);
-      perbaruiPersentaseApprovalTerhadapTotal();
-
-      const formattedRows = rows.map((r) => ({
-        ...r,
-        label: /^desil/i.test(r.label) ? r.label : `Desil ${r.label}`
-      }));
-
-      buatAtauPerbaruiChart(
-        "desil",
-        "chartDesil",
-        buatKonfigurasiBarSamping(formattedRows, {
-          isHorizontal: false,
-          sorotIndex: formattedRows.length - 1
-        })
-      );
-    }
-
-    function renderKecamatan(rows) {
-      const sortedRows = [...rows].sort((a, b) => b.jumlah - a.jumlah);
-      buatAtauPerbaruiChart(
-        "kecamatan",
-        "chartKecamatan",
-        buatKonfigurasiBarSamping(sortedRows, {
-          isHorizontal: true,
-          sorotIndex: 0
-        })
-      );
-    }
-
-    function renderDonutPBI(key, canvasId, ringkasId, rows) {
-      const total = rows.reduce((acc, r) => acc + r.jumlah, 0);
-      const palet = ["#4a0e4e", "#eab308", "#7e22ce", "#facc15", "#e9d5ff"];
-
-      document.getElementById(ringkasId).innerHTML = rows
-        .map((r) => {
-          const pct = total > 0 ? ((r.jumlah / total) * 100).toFixed(1) : "0.0";
-          return `
-            <div class="d-flex justify-content-between align-items-center p-2 rounded-3" style="background: #faf5ff;">
-              <span>${r.label}</span>
-              <span style="color: var(--ungu-pekat);">${r.jumlah.toLocaleString("id-ID")} (${pct}%)</span>
-            </div>
-          `;
-        })
-        .join("");
-
-      buatAtauPerbaruiChart(key, canvasId, {
-        type: "doughnut",
-        data: {
-          labels: rows.map((r) => r.label),
-          datasets: [{
-            data: rows.map((r) => r.jumlah),
-            backgroundColor: rows.map((_, idx) => palet[idx % palet.length]),
-            borderWidth: 2,
-            borderColor: "#ffffff"
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: "62%",
-          plugins: {
-            legend: {
-              position: "bottom",
-              labels: { boxWidth: 12, font: { size: 11 } }
-            },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => {
-                  const val = Number(ctx.raw) || 0;
-                  const pct = total > 0 ? ((val / total) * 100).toFixed(1) : "0.0";
-                  return ` ${ctx.label}: ${val.toLocaleString("id-ID")} (${pct}%)`;
-                }
-              }
-            }
-          }
-        }
-      });
-    }
-
-    function renderBarHorizontalSamping(key, canvasId, rows) {
-      const sortedRows = [...rows].sort((a, b) => b.jumlah - a.jumlah);
-      buatAtauPerbaruiChart(
-        key,
-        canvasId,
-        buatKonfigurasiBarSamping(sortedRows, {
-          isHorizontal: true,
-          sorotIndex: 0
-        })
-      );
-    }
-
-    async function muatSemuaKategoriUmum() {
-      const tugas = [
-        {
-          url: SUMBER_CSV.desil,
-          statusId: "statusDesil",
-          errorId: "errorDesil",
-          render: renderDesil
-        },
-        {
-          url: SUMBER_CSV.approval,
-          statusId: "statusApproval",
-          errorId: "errorApproval",
-          render: renderApproval
-        },
-        {
-          url: SUMBER_CSV.kecamatan,
-          statusId: "statusKecamatan",
-          errorId: "errorKecamatan",
-          render: renderKecamatan
-        },
-        {
-          url: SUMBER_CSV.pbiNasional,
-          statusId: "statusPbiNasional",
-          errorId: "errorPbiNasional",
-          render: (rows) => renderDonutPBI("pbiNasional", "chartPbiNasional", "ringkasPbiNasional", rows)
-        },
-        {
-          url: SUMBER_CSV.pbiPemda,
-          statusId: "statusPbiPemda",
-          errorId: "errorPbiPemda",
-          render: (rows) => renderDonutPBI("pbiPemda", "chartPbiPemda", "ringkasPbiPemda", rows)
-        },
-        {
-          url: SUMBER_CSV.statusKepemilikanRumah,
-          statusId: "statusKepemilikanRumah",
-          errorId: "errorKepemilikanRumah",
-          render: (rows) => renderDonutPBI("statusKepemilikanRumah", "chartKepemilikanRumah", "ringkasKepemilikanRumah", rows)
-        },
-        {
-          url: SUMBER_CSV.jenisLantai,
-          statusId: "statusJenisLantai",
-          errorId: "errorJenisLantai",
-          render: (rows) => renderBarHorizontalSamping("jenisLantai", "chartJenisLantai", rows)
-        },
-        {
-          url: SUMBER_CSV.jenisAtap,
-          statusId: "statusJenisAtap",
-          errorId: "errorJenisAtap",
-          render: (rows) => renderBarHorizontalSamping("jenisAtap", "chartJenisAtap", rows)
-        },
-        {
-          url: SUMBER_CSV.jenisDinding,
-          statusId: "statusJenisDinding",
-          errorId: "errorJenisDinding",
-          render: (rows) => renderBarHorizontalSamping("jenisDinding", "chartJenisDinding", rows)
-        },
-        {
-          url: SUMBER_CSV.sumberAirMinum,
-          statusId: "statusSumberAirMinum",
-          errorId: "errorSumberAirMinum",
-          render: (rows) => renderBarHorizontalSamping("sumberAirMinum", "chartSumberAirMinum", rows)
-        },
-        {
-          url: SUMBER_CSV.sumberPenerangan,
-          statusId: "statusSumberPenerangan",
-          errorId: "errorSumberPenerangan",
-          render: (rows) => renderBarHorizontalSamping("sumberPenerangan", "chartSumberPenerangan", rows)
-        },
-        {
-          url: SUMBER_CSV.bahanBakarMasak,
-          statusId: "statusBahanBakarMasak",
-          errorId: "errorBahanBakarMasak",
-          render: (rows) => renderBarHorizontalSamping("bahanBakarMasak", "chartBahanBakarMasak", rows)
-        },
-        {
-          url: SUMBER_CSV.fasilitasBab,
-          statusId: "statusFasilitasBab",
-          errorId: "errorFasilitasBab",
-          render: (rows) => renderBarHorizontalSamping("fasilitasBab", "chartFasilitasBab", rows)
-        },
-        {
-          url: SUMBER_CSV.jenisKloset,
-          statusId: "statusJenisKloset",
-          errorId: "errorJenisKloset",
-          render: (rows) => renderBarHorizontalSamping("jenisKloset", "chartJenisKloset", rows)
-        },
-        {
-          url: SUMBER_CSV.pembuanganTinja,
-          statusId: "statusPembuanganTinja",
-          errorId: "errorPembuanganTinja",
-          render: (rows) => renderBarHorizontalSamping("pembuanganTinja", "chartPembuanganTinja", rows)
-        }
-      ];
-
-      let berhasil = 0;
-
-      await Promise.all(
-        tugas.map(async (item) => {
-          const statusEl = document.getElementById(item.statusId);
-          const errorEl = document.getElementById(item.errorId);
-          try {
-            const rows = await ambilDataCSV(item.url);
-            item.render(rows);
-            errorEl.classList.add("d-none");
-            statusEl.textContent = "Terhubung";
-            berhasil++;
-          } catch (err) {
-            statusEl.textContent = "Gagal";
-            errorEl.textContent = `Gagal memuat CSV: ${err.message}`;
-            errorEl.classList.remove("d-none");
-          }
-        })
-      );
-
-      const globalEl = document.getElementById("statusGlobal");
-      globalEl.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> ${berhasil}/${tugas.length} Terhubung`;
-    }
-
-    muatSemuaKategoriUmum();
-  </script>
-</body>
-</html>
