@@ -821,7 +821,6 @@
       }
     });
   </script>
-  </script>
   <script>
     const SUMBER_CSV = {
       approval: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=627777717&single=true&output=csv",
@@ -897,3 +896,331 @@
 
     async function ambilDataCSV(url) {
       const urlCacheBust = `${url}${url.includes("?") ? "&" : "?"}_t=${Date.now()}`;
+      const resp = await fetch(urlCacheBust, { cache: "no-store" });
+      if (!resp.ok) {
+        throw new Error(`HTTP ${resp.status} saat mengambil CSV`);
+      }
+      const teks = await resp.text();
+      return parseCSVUmum(teks);
+    }
+
+    function formatAngka(angka) {
+      return Number(angka || 0).toLocaleString("id-ID");
+    }
+
+    function formatPersen(bagian, keseluruhan) {
+      if (!keseluruhan || keseluruhan <= 0) return "0%";
+      const pct = (bagian / keseluruhan) * 100;
+      return `${pct.toFixed(1).replace(".", ",")}%`;
+    }
+
+    function tampilkanError(idError, idStatus, pesan) {
+      const elErr = document.getElementById(idError);
+      const elStat = document.getElementById(idStatus);
+      if (elErr) {
+        elErr.textContent = pesan;
+        elErr.classList.remove("d-none");
+      }
+      if (elStat) {
+        elStat.textContent = "Gagal memuat";
+      }
+    }
+
+    function sembunyikanError(idError) {
+      const elErr = document.getElementById(idError);
+      if (elErr) {
+        elErr.textContent = "";
+        elErr.classList.add("d-none");
+      }
+    }
+
+    function buatAtauPerbaruiChart(canvasId, config) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return null;
+      if (chartInstances[canvasId]) {
+        chartInstances[canvasId].destroy();
+      }
+      chartInstances[canvasId] = new Chart(canvas.getContext("2d"), config);
+      return chartInstances[canvasId];
+    }
+
+    function perbaruiRingkasanKPI() {
+      const elTotalData = document.getElementById("kpiTotalData");
+      const elTotalApproval = document.getElementById("kpiTotalApproval");
+      const elPersen = document.getElementById("kpiPersenApprovalTotal");
+      const elBarPersen = document.getElementById("barPersenApprovalTotal");
+
+      if (elTotalData) elTotalData.textContent = formatAngka(totalDataDesil);
+      if (elTotalApproval) elTotalApproval.textContent = formatAngka(totalDataApproval);
+
+      const pctAngka = totalDataDesil > 0 ? Math.min(100, (totalDataApproval / totalDataDesil) * 100) : 0;
+      const pctLabel = `${pctAngka.toFixed(1).replace(".", ",")}%`;
+
+      if (elPersen) elPersen.textContent = pctLabel;
+      if (elBarPersen) {
+        elBarPersen.style.width = `${Math.max(12, pctAngka)}%`;
+        elBarPersen.textContent = pctLabel;
+      }
+    }
+
+    function renderApproval(items) {
+      sembunyikanError("errorApproval");
+      const elStatus = document.getElementById("statusApproval");
+      const elGrid = document.getElementById("gridApprovalItems");
+      const elDaftar = document.getElementById("daftarRingkasApproval");
+      const elBadgeTotal = document.getElementById("badgeTotalApproval");
+      const elBarKat = document.getElementById("barKategoriApproval");
+      const elTerbanyak = document.getElementById("kpiStatusApprovalTerbanyak");
+      const elPillHighlight = document.getElementById("pillHighlightApproval");
+
+      if (!items.length) {
+        if (elStatus) elStatus.textContent = "Kosong";
+        return;
+      }
+
+      const sorted = [...items].sort((a, b) => b.jumlah - a.jumlah);
+      totalDataApproval = sorted.reduce((acc, cur) => acc + cur.jumlah, 0);
+
+      if (elStatus) elStatus.textContent = `${sorted.length} Status`;
+      if (elBadgeTotal) elBadgeTotal.textContent = `${formatAngka(totalDataApproval)} Data`;
+      if (elBarKat) elBarKat.textContent = `${sorted.length} Status`;
+      if (elTerbanyak) elTerbanyak.textContent = `${sorted[0].label} (${formatAngka(sorted[0].jumlah)})`;
+      if (elPillHighlight) elPillHighlight.textContent = `Terbanyak: ${sorted[0].label} • ${formatAngka(sorted[0].jumlah)}`;
+
+      if (elGrid) {
+        elGrid.innerHTML = sorted.map((item, idx) => {
+          const canvasId = `gaugeApproval_${idx}`;
+          const pct = totalDataApproval > 0 ? Math.round((item.jumlah / totalDataApproval) * 100) : 0;
+          return `
+            <div class="approval-item-card" style="min-width: 118px;">
+              <div class="small fw-medium text-truncate w-100" title="${item.label}">${item.label}</div>
+              <div class="ring-gauge-wrap">
+                <canvas id="${canvasId}"></canvas>
+                <div class="ring-gauge-center">
+                  <span class="ring-gauge-value">${pct}%</span>
+                  <span class="ring-gauge-sub">${formatAngka(item.jumlah)}</span>
+                </div>
+              </div>
+              <div class="small text-muted">dari total approval</div>
+            </div>
+          `;
+        }).join("");
+
+        sorted.forEach((item, idx) => {
+          const canvasId = `gaugeApproval_${idx}`;
+          const sisa = Math.max(0, totalDataApproval - item.jumlah);
+          buatAtauPerbaruiChart(canvasId, {
+            type: "doughnut",
+            data: {
+              labels: [item.label, "Lainnya"],
+              datasets: [{
+                data: [item.jumlah, sisa],
+                backgroundColor: ["#7e22ce", "#f3e8ff"],
+                borderWidth: 0
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              cutout: "74%",
+              plugins: { legend: { display: false }, tooltip: { enabled: true } }
+            }
+          });
+        });
+      }
+
+      if (elDaftar) {
+        elDaftar.innerHTML = sorted.map((item) => `
+          <div class="dark-item-row d-flex justify-content-between align-items-center gap-2 small">
+            <span class="text-truncate">${item.label}</span>
+            <span class="fw-medium" style="color: var(--kuning-aksen);">${formatAngka(item.jumlah)} (${formatPersen(item.jumlah, totalDataApproval)})</span>
+          </div>
+        `).join("");
+      }
+
+      perbaruiRingkasanKPI();
+    }
+
+    function renderBarChart(key, items, canvasId, errorId, statusId, warnaBar = "#7e22ce", horizontal = false) {
+      sembunyikanError(errorId);
+      const elStatus = document.getElementById(statusId);
+      if (!items.length) {
+        if (elStatus) elStatus.textContent = "Kosong";
+        return;
+      }
+
+      const dataChart = key === "kecamatan" ? [...items].sort((a, b) => b.jumlah - a.jumlah) : items;
+      const total = dataChart.reduce((acc, cur) => acc + cur.jumlah, 0);
+
+      if (key === "desil") {
+        totalDataDesil = total;
+        perbaruiRingkasanKPI();
+      }
+
+      if (elStatus) elStatus.textContent = `${formatAngka(total)} Data`;
+
+      buatAtauPerbaruiChart(canvasId, {
+        type: "bar",
+        data: {
+          labels: dataChart.map((d) => d.label),
+          datasets: [{
+            label: "Jumlah",
+            data: dataChart.map((d) => d.jumlah),
+            backgroundColor: warnaBar,
+            borderRadius: 8,
+            maxBarThickness: 36
+          }]
+        },
+        options: {
+          indexAxis: horizontal ? "y" : "x",
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  const val = ctx.parsed[horizontal ? "x" : "y"] || 0;
+                  return ` ${formatAngka(val)} (${formatPersen(val, total)})`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: { beginAtZero: true, grid: { color: "#f3e8ff" } },
+            y: { beginAtZero: true, grid: { color: "#f3e8ff" } }
+          }
+        }
+      });
+    }
+
+    function renderDoughnutRingkasan(items, canvasId, ringkasId, errorId, statusId) {
+      sembunyikanError(errorId);
+      const elStatus = document.getElementById(statusId);
+      const elRingkas = document.getElementById(ringkasId);
+      if (!items.length) {
+        if (elStatus) elStatus.textContent = "Kosong";
+        return;
+      }
+
+      const total = items.reduce((acc, cur) => acc + cur.jumlah, 0);
+      if (elStatus) elStatus.textContent = `${formatAngka(total)} Data`;
+
+      const palet = ["#7e22ce", "#a855f7", "#facc15", "#4c1d95", "#c084fc", "#ca8a04", "#18181b"];
+
+      buatAtauPerbaruiChart(canvasId, {
+        type: "doughnut",
+        data: {
+          labels: items.map((d) => d.label),
+          datasets: [{
+            data: items.map((d) => d.jumlah),
+            backgroundColor: items.map((_, i) => palet[i % palet.length]),
+            borderWidth: 2,
+            borderColor: "#ffffff"
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "62%",
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  const val = ctx.parsed || 0;
+                  return ` ${ctx.label}: ${formatAngka(val)} (${formatPersen(val, total)})`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      if (elRingkas) {
+        elRingkas.innerHTML = items.map((d, i) => `
+          <div class="d-flex justify-content-between align-items-center gap-2 p-2 rounded-3" style="background: #faf5ff;">
+            <span class="d-flex align-items-center gap-2 text-truncate">
+              <span style="width:10px;height:10px;border-radius:50%;background:${palet[i % palet.length]};display:inline-block;flex-shrink:0;"></span>
+              <span class="text-truncate">${d.label}</span>
+            </span>
+            <span class="fw-medium text-nowrap">${formatAngka(d.jumlah)} (${formatPersen(d.jumlah, total)})</span>
+          </div>
+        `).join("");
+      }
+    }
+
+    async function muatSemuaGrafik() {
+      const elGlobal = document.getElementById("statusGlobal");
+      const entries = Object.entries(SUMBER_CSV);
+      let sukses = 0;
+
+      await Promise.all(entries.map(async ([key, url]) => {
+        try {
+          const data = await ambilDataCSV(url);
+          sukses++;
+
+          if (key === "approval") {
+            renderApproval(data);
+          } else if (key === "desil") {
+            renderBarChart(key, data, "chartDesil", "errorDesil", "statusDesil", "#7e22ce", false);
+          } else if (key === "kecamatan") {
+            renderBarChart(key, data, "chartKecamatan", "errorKecamatan", "statusKecamatan", "#4c1d95", true);
+          } else if (key === "pbiNasional") {
+            renderDoughnutRingkasan(data, "chartPbiNasional", "ringkasPbiNasional", "errorPbiNasional", "statusPbiNasional");
+          } else if (key === "pbiPemda") {
+            renderDoughnutRingkasan(data, "chartPbiPemda", "ringkasPbiPemda", "errorPbiPemda", "statusPbiPemda");
+          } else if (key === "statusKepemilikanRumah") {
+            renderDoughnutRingkasan(data, "chartKepemilikanRumah", "ringkasKepemilikanRumah", "errorKepemilikanRumah", "statusKepemilikanRumah");
+          } else if (key === "jenisLantai") {
+            renderBarChart(key, data, "chartJenisLantai", "errorJenisLantai", "statusJenisLantai", "#7e22ce", false);
+          } else if (key === "jenisAtap") {
+            renderBarChart(key, data, "chartJenisAtap", "errorJenisAtap", "statusJenisAtap", "#a855f7", false);
+          } else if (key === "jenisDinding") {
+            renderBarChart(key, data, "chartJenisDinding", "errorJenisDinding", "statusJenisDinding", "#4c1d95", false);
+          } else if (key === "sumberAirMinum") {
+            renderBarChart(key, data, "chartSumberAirMinum", "errorSumberAirMinum", "statusSumberAirMinum", "#7e22ce", false);
+          } else if (key === "sumberPenerangan") {
+            renderBarChart(key, data, "chartSumberPenerangan", "errorSumberPenerangan", "statusSumberPenerangan", "#ca8a04", false);
+          } else if (key === "bahanBakarMasak") {
+            renderBarChart(key, data, "chartBahanBakarMasak", "errorBahanBakarMasak", "statusBahanBakarMasak", "#a855f7", false);
+          } else if (key === "fasilitasBab") {
+            renderBarChart(key, data, "chartFasilitasBab", "errorFasilitasBab", "statusFasilitasBab", "#4c1d95", false);
+          } else if (key === "jenisKloset") {
+            renderBarChart(key, data, "chartJenisKloset", "errorJenisKloset", "statusJenisKloset", "#7e22ce", false);
+          } else if (key === "pembuanganTinja") {
+            renderBarChart(key, data, "chartPembuanganTinja", "errorPembuanganTinja", "statusPembuanganTinja", "#4a0e4e", false);
+          }
+        } catch (err) {
+          const mapErr = {
+            approval: ["errorApproval", "statusApproval"],
+            desil: ["errorDesil", "statusDesil"],
+            kecamatan: ["errorKecamatan", "statusKecamatan"],
+            pbiNasional: ["errorPbiNasional", "statusPbiNasional"],
+            pbiPemda: ["errorPbiPemda", "statusPbiPemda"],
+            statusKepemilikanRumah: ["errorKepemilikanRumah", "statusKepemilikanRumah"],
+            jenisLantai: ["errorJenisLantai", "statusJenisLantai"],
+            jenisAtap: ["errorJenisAtap", "statusJenisAtap"],
+            jenisDinding: ["errorJenisDinding", "statusJenisDinding"],
+            sumberAirMinum: ["errorSumberAirMinum", "statusSumberAirMinum"],
+            sumberPenerangan: ["errorSumberPenerangan", "statusSumberPenerangan"],
+            bahanBakarMasak: ["errorBahanBakarMasak", "statusBahanBakarMasak"],
+            fasilitasBab: ["errorFasilitasBab", "statusFasilitasBab"],
+            jenisKloset: ["errorJenisKloset", "statusJenisKloset"],
+            pembuanganTinja: ["errorPembuanganTinja", "statusPembuanganTinja"]
+          };
+          if (mapErr[key]) {
+            tampilkanError(mapErr[key][0], mapErr[key][1], err.message);
+          }
+        }
+      }));
+
+      if (elGlobal) {
+        elGlobal.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> ${sukses}/${entries.length} CSV termuat`;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", muatSemuaGrafik);
+  </script>
+</body>
+</html>
