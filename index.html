@@ -178,10 +178,10 @@
     }
 
     .approval-item-card {
-      background: #fffdf5;
+      background: #fffdf6;
       border: 1px solid #f3e8ff;
-      border-radius: 18px;
-      padding: 0.75rem 0.5rem;
+      border-radius: 20px;
+      padding: 0.8rem 0.55rem;
       text-align: center;
       height: 100%;
       display: flex;
@@ -198,9 +198,9 @@
 
     .ring-gauge-wrap {
       position: relative;
-      width: 102px;
-      height: 102px;
-      margin: 0.25rem auto;
+      width: 112px;
+      height: 112px;
+      margin: 0.2rem auto;
     }
 
     .ring-gauge-center {
@@ -215,16 +215,16 @@
     }
 
     .ring-gauge-value {
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       font-weight: 500;
       color: var(--teks-utama);
       line-height: 1.1;
     }
 
     .ring-gauge-sub {
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       color: var(--teks-redup);
-      margin-top: 0.1rem;
+      margin-top: 0.15rem;
     }
 
     .pill-meter-track {
@@ -447,7 +447,7 @@
                   <span id="statusDesil" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorDesil" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 310px;">
+                <div class="flex-grow-1" style="position: relative; min-height: 320px;">
                   <canvas id="chartDesil"></canvas>
                 </div>
               </div>
@@ -463,7 +463,7 @@
                   <span id="statusKecamatan" class="badge-status">Memuat...</span>
                 </div>
                 <div id="errorKecamatan" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 310px;">
+                <div class="flex-grow-1" style="position: relative; min-height: 320px;">
                   <canvas id="chartKecamatan"></canvas>
                 </div>
               </div>
@@ -963,28 +963,92 @@
       }
     }
 
-    function buatPolaGarisKecil(warnaLatar = "#f3e8ff", warnaGaris = "#7e22ce") {
-      const polaCanvas = document.createElement("canvas");
-      polaCanvas.width = 8;
-      polaCanvas.height = 8;
-      const pctx = polaCanvas.getContext("2d");
-
-      pctx.fillStyle = warnaLatar;
-      pctx.fillRect(0, 0, polaCanvas.width, polaCanvas.height);
-
-      pctx.strokeStyle = warnaGaris;
-      pctx.lineWidth = 1.25;
-      pctx.beginPath();
-      pctx.moveTo(0, 8);
-      pctx.lineTo(8, 0);
-      pctx.moveTo(-4, 4);
-      pctx.lineTo(4, -4);
-      pctx.moveTo(4, 12);
-      pctx.lineTo(12, 4);
-      pctx.stroke();
-
-      return pctx.createPattern(polaCanvas, "repeat");
+    function tentukanWarnaStatusApproval(label, index) {
+      const teks = String(label || "").toLowerCase();
+      if (teks.includes("disetujui") || teks.includes("setuju") || teks.includes("approved")) {
+        return "#eab308";
+      }
+      if (teks.includes("menunggu") || teks.includes("pending")) {
+        return "#3b0745";
+      }
+      if (teks.includes("dikembalikan") || teks.includes("revisi") || teks.includes("tolak")) {
+        return "#8b2cf5";
+      }
+      const cadangan = ["#3b0745", "#eab308", "#8b2cf5", "#7e22ce"];
+      return cadangan[index % cadangan.length];
     }
+
+    const pluginGaugeGarisRadial = {
+      id: "gaugeGarisRadial",
+      beforeDatasetDraw(chart, args, pluginOptions) {
+        if (!pluginOptions || !pluginOptions.enabled) return;
+        const { ctx, chartArea } = chart;
+        if (!chartArea) return;
+
+        const cx = (chartArea.left + chartArea.right) / 2;
+        const cy = (chartArea.top + chartArea.bottom) / 2;
+        const radiusLuar = Math.min(chartArea.width, chartArea.height) / 2 - 2;
+        const radiusDalam = radiusLuar - 11;
+        const jumlahTick = 36;
+
+        ctx.save();
+        ctx.strokeStyle = pluginOptions.tickColor || "#b8b8c2";
+        ctx.lineWidth = 1.6;
+        ctx.lineCap = "round";
+
+        for (let i = 0; i < jumlahTick; i++) {
+          const sudut = (i / jumlahTick) * Math.PI * 2 - Math.PI / 2;
+          const x1 = cx + Math.cos(sudut) * radiusDalam;
+          const y1 = cy + Math.sin(sudut) * radiusDalam;
+          const x2 = cx + Math.cos(sudut) * radiusLuar;
+          const y2 = cy + Math.sin(sudut) * radiusLuar;
+
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+    };
+
+    const pluginLabelNilaiBatang = {
+      id: "labelNilaiBatang",
+      afterDatasetsDraw(chart) {
+        const { ctx, chartArea } = chart;
+        if (!chartArea) return;
+
+        const isHorizontal = chart.config.options.indexAxis === "y";
+        const dataset = chart.data.datasets[0];
+        const meta = chart.getDatasetMeta(0);
+        if (!dataset || !meta || !meta.data) return;
+
+        ctx.save();
+        ctx.fillStyle = "#1f2937";
+        ctx.font = '500 11.5px "Outfit", "DM Sans", sans-serif';
+
+        meta.data.forEach((barElement, idx) => {
+          const nilai = Number(dataset.data[idx] || 0);
+          const teks = formatAngka(nilai);
+
+          if (isHorizontal) {
+            ctx.textAlign = "left";
+            ctx.textBaseline = "middle";
+            const xPos = Math.min(barElement.x + 8, chartArea.right - 2);
+            ctx.fillText(teks, xPos, barElement.y);
+          } else {
+            ctx.textAlign = "center";
+            ctx.textBaseline = "bottom";
+            const yPos = Math.max(barElement.y - 6, chartArea.top + 12);
+            ctx.fillText(teks, barElement.x, yPos);
+          }
+        });
+
+        ctx.restore();
+      }
+    };
+
+    Chart.register(pluginGaugeGarisRadial, pluginLabelNilaiBatang);
 
     function renderApproval(items) {
       sembunyikanError("errorApproval");
@@ -1004,7 +1068,7 @@
       const sorted = [...items].sort((a, b) => b.jumlah - a.jumlah);
       totalDataApproval = sorted.reduce((acc, cur) => acc + cur.jumlah, 0);
 
-      if (elStatus) elStatus.textContent = `${sorted.length} Status`;
+      if (elStatus) elStatus.textContent = "Terhubung";
       if (elBadgeTotal) elBadgeTotal.textContent = `${formatAngka(totalDataApproval)} Data`;
       if (elBarKat) elBarKat.textContent = `${sorted.length} Status`;
       if (elTerbanyak) elTerbanyak.textContent = `${sorted[0].label} (${formatAngka(sorted[0].jumlah)})`;
@@ -1013,43 +1077,59 @@
       if (elGrid) {
         elGrid.innerHTML = sorted.map((item, idx) => {
           const canvasId = `gaugeApproval_${idx}`;
-          const pct = totalDataApproval > 0 ? Math.round((item.jumlah / totalDataApproval) * 100) : 0;
+          const pctAngka = totalDataApproval > 0 ? (item.jumlah / totalDataApproval) * 100 : 0;
+          const pctLabel = `${pctAngka.toFixed(1)}%`;
           return `
-            <div class="approval-item-card" style="min-width: 118px;">
+            <div class="approval-item-card" style="min-width: 122px;">
               <div class="small fw-medium text-truncate w-100" title="${item.label}">${item.label}</div>
               <div class="ring-gauge-wrap">
                 <canvas id="${canvasId}"></canvas>
                 <div class="ring-gauge-center">
-                  <span class="ring-gauge-value">${pct}%</span>
-                  <span class="ring-gauge-sub">${formatAngka(item.jumlah)}</span>
+                  <span class="ring-gauge-value">${formatAngka(item.jumlah)}</span>
+                  <span class="ring-gauge-sub">${pctLabel}</span>
                 </div>
               </div>
-              <div class="small text-muted">dari total approval</div>
+              <div class="small text-muted">Approval</div>
             </div>
           `;
         }).join("");
 
         sorted.forEach((item, idx) => {
           const canvasId = `gaugeApproval_${idx}`;
+          const warnaAktif = tentukanWarnaStatusApproval(item.label, idx);
           const sisa = Math.max(0, totalDataApproval - item.jumlah);
-          const polaUtama = buatPolaGarisKecil("#7e22ce", "#a855f7");
-          const polaSisa = buatPolaGarisKecil("#f3e8ff", "#d8b4fe");
+
           buatAtauPerbaruiChart(canvasId, {
             type: "doughnut",
             data: {
-              labels: [item.label, "Lainnya"],
+              labels: [item.label, "Sisanya"],
               datasets: [{
                 data: [item.jumlah, sisa],
-                backgroundColor: [polaUtama, polaSisa],
-                borderColor: "#ffffff",
-                borderWidth: 1.5
+                backgroundColor: [warnaAktif, "rgba(0,0,0,0)"],
+                borderWidth: 0,
+                borderRadius: [12, 0]
               }]
             },
             options: {
               responsive: true,
               maintainAspectRatio: false,
-              cutout: "74%",
-              plugins: { legend: { display: false }, tooltip: { enabled: true } }
+              cutout: "78%",
+              rotation: 0,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: (ctx) => {
+                      const val = ctx.parsed || 0;
+                      return ` ${ctx.label}: ${formatAngka(val)} (${formatPersen(val, totalDataApproval)})`;
+                    }
+                  }
+                },
+                gaugeGarisRadial: {
+                  enabled: true,
+                  tickColor: "#b8b8c2"
+                }
+              }
             }
           });
         });
@@ -1067,11 +1147,19 @@
       perbaruiRingkasanKPI();
     }
 
-    function buatGradasiUnguHorizontal(ctx, chartArea) {
-      const gradasi = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+    function buatGradasiDesilVertikal(ctx, chartArea) {
+      const gradasi = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
       gradasi.addColorStop(0, "#4a0e4e");
       gradasi.addColorStop(0.55, "#7e22ce");
-      gradasi.addColorStop(1, "#a855f7");
+      gradasi.addColorStop(1, "#f3e8ff");
+      return gradasi;
+    }
+
+    function buatGradasiBarHorizontal(ctx, chartArea) {
+      const gradasi = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+      gradasi.addColorStop(0, "#f3e8ff");
+      gradasi.addColorStop(0.45, "#7e22ce");
+      gradasi.addColorStop(1, "#4a0e4e");
       return gradasi;
     }
 
@@ -1083,19 +1171,22 @@
         return;
       }
 
-      const dataChart = [...items].sort((a, b) => b.jumlah - a.jumlah);
+      const isDesil = key === "desil";
+      const dataChart = isDesil ? items : [...items].sort((a, b) => b.jumlah - a.jumlah);
       const total = dataChart.reduce((acc, cur) => acc + cur.jumlah, 0);
 
-      if (key === "desil") {
+      if (isDesil) {
         totalDataDesil = total;
         perbaruiRingkasanKPI();
       }
 
-      if (elStatus) elStatus.textContent = `${formatAngka(total)} Data`;
+      if (elStatus) elStatus.textContent = "Terhubung";
 
       const canvas = document.getElementById(canvasId);
       if (canvas && canvas.parentElement) {
-        const tinggiDinamis = Math.max(290, dataChart.length * 38);
+        const tinggiDinamis = isDesil
+          ? 320
+          : Math.max(290, dataChart.length * 36);
         canvas.parentElement.style.minHeight = `${tinggiDinamis}px`;
       }
 
@@ -1109,41 +1200,49 @@
             backgroundColor: (context) => {
               const { ctx, chartArea } = context.chart;
               if (!chartArea) return "#7e22ce";
-              return buatGradasiUnguHorizontal(ctx, chartArea);
+              return isDesil
+                ? buatGradasiDesilVertikal(ctx, chartArea)
+                : buatGradasiBarHorizontal(ctx, chartArea);
             },
-            hoverBackgroundColor: "#4c1d95",
             borderRadius: 8,
-            maxBarThickness: 28
+            maxBarThickness: isDesil ? 54 : 26
           }]
         },
         options: {
-          indexAxis: "y",
+          indexAxis: isDesil ? "x" : "y",
           responsive: true,
           maintainAspectRatio: false,
           layout: {
-            padding: { left: 4, right: 10, top: 4, bottom: 4 }
+            padding: isDesil
+              ? { top: 24, right: 12, left: 6, bottom: 4 }
+              : { top: 6, right: 56, left: 4, bottom: 4 }
           },
           plugins: {
             legend: { display: false },
             tooltip: {
               callbacks: {
                 label: (ctx) => {
-                  const val = ctx.parsed.x || 0;
-                  return ` ${formatAngka(val)} (${formatPersen(val, total)})`;
+                  const val = ctx.parsed[isDesil ? "y" : "x"] || 0;
+                  return ` Jumlah: ${formatAngka(val)} (${formatPersen(val, total)})`;
                 }
               }
             }
           },
-          scales: {
-            x: { beginAtZero: true, grid: { color: "#f3e8ff" } },
-            y: {
-              grid: { display: false },
-              ticks: {
-                autoSkip: false,
-                font: { size: 11.5 }
+          scales: isDesil
+            ? {
+                x: { grid: { display: false } },
+                y: { display: false, beginAtZero: true }
               }
-            }
-          }
+            : {
+                x: { display: false, beginAtZero: true },
+                y: {
+                  grid: { display: false },
+                  ticks: {
+                    autoSkip: false,
+                    font: { size: 11.5 }
+                  }
+                }
+              }
         }
       });
     }
