@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MMC - Management Mansakai Center</title>
+  <title>Mansakai - Dashboard Rekapitulasi</title>
   <link rel="icon" type="image/png" href="LOGO.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -61,22 +61,22 @@
 
     .sticky-header-glass {
       position: sticky;
-      top: 0.5rem;
+      top: 0.55rem;
       z-index: 1030;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(18px) saturate(155%);
-      -webkit-backdrop-filter: blur(18px) saturate(155%);
-      border: 1px solid rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.92);
       border-radius: 22px;
-      padding: 0.65rem 0.9rem;
-      box-shadow: 0 10px 26px rgba(76, 29, 149, 0.08);
+      padding: 0.6rem 0.9rem;
+      box-shadow: 0 10px 28px rgba(76, 29, 149, 0.09);
     }
 
     .brand-pill {
       background: rgba(255, 255, 255, 0.9);
       border: 1px solid rgba(233, 213, 255, 0.95);
       border-radius: 999px;
-      padding: 0.35rem 1.05rem 0.35rem 0.5rem;
+      padding: 0.32rem 1rem 0.32rem 0.45rem;
       font-weight: 500;
       color: var(--ungu-gelap);
       display: inline-flex;
@@ -93,28 +93,28 @@
     }
 
     .brand-title {
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       font-weight: 600;
       color: var(--ungu-gelap);
     }
 
     .brand-subtitle {
-      font-size: 0.65rem;
+      font-size: 0.64rem;
       font-weight: 400;
       color: var(--teks-redup);
       margin-top: 1px;
     }
 
     .brand-logo {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       object-fit: contain;
       border-radius: 50%;
     }
 
     .header-avatar-foto {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       object-fit: cover;
       object-position: center 10%;
@@ -141,38 +141,35 @@
     }
 
     .tab-pil-utama {
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(241, 245, 249, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.92);
       border-radius: 999px;
-      padding: 0.28rem;
+      padding: 0.24rem;
       display: inline-flex;
       flex-wrap: wrap;
-      gap: 0.2rem;
-      box-shadow: 0 8px 22px rgba(76, 29, 149, 0.05);
+      gap: 0.15rem;
     }
 
     .tab-pil-utama .nav-link {
       border: 0;
       background: transparent;
       color: #4b5563;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 500;
-      padding: 0.45rem 1.05rem;
+      padding: 0.38rem 0.95rem;
       border-radius: 999px;
       transition: all 0.2s ease;
     }
 
     .tab-pil-utama .nav-link:hover {
       color: var(--ungu-gelap);
-      background: rgba(255, 255, 255, 0.65);
+      background: rgba(255, 255, 255, 0.7);
     }
 
     .tab-pil-utama .nav-link.active {
       background: #27272a;
       color: #ffffff;
-      box-shadow: 0 6px 14px rgba(24, 24, 27, 0.2);
+      box-shadow: 0 4px 12px rgba(24, 24, 27, 0.2);
     }
 
     .glass-card {
@@ -523,53 +520,6 @@
       font-weight: 500;
     }
 
-    .foto-kartu-wrap {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 18px;
-      overflow: hidden;
-      margin-bottom: 0.9rem;
-      background: linear-gradient(135deg, rgba(76, 29, 149, 0.16), rgba(37, 99, 235, 0.16), rgba(249, 115, 22, 0.16));
-      border: 1px solid rgba(255, 255, 255, 0.88);
-    }
-
-    .foto-kartu-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .foto-fallback-ikon {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--ungu-gelap);
-      font-size: 1.5rem;
-    }
-
-    .btn-glass-action {
-      background: #18181b;
-      color: #ffffff;
-      border-radius: 999px;
-      padding: 0.45rem 1rem;
-      font-size: 0.79rem;
-      font-weight: 500;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      transition: all 0.2s ease;
-    }
-
-    .btn-glass-action:hover {
-      background: var(--ungu-utama);
-      color: #ffffff;
-    }
-
     .riwayat-modal-box {
       background: #faf5ff;
       border: 1px solid #ede9fe;
@@ -602,46 +552,17 @@
 <body>
   <div class="container">
     <div class="glass-container">
-      <!-- Top Bar MMC -->
-      <div class="sticky-header-glass d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+      <!-- Top Bar Mansakai (Freeze + Tab Dash, Perum, Infra) -->
+      <div class="sticky-header-glass d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
         <a href="#" class="brand-pill">
-          <img src="LOGO.png" alt="Logo MMC" class="brand-logo" onerror="this.style.display='none';" />
+          <img src="LOGO.png" alt="Logo Mansakai" class="brand-logo" onerror="this.style.display='none';" />
           <div class="brand-text-wrap">
-            <span class="brand-title">MMC</span>
-            <span class="brand-subtitle">Management Mansakai Center</span>
+            <span class="brand-title">MANSAKAI</span>
+            <span class="brand-subtitle">Data & Verifikasi Sasaran</span>
           </div>
         </a>
 
-        <div class="d-flex align-items-center gap-2 ms-auto">
-          <button
-            type="button"
-            class="btn btn-sm rounded-pill px-3 btn-minta-akses-glass"
-            data-bs-toggle="modal"
-            data-bs-target="#modalMintaAkses"
-          >
-            <i class="fa-solid fa-user-plus"></i>
-            <span>Minta Akses</span>
-          </button>
-          <span id="statusGlobal" class="badge-status">
-            <i class="fa-solid fa-rotate me-1"></i> Memuat 15 CSV...
-          </span>
-          <img
-            src="Foto.png"
-            alt="Foto Profil MMC"
-            class="header-avatar-foto"
-            onerror="this.onerror=null;this.src='Beranda.jpg';"
-          />
-        </div>
-      </div>
-
-      <!-- Baris Navigasi Tab Utama -->
-      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
-        <ul class="nav tab-pil-utama" id="tabUtamaMmc" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-all" data-bs-toggle="pill" data-bs-target="#pane-all" type="button" role="tab">
-              All
-            </button>
-          </li>
+        <ul class="nav tab-pil-utama" id="tabUtamaMansakai" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="tab-dash" data-bs-toggle="pill" data-bs-target="#pane-dash" type="button" role="tab">
               Dash
@@ -658,33 +579,32 @@
             </button>
           </li>
         </ul>
+
+        <div class="d-flex align-items-center gap-2 ms-auto ms-lg-0">
+          <button
+            type="button"
+            class="btn btn-sm rounded-pill px-3 btn-minta-akses-glass"
+            data-bs-toggle="modal"
+            data-bs-target="#modalMintaAkses"
+          >
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Minta Akses</span>
+          </button>
+          <span id="statusGlobal" class="badge-status">
+            <i class="fa-solid fa-rotate me-1"></i> Memuat 15 CSV...
+          </span>
+          <img
+            src="Foto.png"
+            alt="Foto Profil Mansakai"
+            class="header-avatar-foto"
+            onerror="this.onerror=null;this.src='Beranda.jpg';"
+          />
+        </div>
       </div>
 
       <!-- Isi Tab -->
-      <div class="tab-content" id="tabUtamaMmcContent">
-        <!-- ================= TAB 1: ALL (6 KARTU GLASS MODE + FOTO) ================= -->
-        <div class="tab-pane fade" id="pane-all" role="tabpanel" tabindex="0">
-          <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
-            <div>
-              <h2 class="h3 mb-1 fw-normal">Semua Laman MMC (6 Kartu)</h2>
-              <p class="small mb-0" style="color: var(--teks-redup);">
-                Daftar lengkap 6 laman web utama dalam tampilan mode kaca dengan bingkai foto.
-              </p>
-            </div>
-            <div style="min-width: 250px;">
-              <input
-                type="search"
-                id="cariLamanSemua"
-                class="form-control rounded-pill px-3 bg-white bg-opacity-75"
-                placeholder="Cari dari 6 laman..."
-              />
-            </div>
-          </div>
-
-          <div id="gridLamanSemua" class="row g-4"></div>
-        </div>
-
-        <!-- ================= TAB 2: DASH ================= -->
+      <div class="tab-content" id="tabUtamaMansakaiContent">
+        <!-- ================= TAB 1: DASH ================= -->
         <div class="tab-pane fade show active" id="pane-dash" role="tabpanel" tabindex="0">
           <section class="row g-4 align-items-start mb-4">
             <div class="col-lg-5">
@@ -729,7 +649,7 @@
                 <div>
                   <h2 class="h5 mb-1">Verifikasi & Validasi</h2>
                   <p class="small text-white-50 mb-2">
-                    Rekap status approval.
+                    Rekap status approval Mansakai.
                   </p>
                   <span id="pillHighlightApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 500;">
                     Memuat Approval...
@@ -811,7 +731,7 @@
             </div>
           </div>
 
-          <!-- Tambahan di Dash: Sebaran Menurut PBI Nasional & PBI Pemda -->
+          <!-- Sebaran Menurut PBI Nasional & PBI Pemda -->
           <div class="row g-4">
             <div class="col-lg-6">
               <div class="glass-card d-flex flex-column">
@@ -865,16 +785,15 @@
           </div>
         </div>
 
-        <!-- ================= TAB 3: PERUM ================= -->
+        <!-- ================= TAB 2: PERUM ================= -->
         <div class="tab-pane fade" id="pane-perum" role="tabpanel" tabindex="0">
           <div class="mb-4">
-            <h2 class="h3 mb-1 fw-normal">Kategori Perumahan (Perum)</h2>
+            <h2 class="h3 mb-1 fw-normal">Perumahan Mansakai (Perum)</h2>
             <p class="small mb-0" style="color: var(--teks-redup);">
               Rekap status kepemilikan rumah serta kondisi lantai, atap, dan dinding terluas.
             </p>
           </div>
 
-          <!-- Status Kepemilikan Rumah & Jenis Lantai -->
           <div class="row g-4 mb-4">
             <div class="col-lg-6">
               <div class="glass-card d-flex flex-column">
@@ -919,8 +838,7 @@
             </div>
           </div>
 
-          <!-- Jenis Atap & Jenis Dinding -->
-          <div class="row g-4 mb-4">
+          <div class="row g-4">
             <div class="col-lg-6">
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
@@ -955,20 +873,17 @@
               </div>
             </div>
           </div>
-
-          <div id="gridLamanPerum" class="row g-4"></div>
         </div>
 
-        <!-- ================= TAB 4: INFRA ================= -->
+        <!-- ================= TAB 3: INFRA ================= -->
         <div class="tab-pane fade" id="pane-infra" role="tabpanel" tabindex="0">
           <div class="mb-4">
-            <h2 class="h3 mb-1 fw-normal">Kategori Infrastruktur & Sanitasi (Infra)</h2>
+            <h2 class="h3 mb-1 fw-normal">Infrastruktur & Sanitasi Mansakai (Infra)</h2>
             <p class="small mb-0" style="color: var(--teks-redup);">
               Rekap sumber air minum, penerangan, bahan bakar masak, fasilitas BAB, jenis kloset, dan pembuangan akhir tinja.
             </p>
           </div>
 
-          <!-- Infrastruktur (3 Grafik) -->
           <div class="row g-4 mb-4">
             <div class="col-lg-4">
               <div class="glass-card d-flex flex-column">
@@ -1022,8 +937,7 @@
             </div>
           </div>
 
-          <!-- Sanitasi (3 Grafik) -->
-          <div class="row g-4 mb-4">
+          <div class="row g-4">
             <div class="col-lg-4">
               <div class="glass-card d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
@@ -1075,21 +989,19 @@
               </div>
             </div>
           </div>
-
-          <div id="gridLamanInfra" class="row g-4"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal Pendaftaran Permintaan Akses MMC -->
+  <!-- Modal Pendaftaran Permintaan Akses Mansakai -->
   <div class="modal fade" id="modalMintaAkses" tabindex="-1" aria-labelledby="labelMintaAkses" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="border-radius: 22px; border: 1px solid #ede9fe;">
         <div class="modal-header border-0 pb-0">
           <div>
-            <h5 class="modal-title" id="labelMintaAkses">Permintaan Akses MMC & Mansakai</h5>
-            <p class="small text-muted mb-0">Ajukan akun untuk diverifikasi oleh admin.</p>
+            <h5 class="modal-title" id="labelMintaAkses">Permintaan Akses Mansakai</h5>
+            <p class="small text-muted mb-0">Ajukan akun Mansakai untuk diverifikasi oleh admin.</p>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
         </div>
@@ -1103,7 +1015,7 @@
                 </span>
                 <span id="ringkasanCountModal" class="badge-status py-0 px-2" style="font-size: 0.7rem;">0 terkirim</span>
               </div>
-              <div id="daftarRiwayatModal" class="small text-muted">Belum ada pengajuan modul/role tercatat.</div>
+              <div id="daftarRiwayatModal" class="small text-muted">Belum ada pengajuan role tercatat.</div>
             </div>
 
             <div class="mb-3">
@@ -1117,18 +1029,17 @@
             </div>
 
             <div class="mb-3">
-              <label class="form-label small">Unit Kerja / OPD / Wilayah</label>
-              <input type="text" name="unit" class="form-control" placeholder="Contoh: OPD / Bidang / Kecamatan / Desa" />
+              <label class="form-label small">Unit Kerja / Kecamatan / Desa</label>
+              <input type="text" name="unit" class="form-control" placeholder="Contoh: Kecamatan / Desa / Bidang" />
             </div>
 
             <div class="row g-2 mb-3">
               <div class="col-sm-6">
-                <label class="form-label small">Modul / Aplikasi</label>
+                <label class="form-label small">Aplikasi / Modul</label>
                 <select name="modul" class="form-select" required>
-                  <option value="Mansakai">Mansakai</option>
-                  <option value="RKPD">RKPD</option>
-                  <option value="APBD">APBD</option>
-                  <option value="Semua Modul MMC">Semua Modul MMC</option>
+                  <option value="Mansakai" selected>Mansakai</option>
+                  <option value="Mansakai Verifikasi">Mansakai Verifikasi</option>
+                  <option value="Mansakai Dashboard">Mansakai Dashboard</option>
                 </select>
               </div>
               <div class="col-sm-6">
@@ -1144,7 +1055,7 @@
 
             <div class="mb-2">
               <label class="form-label small">Keperluan / Catatan Singkat</label>
-              <textarea name="alasan" class="form-control" rows="2" placeholder="Jelaskan kebutuhan akses Anda..."></textarea>
+              <textarea name="alasan" class="form-control" rows="2" placeholder="Jelaskan kebutuhan akses Mansakai Anda..."></textarea>
             </div>
 
             <div id="notifMintaAkses" class="alert d-none small py-2 mt-3 mb-0"></div>
@@ -1165,7 +1076,7 @@
             </div>
             <h6 class="fw-semibold mb-1">Permintaan Terkirim</h6>
             <p id="detailPermintaanTerkirim" class="small text-muted mb-3">
-              Pengajuan akses Anda telah dicatat dan menunggu verifikasi admin.
+              Pengajuan akses Mansakai Anda telah dicatat dan menunggu verifikasi admin.
             </p>
             <div class="d-flex justify-content-center gap-2">
               <button type="button" id="btnAjukanLagi" class="btn btn-sm rounded-pill px-3" style="background: var(--ungu-lembut); color: var(--ungu-utama); border: 1px solid #e9d5ff;">
@@ -1182,156 +1093,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const DATA_6_LAMAN_MMC = [
-      {
-        judul: "Dashboard Rekapitulasi Mansakai",
-        kategori: "Dash",
-        deskripsi: "Rekap status approval, sebaran desil, kecamatan, serta PBI Nasional dan PBI Pemda.",
-        foto: "Beranda.jpg",
-        ikon: "fa-chart-pie",
-        url: "#tab-dash",
-        tabBaru: false,
-        targetTab: "#tab-dash"
-      },
-      {
-        judul: "Monitoring RKPD & APBD",
-        kategori: "Perum",
-        deskripsi: "Pemantauan program dan klasifikasi belanja daerah lintas tahun berbasis data terstruktur.",
-        foto: "mmc-rkpd.jpg",
-        ikon: "fa-coins",
-        url: "https://contoh-username.github.io/rkpd-apbd-mmc/",
-        tabBaru: true
-      },
-      {
-        judul: "Verifikasi & Dokumentasi Foto",
-        kategori: "Dash",
-        deskripsi: "Rekap verifikasi lapangan, dokumentasi foto rumah tangga, dan kelengkapan data.",
-        foto: "mmc-verifikasi.jpg",
-        ikon: "fa-camera-retro",
-        url: "https://contoh-username.github.io/verifikasi-mmc/",
-        tabBaru: true
-      },
-      {
-        judul: "Administrasi & Berita Acara (BAST)",
-        kategori: "Infra",
-        deskripsi: "Akses formulir serah terima, penomoran otomatis, dan pembuatan dokumen administrasi.",
-        foto: "mmc-bast.jpg",
-        ikon: "fa-file-signature",
-        url: "https://contoh-username.github.io/bast-mmc/",
-        tabBaru: true
-      },
-      {
-        judul: "Perencanaan Strategis (RENSTRA & IDP)",
-        kategori: "Perum",
-        deskripsi: "Dokumen acuan rencana strategis unit kerja dan rencana pengembangan kompetensi.",
-        foto: "mmc-renstra.jpg",
-        ikon: "fa-compass-drafting",
-        url: "https://contoh-username.github.io/renstra-idp-mmc/",
-        tabBaru: true
-      },
-      {
-        judul: "Panduan & Pusat Informasi MMC",
-        kategori: "Infra",
-        deskripsi: "Informasi alur kerja, ketentuan penggunaan modul, dan panduan operasional MMC.",
-        foto: "Foto.png",
-        ikon: "fa-book-open",
-        url: "https://contoh-username.github.io/panduan-mmc/",
-        tabBaru: true
-      }
-    ];
-
-    function buatKartuLamanHtml(item) {
-      return `
-        <div class="col-md-6 col-lg-4">
-          <div class="glass-card">
-            <div>
-              <div class="foto-kartu-wrap">
-                <img
-                  src="${item.foto}"
-                  alt="${item.judul}"
-                  loading="lazy"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-                />
-                <div class="foto-fallback-ikon" style="display:none;">
-                  <i class="fa-solid ${item.ikon}"></i>
-                </div>
-              </div>
-
-              <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
-                <span class="badge-status">${item.kategori}</span>
-                <span class="small" style="color: var(--teks-redup);">
-                  <i class="fa-solid ${item.ikon}"></i>
-                </span>
-              </div>
-
-              <h3 class="h5 mb-2 fw-normal">${item.judul}</h3>
-              <p class="small mb-3" style="color: var(--teks-redup);">${item.deskripsi}</p>
-            </div>
-
-            <div>
-              ${
-                item.targetTab
-                  ? `<button type="button" class="btn-glass-action border-0" onclick="document.querySelector('${item.targetTab}')?.click();">
-                       <span>Buka Tab</span>
-                       <i class="fa-solid fa-arrow-right"></i>
-                     </button>`
-                  : `<a href="${item.url}" class="btn-glass-action" ${item.tabBaru ? 'target="_blank" rel="noopener noreferrer"' : ""}>
-                       <span>Buka Laman</span>
-                       <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                     </a>`
-              }
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderGridSemua6(q = "") {
-      const elGrid = document.getElementById("gridLamanSemua");
-      if (!elGrid) return;
-      const bersih = q.trim().toLowerCase();
-      const daftar = DATA_6_LAMAN_MMC.filter((item) =>
-        !bersih ||
-        item.judul.toLowerCase().includes(bersih) ||
-        item.kategori.toLowerCase().includes(bersih) ||
-        item.deskripsi.toLowerCase().includes(bersih)
-      );
-
-      if (!daftar.length) {
-        elGrid.innerHTML = `<div class="col-12"><div class="glass-card text-center py-5" style="color: var(--teks-redup);">Tidak ada laman yang cocok.</div></div>`;
-        return;
-      }
-
-      elGrid.innerHTML = daftar.map(buatKartuLamanHtml).join("");
-    }
-
-    function renderGridPerKategori() {
-      const elPerum = document.getElementById("gridLamanPerum");
-      const elInfra = document.getElementById("gridLamanInfra");
-
-      if (elPerum) {
-        elPerum.innerHTML = DATA_6_LAMAN_MMC
-          .filter((item) => item.kategori === "Perum")
-          .map(buatKartuLamanHtml)
-          .join("");
-      }
-
-      if (elInfra) {
-        elInfra.innerHTML = DATA_6_LAMAN_MMC
-          .filter((item) => item.kategori === "Infra")
-          .map(buatKartuLamanHtml)
-          .join("");
-      }
-    }
-
-    document.getElementById("cariLamanSemua")?.addEventListener("input", (e) => {
-      renderGridSemua6(e.target.value);
-    });
-
-    renderGridSemua6();
-    renderGridPerKategori();
-  </script>
   <script>
     const URL_WEB_APP_AKSES = "https://script.google.com/macros/s/AKfycbyx7cqWcizD_Q81jvW8bssSDzBdvos6X0soIHJpppPt7b9jxuTnoFpOfe38k7zxInLCqQ/exec";
     const KUNCI_JUMLAH_PERMINTAAN = "mansakai_jumlah_permintaan_akses";
@@ -1393,7 +1154,7 @@
 
       if (elDaftarModal) {
         if (!riwayat.length) {
-          elDaftarModal.textContent = "Belum ada pengajuan modul/role tercatat.";
+          elDaftarModal.textContent = "Belum ada pengajuan role tercatat.";
         } else {
           elDaftarModal.innerHTML = riwayat
             .map((r) => `<span class="d-inline-block me-2 mb-1 px-2 py-1 rounded-pill bg-white border" style="border-color:#e9d5ff!important;"><strong>${r.modul}</strong> • ${r.role}</span>`)
@@ -1978,7 +1739,7 @@
       setMetaGrafik(metaIds, sortedItems, total);
     }
 
-    document.querySelectorAll('#tabUtamaMmc button[data-bs-toggle="pill"]').forEach((btn) => {
+    document.querySelectorAll('#tabUtamaMansakai button[data-bs-toggle="pill"]').forEach((btn) => {
       btn.addEventListener("shown.bs.tab", () => {
         Object.values(chartInstances).forEach((inst) => {
           if (inst && typeof inst.resize === "function") {
