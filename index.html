@@ -311,7 +311,42 @@
       background: rgba(255, 255, 255, 0.46);
       border: 1px solid rgba(255, 255, 255, 0.88);
       border-radius: 16px;
-      padding: 0.8rem 0.9rem;
+      padding: 0.75rem 0.85rem;
+    }
+
+    .donat-approval-kecil {
+      width: 148px;
+      height: 148px;
+    }
+
+    .donat-approval-kecil .donat-tengah-angka {
+      font-size: 1.05rem;
+      padding: 0.08rem 0.38rem;
+    }
+
+    .donat-approval-kecil .donat-tengah-ket {
+      font-size: 0.62rem;
+    }
+
+    .ringkas-approval-dua-kolom {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    @media (max-width: 575.98px) {
+      .ringkas-approval-dua-kolom {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ringkas-approval-dua-kolom .item-rincian-pro {
+      padding: 0.42rem 0.58rem;
+    }
+
+    .ringkas-approval-dua-kolom .item-rincian-top {
+      font-size: 0.74rem;
+      margin-bottom: 0.25rem;
     }
 
     .desil-glass-stage {
@@ -391,8 +426,8 @@
 
     .donat-tengah-wrap {
       position: relative;
-      width: 176px;
-      height: 176px;
+      width: 188px;
+      height: 188px;
       margin: 0 auto;
     }
 
@@ -1468,8 +1503,8 @@
           return `
             <div class="item-rincian-pro">
               <div class="item-rincian-top">
-                <span class="d-flex align-items-center gap-2 text-truncate">
-                  <span style="width:9px;height:9px;border-radius:50%;background:${warna};display:inline-block;flex-shrink:0;"></span>
+                <span class="d-flex align-items-center gap-1 text-truncate" title="${d.label}">
+                  <span style="width:8px;height:8px;border-radius:50%;background:${warna};display:inline-block;flex-shrink:0;"></span>
                   <span class="text-truncate fw-medium">${d.label}</span>
                 </span>
                 <span class="fw-medium text-nowrap">${formatAngka(d.jumlah)} <span style="color: var(--teks-redup);">(${formatPersen(d.jumlah, total)})</span></span>
@@ -1513,15 +1548,15 @@
 
       const htmlDonat = `
         <div class="approval-donat-panel">
-          <div class="row align-items-center g-3">
-            <div class="col-sm-5">
-              <div class="donat-tengah-wrap">
+          <div class="row align-items-center g-2">
+            <div class="col-sm-4">
+              <div class="donat-tengah-wrap donat-approval-kecil">
                 <canvas id="chartApprovalDonat"></canvas>
                 <div id="centerApprovalDonat" class="donat-tengah-label"></div>
               </div>
             </div>
-            <div class="col-sm-7">
-              <div id="ringkasApprovalDonat" class="d-flex flex-column gap-2 small"></div>
+            <div class="col-sm-8">
+              <div id="ringkasApprovalDonat" class="ringkas-approval-dua-kolom small"></div>
             </div>
           </div>
         </div>
