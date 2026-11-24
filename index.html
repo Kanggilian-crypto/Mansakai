@@ -3,1882 +3,500 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mansakai - Dashboard Rekapitulasi</title>
-  <link rel="icon" type="image/png" href="LOGO.png" />
+  <title>Mansakai — Status Approval</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ungu-utama: #7e22ce;
-      --ungu-pekat: #4a0e4e;
-      --ungu-gelap: #4c1d95;
-      --ungu-lembut: #f3e8ff;
-      --biru-aksen: #2563eb;
-      --orange-aksen: #f97316;
-      --kuning-aksen: #facc15;
-      --gelap-pill: #18181b;
-      --teks-utama: #141416;
-      --teks-redup: #525866;
+      --bg-grad: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 48%, #f8fafc 100%);
+      --card-light: rgba(255, 255, 255, 0.92);
+      --card-dark: #090714;
+      --dark-row: #17132b;
+      --purple-main: #5b21b6;
+      --purple-soft: #ede9fe;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --c-approved: #6d28d9;
+      --c-revision: #2563eb;
+      --c-waiting: #ea580c;
+      --c-inactive: #9333ea;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
-      font-family: "Outfit", "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-      font-weight: 400;
-      color: var(--teks-utama);
+      margin: 0;
+      font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-grad);
+      color: var(--ink);
       min-height: 100vh;
-      padding: 1.35rem 0 2.75rem;
-      background-color: #eef0f8;
-      background-image:
-        radial-gradient(circle at 12% 14%, rgba(124, 58, 237, 0.24) 0%, transparent 42%),
-        radial-gradient(circle at 88% 18%, rgba(37, 99, 235, 0.2) 0%, transparent 45%),
-        radial-gradient(circle at 78% 88%, rgba(249, 115, 22, 0.18) 0%, transparent 45%),
-        linear-gradient(135deg, #f5f3ff 0%, #eef2ff 52%, #fff7ed 100%);
-      background-attachment: fixed;
-      -webkit-font-smoothing: antialiased;
+      padding: 1.25rem;
     }
 
-    h1, h2, h3, .stat-big {
-      font-family: "Outfit", "DM Sans", sans-serif;
-      font-weight: 400;
-      letter-spacing: -0.02em;
-    }
-
-    .glass-container {
-      background: rgba(255, 255, 255, 0.54);
-      backdrop-filter: blur(22px) saturate(155%);
-      -webkit-backdrop-filter: blur(22px) saturate(155%);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      border-radius: 30px;
-      padding: 1.65rem;
-      box-shadow:
-        0 24px 60px rgba(76, 29, 149, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    }
-
-    .sticky-header-glass {
-      position: sticky;
-      top: 0.55rem;
-      z-index: 1030;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border: 1px solid rgba(255, 255, 255, 0.92);
-      border-radius: 22px;
-      padding: 0.6rem 0.9rem;
-      box-shadow: 0 10px 28px rgba(76, 29, 149, 0.09);
-    }
-
-    .brand-pill {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(233, 213, 255, 0.95);
-      border-radius: 999px;
-      padding: 0.32rem 1rem 0.32rem 0.45rem;
-      font-weight: 500;
-      color: var(--ungu-gelap);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      text-decoration: none;
-      line-height: 1.15;
-    }
-
-    .brand-text-wrap {
+    .mansakai-wrap {
+      max-width: 1280px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      gap: 1.15rem;
     }
 
-    .brand-title {
-      font-size: 0.96rem;
-      font-weight: 600;
-      color: var(--ungu-gelap);
-    }
-
-    .brand-subtitle {
-      font-size: 0.64rem;
-      font-weight: 400;
-      color: var(--teks-redup);
-      margin-top: 1px;
-    }
-
-    .brand-logo {
-      width: 30px;
-      height: 30px;
-      object-fit: contain;
-      border-radius: 50%;
-    }
-
-    .header-avatar-foto {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: center 10%;
-      border: 2px solid rgba(255, 255, 255, 0.94);
-      box-shadow: 0 4px 12px rgba(76, 29, 149, 0.14);
-      flex-shrink: 0;
-    }
-
-    .btn-minta-akses-glass {
-      background: rgba(243, 232, 255, 0.88);
-      color: var(--ungu-utama);
-      border: 1px solid rgba(255, 255, 255, 0.92);
-      font-size: 0.76rem;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .btn-minta-akses-glass:hover,
-    .btn-minta-akses-glass:focus {
-      background: rgba(233, 213, 255, 0.98);
-      color: var(--ungu-gelap);
-    }
-
-    .tab-pil-utama {
-      background: rgba(241, 245, 249, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.92);
-      border-radius: 999px;
-      padding: 0.24rem;
-      display: inline-flex;
+    /* Header Strip */
+    .top-summary-bar {
+      display: flex;
       flex-wrap: wrap;
-      gap: 0.15rem;
-    }
-
-    .tab-pil-utama .nav-link {
-      border: 0;
-      background: transparent;
-      color: #4b5563;
-      font-size: 0.8rem;
-      font-weight: 500;
-      padding: 0.38rem 0.95rem;
-      border-radius: 999px;
-      transition: all 0.2s ease;
-    }
-
-    .tab-pil-utama .nav-link:hover {
-      color: var(--ungu-gelap);
-      background: rgba(255, 255, 255, 0.7);
-    }
-
-    .tab-pil-utama .nav-link.active {
-      background: #27272a;
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(24, 24, 27, 0.2);
-    }
-
-    .glass-card {
-      background: rgba(255, 255, 255, 0.74);
-      backdrop-filter: blur(16px) saturate(150%);
-      -webkit-backdrop-filter: blur(16px) saturate(150%);
-      border: 1px solid rgba(255, 255, 255, 0.92);
-      border-radius: 22px;
-      padding: 1.25rem;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
+      align-items: center;
       justify-content: space-between;
-      box-shadow:
-        0 10px 26px rgba(76, 29, 149, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.94);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .glass-card:hover {
-      transform: translateY(-2px);
-      box-shadow:
-        0 16px 32px rgba(76, 29, 149, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.96);
-    }
-
-    .glass-card-dark {
-      background: linear-gradient(160deg, #1f1b2e 0%, #141418 100%);
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 22px;
-      padding: 1.25rem;
-      height: 100%;
-      box-shadow: 0 14px 32px rgba(20, 20, 24, 0.2);
-    }
-
-    .beranda-banner-card {
-      position: relative;
-      border-radius: 22px;
-      overflow: hidden;
-      height: 100%;
-      min-height: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.82);
-      background: linear-gradient(180deg, rgba(24, 24, 27, 0.05) 38%, rgba(24, 24, 27, 0.58) 72%, rgba(24, 24, 27, 0.92) 100%),
-                  url("Beranda.jpg") center/cover no-repeat;
-      color: #ffffff;
-      padding: 1.45rem 1.2rem 1.2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    .kpi-kolom-item {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .kpi-label-seragam {
-      font-size: 0.82rem;
-      line-height: 1.25;
-      color: var(--teks-redup);
-    }
-
-    .kpi-nilai-seragam {
-      min-height: 2.25rem;
-      margin-top: 0.35rem;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      line-height: 1.15;
-    }
-
-    @media (min-width: 992px) {
-      .kpi-nilai-seragam {
-        justify-content: flex-end;
-      }
-    }
-
-    .approval-pro-wrap {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
       gap: 1rem;
-      padding: 0.25rem 0;
+      padding: 0.35rem 0.5rem;
     }
 
-    .approval-hero-box {
-      background: rgba(255, 255, 255, 0.62);
-      border: 1px solid rgba(255, 255, 255, 0.92);
-      border-radius: 16px;
-      padding: 0.85rem 1rem;
+    .title-block h1 {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
     }
 
-    .approval-hero-top {
+    .title-block p {
+      margin: 0.2rem 0 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .kpi-strip {
       display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 2rem;
     }
 
-    .approval-hero-title {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--teks-redup);
+    .kpi-item .lbl {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
     }
 
-    .approval-hero-pct {
-      font-family: "Outfit", "DM Sans", sans-serif;
-      font-size: 1.35rem;
+    .kpi-item .val {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .kpi-item .val.purple {
+      color: var(--purple-main);
+    }
+
+    .kpi-item .sub-link {
+      font-size: 0.75rem;
+      color: var(--purple-main);
       font-weight: 600;
-      color: var(--ungu-gelap);
-      line-height: 1;
+      margin-top: 0.2rem;
     }
 
-    .approval-track {
-      width: 100%;
-      height: 9px;
-      border-radius: 999px;
-      background: rgba(126, 34, 206, 0.12);
-      overflow: hidden;
-    }
-
-    .approval-track-fill {
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #7e22ce 0%, #2563eb 100%);
-      transition: width 0.5s ease;
-    }
-
-    .approval-hero-sub {
-      font-size: 0.72rem;
-      color: var(--teks-redup);
-      margin-top: 0.45rem;
-    }
-
-    .approval-tiga-grid {
+    /* Main Split Grid */
+    .approval-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.7rem;
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.85fr);
+      gap: 1.15rem;
+      align-items: stretch;
     }
 
-    @media (max-width: 575.98px) {
-      .approval-tiga-grid {
+    @media (max-width: 992px) {
+      .approval-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    .approval-stat-mini {
-      background: rgba(255, 255, 255, 0.68);
-      border: 1px solid rgba(255, 255, 255, 0.92);
-      border-radius: 16px;
-      padding: 0.8rem 0.75rem;
-      text-align: center;
+    /* Left Card: Grafik Status Approval */
+    .panel-status-approval {
+      background: var(--card-light);
+      backdrop-filter: blur(16px);
+      border-radius: 26px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 14px 36px rgba(91, 33, 182, 0.06);
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: space-between;
-      gap: 0.35rem;
+      gap: 1.15rem;
     }
 
-    .approval-mini-angka {
-      font-family: "Outfit", "DM Sans", sans-serif;
-      font-size: 1.45rem;
-      font-weight: 500;
-      color: var(--teks-utama);
-      line-height: 1.1;
-    }
-
-    .approval-mini-pct {
-      font-size: 0.72rem;
-      font-weight: 500;
-      color: var(--teks-redup);
-    }
-
-    .approval-mini-bar {
-      width: 44px;
-      height: 4px;
-      border-radius: 999px;
-      margin: 0.1rem 0;
-    }
-
-    .approval-mini-label {
-      font-size: 0.74rem;
-      font-weight: 500;
-      color: var(--teks-utama);
-      line-height: 1.25;
-    }
-
-    .desil-glass-stage {
-      background: rgba(255, 255, 255, 0.38);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      border-radius: 20px;
-      padding: 1.15rem 1rem 0.8rem;
-      overflow-x: auto;
-    }
-
-    .desil-capsule-chart {
+    .panel-head {
       display: flex;
-      align-items: flex-end;
+      align-items: flex-start;
       justify-content: space-between;
-      gap: 0.85rem;
-      min-height: 245px;
-      min-width: 480px;
-      padding: 1.65rem 0.35rem 0.55rem;
-      border-bottom: 1.5px solid rgba(148, 163, 184, 0.35);
+      gap: 0.75rem;
     }
 
-    .desil-col-item {
-      flex: 1 1 0;
-      min-width: 58px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .desil-track-glass {
-      position: relative;
-      width: 100%;
-      max-width: 40px;
-      height: 185px;
-      border-radius: 14px;
-      background: rgba(226, 232, 240, 0.38);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
-
-    .desil-bar-glass {
-      position: relative;
-      width: 100%;
-      min-height: 16%;
-      border-radius: 12px;
-      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.16);
-      transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-      display: flex;
-      justify-content: center;
-    }
-
-    .desil-nilai-atas {
-      position: absolute;
-      top: -1.45rem;
+    .eyebrow {
       font-size: 0.78rem;
-      font-weight: 600;
-      color: #1f2937;
-      white-space: nowrap;
-      line-height: 1;
-    }
-
-    .desil-label-bawah {
-      margin-top: 0.55rem;
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: #1f2937;
-      text-align: center;
-      line-height: 1.2;
-    }
-
-    .desil-persen-bawah {
-      font-size: 0.68rem;
-      color: var(--teks-redup);
-      margin-top: 0.1rem;
-    }
-
-    .donat-tengah-wrap {
-      position: relative;
-      width: 188px;
-      height: 188px;
-      margin: 0 auto;
-    }
-
-    .donat-tengah-label {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      text-align: center;
-      padding: 0 1.35rem;
-      z-index: 2;
-    }
-
-    .donat-tengah-angka {
-      font-family: "Outfit", "DM Sans", sans-serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--teks-utama);
-      line-height: 1.15;
-      background: rgba(255, 255, 255, 0.82);
-      padding: 0.12rem 0.45rem;
-      border-radius: 8px;
-    }
-
-    .donat-tengah-ket {
-      font-size: 0.68rem;
+      color: var(--muted);
       font-weight: 500;
-      color: var(--teks-redup);
-      margin-top: 0.2rem;
     }
 
-    .item-rincian-pro {
-      background: rgba(255, 255, 255, 0.72);
-      border: 1px solid rgba(233, 213, 255, 0.75);
-      border-radius: 12px;
-      padding: 0.5rem 0.7rem;
+    .panel-title {
+      margin: 0.15rem 0 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
     }
 
-    .item-rincian-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.32rem;
-    }
-
-    .item-rincian-track {
-      width: 100%;
-      height: 5px;
+    .badge-connected {
+      background: var(--purple-soft);
+      color: var(--purple-main);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.42rem 0.9rem;
       border-radius: 999px;
-      background: rgba(148, 163, 184, 0.2);
+      white-space: nowrap;
+    }
+
+    .progress-box {
+      background: rgba(248, 250, 252, 0.92);
+      border: 1px solid #eef2ff;
+      border-radius: 18px;
+      padding: 1.1rem 1.2rem;
+    }
+
+    .progress-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .progress-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .progress-pct {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--purple-main);
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #e9d5ff;
       overflow: hidden;
     }
 
-    .item-rincian-fill {
+    .bar-fill {
       height: 100%;
+      width: 0%;
       border-radius: 999px;
-      transition: width 0.45s ease;
+      background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+      transition: width 0.35s ease;
     }
 
-    .grafik-footer-meta {
-      margin-top: 0.85rem;
-      padding-top: 0.65rem;
-      border-top: 1px dashed rgba(126, 34, 206, 0.18);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.74rem;
-      color: var(--teks-redup);
+    .progress-caption {
+      margin-top: 0.65rem;
+      font-size: 0.82rem;
+      color: var(--muted);
     }
 
-    .grafik-footer-meta strong {
-      color: var(--ungu-gelap);
-      font-weight: 500;
+    .progress-caption strong {
+      color: var(--ink);
     }
 
-    .stat-big {
-      font-size: 1.85rem;
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
+    /* 4 Status Cards inside Grafik Status Approval */
+    .status-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
     }
 
-    .badge-status {
-      background: var(--ungu-lembut);
-      color: var(--ungu-utama);
-      border: 1px solid #e9d5ff;
-      font-weight: 400;
-      border-radius: 999px;
-      padding: 0.34rem 0.78rem;
-      font-size: 0.75rem;
+    @media (max-width: 768px) {
+      .status-mini-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
-    .dark-item-row {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      border-radius: 14px;
-      padding: 0.65rem 0.9rem;
-    }
-
-    .subteks-permintaan-kpi {
-      font-size: 0.74rem;
-      color: var(--ungu-utama);
-      margin-top: 0.45rem;
-    }
-
-    .subteks-permintaan-kpi strong {
-      color: var(--ungu-gelap);
-      font-weight: 500;
-    }
-
-    .riwayat-modal-box {
-      background: #faf5ff;
-      border: 1px solid #ede9fe;
-      border-radius: 14px;
-      padding: 0.65rem 0.85rem;
-    }
-
-    .sukses-terkirim-box {
-      background: #faf5ff;
-      border: 1px solid #e9d5ff;
+    .status-mini-card {
+      background: #ffffff;
+      border: 1px solid #f1f5f9;
       border-radius: 18px;
-      padding: 1.5rem 1.25rem;
+      padding: 0.9rem 0.65rem;
       text-align: center;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.03);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
     }
 
-    .ikon-sukses-bulat {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--ungu-lembut);
-      color: var(--ungu-utama);
-      display: inline-flex;
+    .mini-num {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .mini-sub {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .mini-line {
+      width: 26px;
+      height: 3px;
+      border-radius: 999px;
+      margin: 0.25rem 0;
+    }
+
+    .mini-name {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    /* Right Dark Card: Ringkasan Approval */
+    .panel-ringkasan-dark {
+      background: var(--card-dark);
+      color: #ffffff;
+      border-radius: 26px;
+      padding: 1.5rem;
+      box-shadow: 0 18px 42px rgba(9, 7, 20, 0.25);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .dark-eyebrow {
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
+
+    .dark-title {
+      margin: 0.15rem 0 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .pill-total-data {
+      background: #facc15;
+      color: #1e1b4b;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .dark-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .dark-status-row {
+      background: var(--dark-row);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 0.85rem 1rem;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .dark-left {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dark-right {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: nowrap;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="glass-container">
-      <!-- Top Bar Mansakai (Freeze + Tab Dash, Perum, Infra) -->
-      <div class="sticky-header-glass d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
-        <a href="#" class="brand-pill">
-          <img src="LOGO.png" alt="Logo Mansakai" class="brand-logo" onerror="this.style.display='none';" />
-          <div class="brand-text-wrap">
-            <span class="brand-title">MANSAKAI</span>
-            <span class="brand-subtitle">Data & Verifikasi Sasaran</span>
-          </div>
-        </a>
-
-        <ul class="nav tab-pil-utama" id="tabUtamaMansakai" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="tab-dash" data-bs-toggle="pill" data-bs-target="#pane-dash" type="button" role="tab">
-              Dash
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-perum" data-bs-toggle="pill" data-bs-target="#pane-perum" type="button" role="tab">
-              Perum
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-infra" data-bs-toggle="pill" data-bs-target="#pane-infra" type="button" role="tab">
-              Infra
-            </button>
-          </li>
-        </ul>
-
-        <div class="d-flex align-items-center gap-2 ms-auto ms-lg-0">
-          <button
-            type="button"
-            class="btn btn-sm rounded-pill px-3 btn-minta-akses-glass"
-            data-bs-toggle="modal"
-            data-bs-target="#modalMintaAkses"
-          >
-            <i class="fa-solid fa-user-plus"></i>
-            <span>Minta Akses</span>
-          </button>
-          <span id="statusGlobal" class="badge-status">
-            <i class="fa-solid fa-rotate me-1"></i> Memuat 15 CSV...
-          </span>
-          <img
-            src="Foto.png"
-            alt="Foto Profil Mansakai"
-            class="header-avatar-foto"
-            onerror="this.onerror=null;this.src='Beranda.jpg';"
-          />
-        </div>
+  <div class="mansakai-wrap">
+    <!-- Top KPI Bar -->
+    <div class="top-summary-bar">
+      <div class="title-block">
+        <h1>Rekapitulasi Mansakai</h1>
+        <p>Ringkasan status approval dan sebaran data desil</p>
       </div>
 
-      <!-- Isi Tab -->
-      <div class="tab-content" id="tabUtamaMansakaiContent">
-        <!-- ================= TAB 1: DASH ================= -->
-        <div class="tab-pane fade show active" id="pane-dash" role="tabpanel" tabindex="0">
-          <section class="row g-4 align-items-start mb-4">
-            <div class="col-lg-5">
-              <h1 class="fs-2 mb-1">Dashboard Rekapitulasi Mansakai</h1>
-              <p class="small mb-0" style="color: var(--teks-redup);">
-                Persentase approval mengacu pada <strong>Total Data</strong> keseluruhan menurut Desil.
-              </p>
-            </div>
-
-            <div class="col-lg-7">
-              <div class="row g-3 text-lg-end">
-                <div class="col-6 col-sm-3 kpi-kolom-item">
-                  <div class="kpi-label-seragam">Total Data (Desil)</div>
-                  <div id="kpiTotalData" class="stat-big kpi-nilai-seragam" style="color: var(--ungu-pekat);">...</div>
-                </div>
-                <div class="col-6 col-sm-3 kpi-kolom-item">
-                  <div class="kpi-label-seragam">Total Approval</div>
-                  <div id="kpiTotalApproval" class="stat-big kpi-nilai-seragam">...</div>
-                </div>
-                <div class="col-6 col-sm-3 kpi-kolom-item">
-                  <div class="kpi-label-seragam">% Approval / Total</div>
-                  <div id="kpiPersenApprovalTotal" class="stat-big kpi-nilai-seragam" style="color: var(--ungu-utama);">...</div>
-                </div>
-                <div class="col-6 col-sm-3 kpi-kolom-item">
-                  <div class="kpi-label-seragam">Status Terbanyak</div>
-                  <div id="kpiStatusApprovalTerbanyak" class="fs-6 fw-medium kpi-nilai-seragam">...</div>
-                </div>
-              </div>
-
-              <div id="subteksPermintaanKpi" class="subteks-permintaan-kpi text-lg-end d-none">
-                <i class="fa-solid fa-paper-plane me-1"></i>
-                <strong id="teksJumlahPermintaanKpi">0 permintaan terkirim</strong>
-                <span id="teksRiwayatPermintaanKpi"></span>
-              </div>
-            </div>
-          </section>
-
-          <!-- Baris Utama: Banner + Status Approval + Ringkasan Gelap -->
-          <div class="row g-4 align-items-stretch mb-4">
-            <div class="col-lg-3">
-              <div class="beranda-banner-card">
-                <div>
-                  <h2 class="h5 mb-1">Verifikasi & Validasi</h2>
-                  <p class="small text-white-50 mb-2">
-                    Rekap status approval Mansakai.
-                  </p>
-                  <span id="pillHighlightApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 500;">
-                    Memuat Approval...
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-5">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Grafik 1 • Prioritas Utama</span>
-                    <h2 class="h5 mb-0">Status Approval</h2>
-                  </div>
-                  <span id="statusApproval" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorApproval" class="alert alert-danger py-2 small d-none"></div>
-                <div id="gridApprovalItems" class="approval-pro-wrap flex-grow-1">
-                  <div class="text-center small py-4 w-100" style="color: var(--teks-redup);">Memuat grafik approval...</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="glass-card-dark d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <div>
-                    <div class="small text-white-50">Rincian Status</div>
-                    <h2 class="h5 mb-0">Ringkasan Approval</h2>
-                  </div>
-                  <span id="badgeTotalApproval" class="badge rounded-pill px-3 py-2" style="background: var(--kuning-aksen); color: #18181b; font-weight: 500;">
-                    0 Data
-                  </span>
-                </div>
-                <div id="daftarRingkasApproval" class="d-flex flex-column gap-2 flex-grow-1">
-                  <div class="dark-item-row small text-white-50">Memuat rincian approval...</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Grafik Desil & Kecamatan -->
-          <div class="row g-4 mb-4">
-            <div class="col-lg-6">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Grafik 2 • Sebaran Ekonomi</span>
-                    <h2 class="h5 mb-0">Sebaran Menurut Desil</h2>
-                  </div>
-                  <span id="statusDesil" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorDesil" class="alert alert-danger py-2 small d-none"></div>
-                <div class="desil-glass-stage flex-grow-1">
-                  <div id="desilCapsuleChart" class="desil-capsule-chart">
-                    <div class="text-center small py-5 w-100" style="color: var(--teks-redup);">Memuat grafik desil...</div>
-                  </div>
-                </div>
-                <div id="metaDesil" class="grafik-footer-meta">Memuat ringkasan desil...</div>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Grafik 3 • Urutan Terbanyak</span>
-                    <h2 class="h5 mb-0">Sebaran Menurut Kecamatan</h2>
-                  </div>
-                  <span id="statusKecamatan" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorKecamatan" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 290px;">
-                  <canvas id="chartKecamatan"></canvas>
-                </div>
-                <div id="metaKecamatan" class="grafik-footer-meta">Memuat ringkasan kecamatan...</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sebaran Menurut PBI Nasional & PBI Pemda -->
-          <div class="row g-4">
-            <div class="col-lg-6">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Grafik 4 • Bantuan & Jaminan</span>
-                    <h2 class="h5 mb-0">Sebaran Menurut PBI Nasional</h2>
-                  </div>
-                  <span id="statusPbiNasional" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorPbiNasional" class="alert alert-danger py-2 small d-none"></div>
-                <div class="row align-items-center g-3 flex-grow-1">
-                  <div class="col-sm-6">
-                    <div class="donat-tengah-wrap">
-                      <canvas id="chartPbiNasional"></canvas>
-                      <div id="centerPbiNasional" class="donat-tengah-label"></div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div id="ringkasPbiNasional" class="d-flex flex-column gap-2 small"></div>
-                  </div>
-                </div>
-                <div id="metaPbiNasional" class="grafik-footer-meta">Memuat ringkasan PBI Nasional...</div>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Grafik 5 • Bantuan & Jaminan</span>
-                    <h2 class="h5 mb-0">Sebaran Menurut PBI Pemda</h2>
-                  </div>
-                  <span id="statusPbiPemda" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorPbiPemda" class="alert alert-danger py-2 small d-none"></div>
-                <div class="row align-items-center g-3 flex-grow-1">
-                  <div class="col-sm-6">
-                    <div class="donat-tengah-wrap">
-                      <canvas id="chartPbiPemda"></canvas>
-                      <div id="centerPbiPemda" class="donat-tengah-label"></div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div id="ringkasPbiPemda" class="d-flex flex-column gap-2 small"></div>
-                  </div>
-                </div>
-                <div id="metaPbiPemda" class="grafik-footer-meta">Memuat ringkasan PBI Pemda...</div>
-              </div>
-            </div>
-          </div>
+      <div class="kpi-strip">
+        <div class="kpi-item">
+          <div class="lbl">Total Data (Desil)</div>
+          <div class="val" id="topTotalData">22.314</div>
         </div>
-
-        <!-- ================= TAB 2: PERUM ================= -->
-        <div class="tab-pane fade" id="pane-perum" role="tabpanel" tabindex="0">
-          <div class="mb-4">
-            <h2 class="h3 mb-1 fw-normal">Perumahan Mansakai (Perum)</h2>
-            <p class="small mb-0" style="color: var(--teks-redup);">
-              Rekap status kepemilikan rumah serta kondisi lantai, atap, dan dinding terluas.
-            </p>
-          </div>
-
-          <div class="row g-4 mb-4">
-            <div class="col-lg-6">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Perum • Grafik 1</span>
-                    <h3 class="h5 mb-0">Status Kepemilikan Rumah</h3>
-                  </div>
-                  <span id="statusKepemilikanRumah" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorKepemilikanRumah" class="alert alert-danger py-2 small d-none"></div>
-                <div class="row align-items-center g-3 flex-grow-1">
-                  <div class="col-sm-6">
-                    <div class="donat-tengah-wrap">
-                      <canvas id="chartKepemilikanRumah"></canvas>
-                      <div id="centerKepemilikanRumah" class="donat-tengah-label"></div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div id="ringkasKepemilikanRumah" class="d-flex flex-column gap-2 small"></div>
-                  </div>
-                </div>
-                <div id="metaKepemilikanRumah" class="grafik-footer-meta">Memuat ringkasan kepemilikan rumah...</div>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Perum • Grafik 2</span>
-                    <h3 class="h5 mb-0">Jenis Lantai Terluas</h3>
-                  </div>
-                  <span id="statusJenisLantai" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorJenisLantai" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
-                  <canvas id="chartJenisLantai"></canvas>
-                </div>
-                <div id="metaJenisLantai" class="grafik-footer-meta">Memuat ringkasan jenis lantai...</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row g-4">
-            <div class="col-lg-6">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Perum • Grafik 3</span>
-                    <h3 class="h5 mb-0">Jenis Atap Terluas</h3>
-                  </div>
-                  <span id="statusJenisAtap" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorJenisAtap" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
-                  <canvas id="chartJenisAtap"></canvas>
-                </div>
-                <div id="metaJenisAtap" class="grafik-footer-meta">Memuat ringkasan jenis atap...</div>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Perum • Grafik 4</span>
-                    <h3 class="h5 mb-0">Jenis Dinding Terluas</h3>
-                  </div>
-                  <span id="statusJenisDinding" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorJenisDinding" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
-                  <canvas id="chartJenisDinding"></canvas>
-                </div>
-                <div id="metaJenisDinding" class="grafik-footer-meta">Memuat ringkasan jenis dinding...</div>
-              </div>
-            </div>
-          </div>
+        <div class="kpi-item">
+          <div class="lbl">Total Approval</div>
+          <div class="val" id="topTotalApproval">12</div>
         </div>
-
-        <!-- ================= TAB 3: INFRA ================= -->
-        <div class="tab-pane fade" id="pane-infra" role="tabpanel" tabindex="0">
-          <div class="mb-4">
-            <h2 class="h3 mb-1 fw-normal">Infrastruktur & Sanitasi Mansakai (Infra)</h2>
-            <p class="small mb-0" style="color: var(--teks-redup);">
-              Rekap sumber air minum, penerangan, bahan bakar masak, fasilitas BAB, jenis kloset, dan pembuangan akhir tinja.
-            </p>
-          </div>
-
-          <div class="row g-4 mb-4">
-            <div class="col-lg-4">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 1</span>
-                    <h3 class="h5 mb-0">Sumber Air Minum Utama</h3>
-                  </div>
-                  <span id="statusSumberAirMinum" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorSumberAirMinum" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
-                  <canvas id="chartSumberAirMinum"></canvas>
-                </div>
-                <div id="metaSumberAirMinum" class="grafik-footer-meta">Memuat ringkasan air minum...</div>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 2</span>
-                    <h3 class="h5 mb-0">Sumber Penerangan Utama</h3>
-                  </div>
-                  <span id="statusSumberPenerangan" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorSumberPenerangan" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
-                  <canvas id="chartSumberPenerangan"></canvas>
-                </div>
-                <div id="metaSumberPenerangan" class="grafik-footer-meta">Memuat ringkasan penerangan...</div>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 3</span>
-                    <h3 class="h5 mb-0">Bahan Bakar Utama untuk Masak</h3>
-                  </div>
-                  <span id="statusBahanBakarMasak" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorBahanBakarMasak" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
-                  <canvas id="chartBahanBakarMasak"></canvas>
-                </div>
-                <div id="metaBahanBakarMasak" class="grafik-footer-meta">Memuat ringkasan bahan bakar...</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row g-4">
-            <div class="col-lg-4">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 4</span>
-                    <h3 class="h5 mb-0">Fasilitas Buang Air Besar</h3>
-                  </div>
-                  <span id="statusFasilitasBab" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorFasilitasBab" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
-                  <canvas id="chartFasilitasBab"></canvas>
-                </div>
-                <div id="metaFasilitasBab" class="grafik-footer-meta">Memuat ringkasan fasilitas BAB...</div>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 5</span>
-                    <h3 class="h5 mb-0">Jenis Kloset</h3>
-                  </div>
-                  <span id="statusJenisKloset" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorJenisKloset" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
-                  <canvas id="chartJenisKloset"></canvas>
-                </div>
-                <div id="metaJenisKloset" class="grafik-footer-meta">Memuat ringkasan jenis kloset...</div>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="glass-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <div>
-                    <span class="small" style="color: var(--teks-redup);">Infra • Grafik 6</span>
-                    <h3 class="h5 mb-0">Pembuangan Akhir Tinja</h3>
-                  </div>
-                  <span id="statusPembuanganTinja" class="badge-status">Memuat...</span>
-                </div>
-                <div id="errorPembuanganTinja" class="alert alert-danger py-2 small d-none"></div>
-                <div class="flex-grow-1" style="position: relative; min-height: 260px;">
-                  <canvas id="chartPembuanganTinja"></canvas>
-                </div>
-                <div id="metaPembuanganTinja" class="grafik-footer-meta">Memuat ringkasan pembuangan tinja...</div>
-              </div>
-            </div>
-          </div>
+        <div class="kpi-item">
+          <div class="lbl">% Disetujui / Total</div>
+          <div class="val purple" id="topPctDisetujuiTotal">0,0%</div>
+        </div>
+        <div class="kpi-item" style="text-align: right;">
+          <div class="lbl">Status Terbanyak</div>
+          <div class="val" style="font-size: 1.25rem;" id="topStatusTerbanyak">Disetujui (5)</div>
+          <div class="sub-link">1 permintaan terkirim</div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Modal Pendaftaran Permintaan Akses Mansakai -->
-  <div class="modal fade" id="modalMintaAkses" tabindex="-1" aria-labelledby="labelMintaAkses" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="border-radius: 22px; border: 1px solid #ede9fe;">
-        <div class="modal-header border-0 pb-0">
+    <!-- Main Grid -->
+    <div class="approval-grid">
+      <!-- Left: Grafik Status Approval -->
+      <section class="panel-status-approval" aria-label="Grafik Status Approval">
+        <div class="panel-head">
           <div>
-            <h5 class="modal-title" id="labelMintaAkses">Permintaan Akses Mansakai</h5>
-            <p class="small text-muted mb-0">Ajukan akun Mansakai untuk diverifikasi oleh admin.</p>
+            <div class="eyebrow">Grafik 1 • Prioritas Utama</div>
+            <h2 class="panel-title">Status Approval</h2>
           </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+          <span class="badge-connected">Terhubung</span>
         </div>
 
-        <form id="formMintaAkses">
-          <div class="modal-body">
-            <div class="riwayat-modal-box mb-3">
-              <div class="d-flex justify-content-between align-items-center small mb-1">
-                <span class="fw-medium" style="color: var(--ungu-gelap);">
-                  <i class="fa-solid fa-clock-rotate-left me-1"></i> Riwayat Permintaan Terkirim
-                </span>
-                <span id="ringkasanCountModal" class="badge-status py-0 px-2" style="font-size: 0.7rem;">0 terkirim</span>
-              </div>
-              <div id="daftarRiwayatModal" class="small text-muted">Belum ada pengajuan role tercatat.</div>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label small">Nama Lengkap</label>
-              <input type="text" name="nama" class="form-control" required placeholder="Contoh: Budi Santoso" />
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label small">Email Google (Akun AppSheet)</label>
-              <input type="email" name="email" class="form-control" required placeholder="nama@gmail.com" />
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label small">Unit Kerja / Kecamatan / Desa</label>
-              <input type="text" name="unit" class="form-control" placeholder="Contoh: Kecamatan / Desa / Bidang" />
-            </div>
-
-            <div class="row g-2 mb-3">
-              <div class="col-sm-6">
-                <label class="form-label small">Aplikasi / Modul</label>
-                <select name="modul" class="form-select" required>
-                  <option value="Mansakai" selected>Mansakai</option>
-                  <option value="Mansakai Verifikasi">Mansakai Verifikasi</option>
-                  <option value="Mansakai Dashboard">Mansakai Dashboard</option>
-                </select>
-              </div>
-              <div class="col-sm-6">
-                <label class="form-label small">Role yang Diajukan</label>
-                <select name="role" class="form-select" required>
-                  <option value="">-- Pilih Role --</option>
-                  <option value="Operator / Pencacah">Operator / Pencacah</option>
-                  <option value="Verifikator">Verifikator</option>
-                  <option value="Pimpinan / Viewer">Pimpinan / Viewer</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="mb-2">
-              <label class="form-label small">Keperluan / Catatan Singkat</label>
-              <textarea name="alasan" class="form-control" rows="2" placeholder="Jelaskan kebutuhan akses Mansakai Anda..."></textarea>
-            </div>
-
-            <div id="notifMintaAkses" class="alert d-none small py-2 mt-3 mb-0"></div>
+        <div class="progress-box">
+          <div class="progress-top">
+            <span class="progress-label">Persentase Jumlah Disetujui Terhadap Total Data</span>
+            <span class="progress-pct" id="grafikPctDisetujui">0,0%</span>
           </div>
-
-          <div class="modal-footer border-0 pt-0">
-            <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Batal</button>
-            <button type="submit" id="btnKirimAkses" class="btn rounded-pill px-4 text-white" style="background: var(--ungu-utama);">
-              Kirim Permintaan
-            </button>
+          <div class="bar-track">
+            <div class="bar-fill" id="grafikBarDisetujui"></div>
           </div>
-        </form>
-
-        <div id="panelPermintaanTerkirim" class="modal-body d-none">
-          <div class="sukses-terkirim-box">
-            <div class="ikon-sukses-bulat">
-              <i class="fa-solid fa-check"></i>
-            </div>
-            <h6 class="fw-semibold mb-1">Permintaan Terkirim</h6>
-            <p id="detailPermintaanTerkirim" class="small text-muted mb-3">
-              Pengajuan akses Mansakai Anda telah dicatat dan menunggu verifikasi admin.
-            </p>
-            <div class="d-flex justify-content-center gap-2">
-              <button type="button" id="btnAjukanLagi" class="btn btn-sm rounded-pill px-3" style="background: var(--ungu-lembut); color: var(--ungu-utama); border: 1px solid #e9d5ff;">
-                Kirim Permintaan Lagi
-              </button>
-              <button type="button" class="btn btn-sm btn-dark rounded-pill px-4" data-bs-dismiss="modal">
-                Selesai
-              </button>
-            </div>
+          <div class="progress-caption" id="grafikCaptionDisetujui">
+            <strong>5</strong> disetujui dari <strong>22.314</strong> total data desil
           </div>
         </div>
-      </div>
+
+        <div class="status-mini-grid" id="miniStatusCards"></div>
+      </section>
+
+      <!-- Right: Ringkasan Approval -->
+      <aside class="panel-ringkasan-dark" aria-label="Ringkasan Approval">
+        <div class="panel-head">
+          <div>
+            <div class="dark-eyebrow">Rincian Status</div>
+            <h2 class="dark-title">Ringkasan Approval</h2>
+          </div>
+          <span class="pill-total-data" id="pillTotalApproval">12 Data</span>
+        </div>
+
+        <div class="dark-rows" id="darkStatusRows"></div>
+      </aside>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    const URL_WEB_APP_AKSES = "https://script.google.com/macros/s/AKfycbyx7cqWcizD_Q81jvW8bssSDzBdvos6X0soIHJpppPt7b9jxuTnoFpOfe38k7zxInLCqQ/exec";
-    const KUNCI_JUMLAH_PERMINTAAN = "mansakai_jumlah_permintaan_akses";
-    const KUNCI_RIWAYAT_PERMINTAAN = "mansakai_riwayat_permintaan_akses";
-
-    function ambilJumlahPermintaan() {
-      const nilai = Number(localStorage.getItem(KUNCI_JUMLAH_PERMINTAAN) || "0");
-      return Number.isFinite(nilai) && nilai >= 0 ? nilai : 0;
-    }
-
-    function ambilRiwayatPermintaan() {
-      try {
-        const raw = JSON.parse(localStorage.getItem(KUNCI_RIWAYAT_PERMINTAAN) || "[]");
-        return Array.isArray(raw) ? raw : [];
-      } catch (_) {
-        return [];
+    // Data sumber (bisa dihubungkan langsung ke hasil fetch sheet Umum_Approval & Total Data Desil)
+    const APPROVAL_STATE = {
+      totalData: 22314,
+      counts: {
+        disetujui: 5,
+        revisi: 3,
+        menunggu: 2,
+        nonAktif: 2
       }
-    }
-
-    function simpanRiwayatPermintaan(itemBaru) {
-      const daftar = ambilRiwayatPermintaan();
-      daftar.unshift(itemBaru);
-      localStorage.setItem(KUNCI_RIWAYAT_PERMINTAAN, JSON.stringify(daftar.slice(0, 3)));
-    }
-
-    function perbaruiIndikatorPermintaan() {
-      const elSubteks = document.getElementById("subteksPermintaanKpi");
-      const elJumlahKpi = document.getElementById("teksJumlahPermintaanKpi");
-      const elRiwayatKpi = document.getElementById("teksRiwayatPermintaanKpi");
-      const elCountModal = document.getElementById("ringkasanCountModal");
-      const elDaftarModal = document.getElementById("daftarRiwayatModal");
-      const jumlah = ambilJumlahPermintaan();
-      const riwayat = ambilRiwayatPermintaan();
-
-      if (elSubteks) {
-        if (jumlah > 0 || riwayat.length > 0) {
-          elSubteks.classList.remove("d-none");
-        } else {
-          elSubteks.classList.add("d-none");
-        }
-      }
-
-      if (elJumlahKpi) {
-        elJumlahKpi.textContent = `${jumlah} permintaan terkirim`;
-      }
-
-      if (elRiwayatKpi) {
-        if (riwayat.length > 0) {
-          const daftarTeks = riwayat.map((r) => `${r.modul} (${r.role})`).join(" • ");
-          elRiwayatKpi.textContent = ` • ${daftarTeks}`;
-        } else {
-          elRiwayatKpi.textContent = "";
-        }
-      }
-
-      if (elCountModal) {
-        elCountModal.textContent = `${jumlah} terkirim`;
-      }
-
-      if (elDaftarModal) {
-        if (!riwayat.length) {
-          elDaftarModal.textContent = "Belum ada pengajuan role tercatat.";
-        } else {
-          elDaftarModal.innerHTML = riwayat
-            .map((r) => `<span class="d-inline-block me-2 mb-1 px-2 py-1 rounded-pill bg-white border" style="border-color:#e9d5ff!important;"><strong>${r.modul}</strong> • ${r.role}</span>`)
-            .join("");
-        }
-      }
-    }
-
-    function tampilkanPanelTerkirim(pesan) {
-      const form = document.getElementById("formMintaAkses");
-      const panel = document.getElementById("panelPermintaanTerkirim");
-      const detail = document.getElementById("detailPermintaanTerkirim");
-      if (form) form.classList.add("d-none");
-      if (panel) panel.classList.remove("d-none");
-      if (detail && pesan) detail.textContent = pesan;
-    }
-
-    function tampilkanFormPermintaan() {
-      const form = document.getElementById("formMintaAkses");
-      const panel = document.getElementById("panelPermintaanTerkirim");
-      const notif = document.getElementById("notifMintaAkses");
-      if (notif) {
-        notif.classList.add("d-none");
-        notif.textContent = "";
-      }
-      if (panel) panel.classList.add("d-none");
-      if (form) {
-        form.reset();
-        form.classList.remove("d-none");
-      }
-    }
-
-    document.getElementById("btnAjukanLagi")?.addEventListener("click", tampilkanFormPermintaan);
-    document.getElementById("modalMintaAkses")?.addEventListener("hidden.bs.modal", function () {
-      const panel = document.getElementById("panelPermintaanTerkirim");
-      if (panel && !panel.classList.contains("d-none")) {
-        tampilkanFormPermintaan();
-      }
-    });
-
-    document.getElementById("formMintaAkses")?.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const form = e.target;
-      const btn = document.getElementById("btnKirimAkses");
-      const notif = document.getElementById("notifMintaAkses");
-
-      const payload = {
-        nama: form.nama.value.trim(),
-        email: form.email.value.trim(),
-        unit: form.unit.value.trim(),
-        modul: form.modul.value,
-        role: form.role.value,
-        alasan: form.alasan.value.trim()
-      };
-
-      btn.disabled = true;
-      btn.textContent = "Mengirim...";
-      notif.classList.add("d-none");
-
-      try {
-        const res = await fetch(URL_WEB_APP_AKSES, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        });
-        const hasil = await res.json();
-
-        if (hasil.status === "success") {
-          const jumlahBaru = ambilJumlahPermintaan() + 1;
-          localStorage.setItem(KUNCI_JUMLAH_PERMINTAAN, String(jumlahBaru));
-          simpanRiwayatPermintaan({
-            modul: payload.modul,
-            role: payload.role,
-            nama: payload.nama
-          });
-          perbaruiIndikatorPermintaan();
-          form.reset();
-          tampilkanPanelTerkirim(
-            hasil.message || `Permintaan ${payload.modul} (${payload.role}) terkirim dan menunggu verifikasi admin.`
-          );
-        } else {
-          notif.classList.remove("d-none", "alert-success");
-          notif.classList.add("alert-danger");
-          notif.textContent = hasil.message || "Gagal mengirim permintaan.";
-        }
-      } catch (err) {
-        notif.classList.remove("d-none", "alert-success");
-        notif.classList.add("alert-danger");
-        notif.textContent = "Terjadi kesalahan jaringan saat mengirim permintaan.";
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Kirim Permintaan";
-      }
-    });
-
-    perbaruiIndikatorPermintaan();
-  </script>
-  <script>
-    const SUMBER_CSV = {
-      approval: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=627777717&single=true&output=csv",
-      desil: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=0&single=true&output=csv",
-      kecamatan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1517054386&single=true&output=csv",
-      pbiNasional: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1491098598&single=true&output=csv",
-      pbiPemda: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=858926562&single=true&output=csv",
-      statusKepemilikanRumah: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=640888748&single=true&output=csv",
-      jenisLantai: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=595722365&single=true&output=csv",
-      jenisAtap: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=686227034&single=true&output=csv",
-      jenisDinding: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=387816287&single=true&output=csv",
-      sumberAirMinum: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1229999159&single=true&output=csv",
-      sumberPenerangan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1714567630&single=true&output=csv",
-      bahanBakarMasak: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=2095146236&single=true&output=csv",
-      fasilitasBab: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1739519489&single=true&output=csv",
-      jenisKloset: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1053371556&single=true&output=csv",
-      pembuanganTinja: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6NEA-SQiE3ow41FhUBRp6Q8zBhWRLTEs4mWB_RLnks8DGTouUDqkO6OAWtSLITZCOHi91YB8lyI0x/pub?gid=1623186494&single=true&output=csv"
     };
 
-    const PALET_BATANG_DESIL = [
-      { grad: "linear-gradient(180deg, #93c5fd 0%, #2563eb 52%, #4c1d95 100%)" },
-      { grad: "linear-gradient(180deg, #bfdbfe 0%, #3b82f6 55%, #1d4ed8 100%)" },
-      { grad: "linear-gradient(180deg, #c4b5fd 0%, #6366f1 55%, #4c1d95 100%)" },
-      { grad: "linear-gradient(180deg, #93c5fd 0%, #2563eb 58%, #3730a3 100%)" },
-      { grad: "linear-gradient(180deg, #bae6fd 0%, #0284c7 55%, #1e40af 100%)" }
+    const STATUS_META = [
+      { key: "disetujui", label: "Disetujui", color: "#6d28d9", textClass: "#6d28d9" },
+      { key: "revisi", label: "Dikembalikan / Revisi", color: "#2563eb", textClass: "#2563eb" },
+      { key: "menunggu", label: "Menunggu Approval", color: "#ea580c", textClass: "#ea580c" },
+      { key: "nonAktif", label: "Non Aktif", color: "#9333ea", textClass: "#9333ea" }
     ];
 
-    const chartInstances = {};
-    let totalDataDesil = 0;
-    let totalDataApproval = 0;
-    let itemApprovalTerakhir = [];
+    const fmtNum = (n) => Number(n || 0).toLocaleString("id-ID");
+    const fmtPct = (n) => Number(n || 0).toFixed(1).replace(".", ",") + "%";
 
-    function pecahBarisCSV(baris) {
-      const hasil = [];
-      let saatIni = "";
-      let dalamKutipan = false;
+    function renderStatusApproval(state) {
+      const totalData = Number(state.totalData || 0);
+      const items = STATUS_META.map((m) => ({
+        ...m,
+        jumlah: Number(state.counts[m.key] || 0)
+      }));
 
-      for (let i = 0; i < baris.length; i++) {
-        const karakter = baris[i];
-        if (karakter === '"') {
-          if (dalamKutipan && baris[i + 1] === '"') {
-            saatIni += '"';
-            i++;
-          } else {
-            dalamKutipan = !dalamKutipan;
-          }
-        } else if (karakter === "," && !dalamKutipan) {
-          hasil.push(saatIni.trim());
-          saatIni = "";
-        } else {
-          saatIni += karakter;
-        }
-      }
-      hasil.push(saatIni.trim());
-      return hasil;
-    }
+      const totalApproval = items.reduce((acc, x) => acc + x.jumlah, 0);
+      const disetujuiCount = state.counts.disetujui || 0;
+      const pctDisetujuiTotal = totalData > 0 ? (disetujuiCount / totalData) * 100 : 0;
 
-    function parseCSVUmum(teksCSV) {
-      const barisList = teksCSV
-        .replace(/^\uFEFF/, "")
-        .trim()
-        .split(/\r?\n/)
-        .filter((baris) => baris.trim() !== "");
+      // Update KPI & Grafik Persentase Disetujui terhadap Total Data
+      document.getElementById("topTotalData").textContent = fmtNum(totalData);
+      document.getElementById("topTotalApproval").textContent = fmtNum(totalApproval);
+      document.getElementById("topPctDisetujuiTotal").textContent = fmtPct(pctDisetujuiTotal);
+      document.getElementById("grafikPctDisetujui").textContent = fmtPct(pctDisetujuiTotal);
+      document.getElementById("pillTotalApproval").textContent = `${fmtNum(totalApproval)} Data`;
 
-      if (barisList.length <= 1) return [];
+      // Lebar bar minimal terlihat jika > 0 agar indikator tidak hilang di skala besar
+      const barWidth = pctDisetujuiTotal <= 0
+        ? 0
+        : Math.min(100, Math.max(2.5, pctDisetujuiTotal));
+      document.getElementById("grafikBarDisetujui").style.width = `${barWidth}%`;
 
-      return barisList
-        .slice(1)
-        .map(pecahBarisCSV)
-        .map((kolom) => {
-          const gunakanDuaKolom = kolom.length < 3;
-          const label = (gunakanDuaKolom ? kolom[0] : kolom[1]) ?? "";
-          const rawNilai = (gunakanDuaKolom ? kolom[1] : kolom[2]) ?? "0";
-          const nilaiBersih = String(rawNilai).replace(/[^0-9.-]/g, "");
-          return {
-            label: String(label).trim(),
-            jumlah: Number(nilaiBersih) || 0
-          };
-        })
-        .filter((item) => item.label !== "" && item.label.toLowerCase() !== "total");
-    }
+      document.getElementById("grafikCaptionDisetujui").innerHTML =
+        `<strong>${fmtNum(disetujuiCount)}</strong> disetujui dari <strong>${fmtNum(totalData)}</strong> total data desil`;
 
-    async function ambilDataCSV(url) {
-      const urlCacheBust = `${url}${url.includes("?") ? "&" : "?"}_t=${Date.now()}`;
-      const resp = await fetch(urlCacheBust, { cache: "no-store" });
-      if (!resp.ok) {
-        throw new Error(`HTTP ${resp.status} saat mengambil CSV`);
-      }
-      const teks = await resp.text();
-      return parseCSVUmum(teks);
-    }
-
-    function formatAngka(angka) {
-      return Number(angka || 0).toLocaleString("id-ID");
-    }
-
-    function formatPersen(bagian, keseluruhan) {
-      if (!keseluruhan || keseluruhan <= 0) return "0%";
-      const pct = (bagian / keseluruhan) * 100;
-      return `${pct.toFixed(1).replace(".", ",")}%`;
-    }
-
-    function tampilkanError(idError, idStatus, pesan) {
-      const elErr = document.getElementById(idError);
-      const elStat = document.getElementById(idStatus);
-      if (elErr) {
-        elErr.textContent = pesan;
-        elErr.classList.remove("d-none");
-      }
-      if (elStat) {
-        elStat.textContent = "Gagal memuat";
-      }
-    }
-
-    function sembunyikanError(idError) {
-      const elErr = document.getElementById(idError);
-      if (elErr) {
-        elErr.textContent = "";
-        elErr.classList.add("d-none");
-      }
-    }
-
-    function buatAtauPerbaruiChart(canvasId, config) {
-      const canvas = document.getElementById(canvasId);
-      if (!canvas) return null;
-      if (chartInstances[canvasId]) {
-        chartInstances[canvasId].destroy();
-      }
-      chartInstances[canvasId] = new Chart(canvas.getContext("2d"), config);
-      return chartInstances[canvasId];
-    }
-
-    function setMetaGrafik(metaIds, sortedItems, total) {
-      if (!sortedItems.length) return;
-      const teratas = [...sortedItems].sort((a, b) => b.jumlah - a.jumlah)[0];
-      const html = `
-        <span>Dominan: <strong>${teratas.label}</strong> (${formatPersen(teratas.jumlah, total)})</span>
-        <span>Total: <strong>${formatAngka(total)}</strong></span>
-      `;
-      metaIds.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.innerHTML = html;
-      });
-    }
-
-    function tentukanWarnaStatusApproval(index) {
-      const palet = ["#4c1d95", "#2563eb", "#f97316", "#7e22ce"];
-      return palet[index % palet.length];
-    }
-
-    function renderKlasterApproval() {
-      const elGrid = document.getElementById("gridApprovalItems");
-      if (!elGrid) return;
-
-      const pctAngka = totalDataDesil > 0 ? Math.min(100, (totalDataApproval / totalDataDesil) * 100) : 0;
-      const pctLabel = `${pctAngka.toFixed(1).replace(".", ",")}%`;
-      const lebarBarPct = totalDataApproval > 0 ? Math.max(3, pctAngka) : 0;
-      const tigaStatus = itemApprovalTerakhir.slice(0, 3);
-
-      const htmlHero = `
-        <div class="approval-hero-box">
-          <div class="approval-hero-top">
-            <span class="approval-hero-title">Persentase Approval Terhadap Total Data</span>
-            <span class="approval-hero-pct">${pctLabel}</span>
-          </div>
-          <div class="approval-track">
-            <div class="approval-track-fill" style="width: ${lebarBarPct}%;"></div>
-          </div>
-          <div class="approval-hero-sub">
-            <strong>${formatAngka(totalDataApproval)}</strong> ter-approval dari <strong>${formatAngka(totalDataDesil)}</strong> total data desil
-          </div>
-        </div>
-      `;
-
-      const htmlTigaKartu = tigaStatus.length
-        ? `<div class="approval-tiga-grid">${tigaStatus.map((item, idx) => {
-            const warna = tentukanWarnaStatusApproval(idx);
-            const pctStatus = formatPersen(item.jumlah, totalDataApproval);
-            return `
-              <div class="approval-stat-mini">
-                <div class="approval-mini-angka" style="color: ${warna};">${formatAngka(item.jumlah)}</div>
-                <div class="approval-mini-pct">${pctStatus} dari approval</div>
-                <div class="approval-mini-bar" style="background: ${warna};"></div>
-                <div class="approval-mini-label">${item.label}</div>
-              </div>
-            `;
-          }).join("")}</div>`
-        : `<div class="small text-muted text-center py-3">Menunggu data status approval...</div>`;
-
-      elGrid.innerHTML = htmlHero + htmlTigaKartu;
-    }
-
-    function perbaruiRingkasanKPI() {
-      const elTotalData = document.getElementById("kpiTotalData");
-      const elTotalApproval = document.getElementById("kpiTotalApproval");
-      const elPersen = document.getElementById("kpiPersenApprovalTotal");
-
-      if (elTotalData) elTotalData.textContent = formatAngka(totalDataDesil);
-      if (elTotalApproval) elTotalApproval.textContent = formatAngka(totalDataApproval);
-
-      const pctAngka = totalDataDesil > 0 ? Math.min(100, (totalDataApproval / totalDataDesil) * 100) : 0;
-      const pctLabel = `${pctAngka.toFixed(1).replace(".", ",")}%`;
-      if (elPersen) elPersen.textContent = pctLabel;
-
-      renderKlasterApproval();
-    }
-
-    function renderGrafikDesilGlass(items, containerIds, statusIds, metaIds) {
-      sembunyikanError("errorDesil");
-      if (!items.length) {
-        statusIds.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el) el.textContent = "Kosong";
-        });
-        return;
+      // Status terbanyak
+      const sorted = [...items].sort((a, b) => b.jumlah - a.jumlah);
+      if (sorted[0]) {
+        document.getElementById("topStatusTerbanyak").textContent =
+          `${sorted[0].label} (${fmtNum(sorted[0].jumlah)})`;
       }
 
-      const maks = Math.max(...items.map((d) => Number(d.jumlah) || 0), 1);
-      const total = items.reduce((acc, d) => acc + (Number(d.jumlah) || 0), 0);
-
-      totalDataDesil = total;
-      perbaruiRingkasanKPI();
-
-      statusIds.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = "Terhubung";
-      });
-
-      const htmlKolom = items.map((d, idx) => {
-        const nilai = Number(d.jumlah) || 0;
-        const tinggiPct = Math.max(16, Math.round((nilai / maks) * 100));
-        const pctTotal = formatPersen(nilai, total);
-        const skema = PALET_BATANG_DESIL[idx % PALET_BATANG_DESIL.length];
-
+      // Render 4 kartu status di bawah grafik (termasuk Non Aktif)
+      document.getElementById("miniStatusCards").innerHTML = items.map((item) => {
+        const shareApproval = totalApproval > 0 ? (item.jumlah / totalApproval) * 100 : 0;
         return `
-          <div class="desil-col-item">
-            <div class="desil-track-glass">
-              <div
-                class="desil-bar-glass"
-                style="height: ${tinggiPct}%; background: ${skema.grad};"
-                title="${d.label}: ${formatAngka(nilai)} (${pctTotal})"
-              >
-                <span class="desil-nilai-atas">${formatAngka(nilai)}</span>
-              </div>
-            </div>
-            <div class="desil-label-bawah">${d.label}</div>
-            <div class="desil-persen-bawah">${pctTotal}</div>
+          <div class="status-mini-card">
+            <div class="mini-num" style="color: ${item.textClass};">${fmtNum(item.jumlah)}</div>
+            <div class="mini-sub">${fmtPct(shareApproval)} dari approval</div>
+            <div class="mini-line" style="background: ${item.color};"></div>
+            <div class="mini-name">${item.label}</div>
           </div>
         `;
       }).join("");
 
-      containerIds.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.innerHTML = htmlKolom;
-      });
-
-      setMetaGrafik(metaIds, items, total);
-    }
-
-    const pluginLabelNilaiBatang = {
-      id: "labelNilaiBatang",
-      afterDatasetsDraw(chart) {
-        if (chart.config.type === "doughnut") return;
-        const { ctx, chartArea } = chart;
-        if (!chartArea) return;
-
-        const isHorizontal = chart.config.options.indexAxis === "y";
-        const dataset = chart.data.datasets[0];
-        const meta = chart.getDatasetMeta(0);
-        if (!dataset || !meta || !meta.data) return;
-
-        ctx.save();
-        ctx.fillStyle = "#1f2937";
-        ctx.font = '500 11.5px "Outfit", "DM Sans", sans-serif';
-
-        meta.data.forEach((barElement, idx) => {
-          const nilai = Number(dataset.data[idx] || 0);
-          const teks = formatAngka(nilai);
-
-          if (isHorizontal) {
-            ctx.textAlign = "left";
-            ctx.textBaseline = "middle";
-            const xPos = Math.min(barElement.x + 8, chartArea.right - 2);
-            ctx.fillText(teks, xPos, barElement.y);
-          } else {
-            ctx.textAlign = "center";
-            ctx.textBaseline = "bottom";
-            const yPos = Math.max(barElement.y - 6, chartArea.top + 12);
-            ctx.fillText(teks, barElement.x, yPos);
-          }
-        });
-
-        ctx.restore();
-      }
-    };
-
-    Chart.register(pluginLabelNilaiBatang);
-
-    function renderApproval(items) {
-      sembunyikanError("errorApproval");
-      const elStatus = document.getElementById("statusApproval");
-      const elDaftar = document.getElementById("daftarRingkasApproval");
-      const elBadgeTotal = document.getElementById("badgeTotalApproval");
-      const elTerbanyak = document.getElementById("kpiStatusApprovalTerbanyak");
-      const elPillHighlight = document.getElementById("pillHighlightApproval");
-
-      if (!items.length) {
-        if (elStatus) elStatus.textContent = "Kosong";
-        return;
-      }
-
-      const sorted = [...items].sort((a, b) => b.jumlah - a.jumlah);
-      itemApprovalTerakhir = sorted;
-      totalDataApproval = sorted.reduce((acc, cur) => acc + cur.jumlah, 0);
-
-      if (elStatus) elStatus.textContent = "Terhubung";
-      if (elBadgeTotal) elBadgeTotal.textContent = `${formatAngka(totalDataApproval)} Data`;
-      if (elTerbanyak) elTerbanyak.textContent = `${sorted[0].label} (${formatAngka(sorted[0].jumlah)})`;
-      if (elPillHighlight) elPillHighlight.textContent = `Terbanyak: ${sorted[0].label} • ${formatAngka(sorted[0].jumlah)}`;
-
-      if (elDaftar) {
-        elDaftar.innerHTML = sorted.map((item, idx) => `
-          <div class="dark-item-row d-flex justify-content-between align-items-center gap-2 small">
-            <span class="d-flex align-items-center gap-2 text-truncate">
-              <span style="width:9px;height:9px;border-radius:50%;background:${tentukanWarnaStatusApproval(idx)};display:inline-block;flex-shrink:0;"></span>
-              <span class="text-truncate">${item.label}</span>
-            </span>
-            <span class="fw-medium text-nowrap" style="color: var(--kuning-aksen);">${formatAngka(item.jumlah)} (${formatPersen(item.jumlah, totalDataApproval)})</span>
-          </div>
-        `).join("");
-      }
-
-      perbaruiRingkasanKPI();
-    }
-
-    function buatGradasiBarHorizontal(ctx, chartArea) {
-      const gradasi = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-      gradasi.addColorStop(0, "#dbeafe");
-      gradasi.addColorStop(0.45, "#2563eb");
-      gradasi.addColorStop(1, "#4c1d95");
-      return gradasi;
-    }
-
-    function konfigurasiBarHorizontal(dataChart, total) {
-      return {
-        type: "bar",
-        data: {
-          labels: dataChart.map((d) => d.label),
-          datasets: [{
-            label: "Jumlah",
-            data: dataChart.map((d) => d.jumlah),
-            backgroundColor: (context) => {
-              const { ctx, chartArea } = context.chart;
-              if (!chartArea) return "#2563eb";
-              return buatGradasiBarHorizontal(ctx, chartArea);
-            },
-            borderRadius: 8,
-            maxBarThickness: 24
-          }]
-        },
-        options: {
-          indexAxis: "y",
-          responsive: true,
-          maintainAspectRatio: false,
-          layout: {
-            padding: { top: 6, right: 56, left: 4, bottom: 4 }
-          },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => {
-                  const val = ctx.parsed.x || 0;
-                  return ` Jumlah: ${formatAngka(val)} (${formatPersen(val, total)})`;
-                }
-              }
-            }
-          },
-          scales: {
-            x: { display: false, beginAtZero: true },
-            y: {
-              grid: { display: false },
-              ticks: {
-                autoSkip: false,
-                font: { size: 11.5 }
-              }
-            }
-          }
-        }
-      };
-    }
-
-    function renderBarHorizontalChart(items, canvasId, errorId, statusId, salinanIds = [], metaIds = []) {
-      if (errorId) sembunyikanError(errorId);
-      const elStatus = document.getElementById(statusId);
-      if (!items.length) {
-        if (elStatus) elStatus.textContent = "Kosong";
-        return;
-      }
-
-      const dataChart = [...items].sort((a, b) => b.jumlah - a.jumlah);
-      const total = dataChart.reduce((acc, cur) => acc + cur.jumlah, 0);
-
-      if (elStatus) elStatus.textContent = "Terhubung";
-
-      const daftarCanvas = [canvasId, ...salinanIds];
-      daftarCanvas.forEach((id) => {
-        const canvas = document.getElementById(id);
-        if (canvas && canvas.parentElement) {
-          const tinggiDinamis = Math.max(260, dataChart.length * 32);
-          canvas.parentElement.style.minHeight = `${tinggiDinamis}px`;
-        }
-        buatAtauPerbaruiChart(id, konfigurasiBarHorizontal(dataChart, total));
-      });
-
-      setMetaGrafik(metaIds, dataChart, total);
-    }
-
-    function renderDoughnutRingkasan(items, canvasId, ringkasId, errorId, statusId, centerId = "", metaIds = []) {
-      sembunyikanError(errorId);
-      const elStatus = document.getElementById(statusId);
-      const elRingkas = document.getElementById(ringkasId);
-      const elCenter = centerId ? document.getElementById(centerId) : null;
-
-      if (!items.length) {
-        if (elStatus) elStatus.textContent = "Kosong";
-        return;
-      }
-
-      const sortedItems = [...items].sort((a, b) => b.jumlah - a.jumlah);
-      const total = sortedItems.reduce((acc, cur) => acc + cur.jumlah, 0);
-      if (elStatus) elStatus.textContent = `${formatAngka(total)} Data`;
-
-      const palet = sortedItems.length === 2
-        ? ["#4c1d95", "#f97316"]
-        : ["#4c1d95", "#2563eb", "#f97316", "#7e22ce", "#0ea5e9", "#f59e0b", "#18181b"];
-
-      buatAtauPerbaruiChart(canvasId, {
-        type: "doughnut",
-        data: {
-          labels: sortedItems.map((d) => d.label),
-          datasets: [{
-            data: sortedItems.map((d) => d.jumlah),
-            backgroundColor: sortedItems.map((_, i) => palet[i % palet.length]),
-            borderWidth: 2,
-            borderColor: "#ffffff",
-            hoverOffset: 4
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: "68%",
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              enabled: true,
-              backgroundColor: "#18181b",
-              titleColor: "#ffffff",
-              bodyColor: "#f8fafc",
-              padding: 10,
-              cornerRadius: 10,
-              callbacks: {
-                label: (ctx) => {
-                  const val = ctx.parsed || 0;
-                  return ` ${ctx.label}: ${formatAngka(val)} (${formatPersen(val, total)})`;
-                }
-              }
-            }
-          }
-        }
-      });
-
-      if (elCenter) {
-        elCenter.innerHTML = `
-          <span class="donat-tengah-angka">${formatAngka(total)}</span>
-          <span class="donat-tengah-ket">Total Data</span>
-        `;
-      }
-
-      if (elRingkas) {
-        elRingkas.innerHTML = sortedItems.map((d, i) => {
-          const warna = palet[i % palet.length];
-          const pctAngka = total > 0 ? Math.min(100, (d.jumlah / total) * 100) : 0;
-          const lebarBar = d.jumlah > 0 ? Math.max(3, pctAngka) : 0;
-
-          return `
-            <div class="item-rincian-pro">
-              <div class="item-rincian-top">
-                <span class="d-flex align-items-center gap-2 text-truncate">
-                  <span style="width:9px;height:9px;border-radius:50%;background:${warna};display:inline-block;flex-shrink:0;"></span>
-                  <span class="text-truncate fw-medium">${d.label}</span>
-                </span>
-                <span class="fw-medium text-nowrap">${formatAngka(d.jumlah)} <span style="color: var(--teks-redup);">(${formatPersen(d.jumlah, total)})</span></span>
-              </div>
-              <div class="item-rincian-track">
-                <div class="item-rincian-fill" style="width: ${lebarBar}%; background: ${warna};"></div>
-              </div>
+      // Render baris pada panel gelap Ringkasan Approval
+      document.getElementById("darkStatusRows").innerHTML = items.map((item) => {
+        const shareApproval = totalApproval > 0 ? (item.jumlah / totalApproval) * 100 : 0;
+        return `
+          <div class="dark-status-row">
+            <div class="dark-left">
+              <span class="status-dot" style="background: ${item.color};"></span>
+              <span>${item.label}</span>
             </div>
-          `;
-        }).join("");
-      }
-
-      setMetaGrafik(metaIds, sortedItems, total);
+            <div class="dark-right" style="color: ${item.color};">
+              ${fmtNum(item.jumlah)} (${fmtPct(shareApproval)})
+            </div>
+          </div>
+        `;
+      }).join("");
     }
 
-    document.querySelectorAll('#tabUtamaMansakai button[data-bs-toggle="pill"]').forEach((btn) => {
-      btn.addEventListener("shown.bs.tab", () => {
-        Object.values(chartInstances).forEach((inst) => {
-          if (inst && typeof inst.resize === "function") {
-            inst.resize();
-          }
-        });
-      });
-    });
-
-    async function muatSemuaGrafik() {
-      const elGlobal = document.getElementById("statusGlobal");
-      const entries = Object.entries(SUMBER_CSV);
-      let sukses = 0;
-
-      await Promise.all(entries.map(async ([key, url]) => {
-        try {
-          const data = await ambilDataCSV(url);
-          sukses++;
-
-          if (key === "approval") {
-            renderApproval(data);
-          } else if (key === "desil") {
-            renderGrafikDesilGlass(
-              data,
-              ["desilCapsuleChart"],
-              ["statusDesil"],
-              ["metaDesil"]
-            );
-          } else if (key === "kecamatan") {
-            renderBarHorizontalChart(data, "chartKecamatan", "errorKecamatan", "statusKecamatan", [], ["metaKecamatan"]);
-          } else if (key === "pbiNasional") {
-            renderDoughnutRingkasan(data, "chartPbiNasional", "ringkasPbiNasional", "errorPbiNasional", "statusPbiNasional", "centerPbiNasional", ["metaPbiNasional"]);
-          } else if (key === "pbiPemda") {
-            renderDoughnutRingkasan(data, "chartPbiPemda", "ringkasPbiPemda", "errorPbiPemda", "statusPbiPemda", "centerPbiPemda", ["metaPbiPemda"]);
-          } else if (key === "statusKepemilikanRumah") {
-            renderDoughnutRingkasan(data, "chartKepemilikanRumah", "ringkasKepemilikanRumah", "errorKepemilikanRumah", "statusKepemilikanRumah", "centerKepemilikanRumah", ["metaKepemilikanRumah"]);
-          } else if (key === "jenisLantai") {
-            renderBarHorizontalChart(data, "chartJenisLantai", "errorJenisLantai", "statusJenisLantai", [], ["metaJenisLantai"]);
-          } else if (key === "jenisAtap") {
-            renderBarHorizontalChart(data, "chartJenisAtap", "errorJenisAtap", "statusJenisAtap", [], ["metaJenisAtap"]);
-          } else if (key === "jenisDinding") {
-            renderBarHorizontalChart(data, "chartJenisDinding", "errorJenisDinding", "statusJenisDinding", [], ["metaJenisDinding"]);
-          } else if (key === "sumberAirMinum") {
-            renderBarHorizontalChart(data, "chartSumberAirMinum", "errorSumberAirMinum", "statusSumberAirMinum", [], ["metaSumberAirMinum"]);
-          } else if (key === "sumberPenerangan") {
-            renderBarHorizontalChart(data, "chartSumberPenerangan", "errorSumberPenerangan", "statusSumberPenerangan", [], ["metaSumberPenerangan"]);
-          } else if (key === "bahanBakarMasak") {
-            renderBarHorizontalChart(data, "chartBahanBakarMasak", "errorBahanBakarMasak", "statusBahanBakarMasak", [], ["metaBahanBakarMasak"]);
-          } else if (key === "fasilitasBab") {
-            renderBarHorizontalChart(data, "chartFasilitasBab", "errorFasilitasBab", "statusFasilitasBab", [], ["metaFasilitasBab"]);
-          } else if (key === "jenisKloset") {
-            renderBarHorizontalChart(data, "chartJenisKloset", "errorJenisKloset", "statusJenisKloset", [], ["metaJenisKloset"]);
-          } else if (key === "pembuanganTinja") {
-            renderBarHorizontalChart(data, "chartPembuanganTinja", "errorPembuanganTinja", "statusPembuanganTinja", [], ["metaPembuanganTinja"]);
-          }
-        } catch (err) {
-          const mapErr = {
-            approval: ["errorApproval", "statusApproval"],
-            desil: ["errorDesil", "statusDesil"],
-            kecamatan: ["errorKecamatan", "statusKecamatan"],
-            pbiNasional: ["errorPbiNasional", "statusPbiNasional"],
-            pbiPemda: ["errorPbiPemda", "statusPbiPemda"],
-            statusKepemilikanRumah: ["errorKepemilikanRumah", "statusKepemilikanRumah"],
-            jenisLantai: ["errorJenisLantai", "statusJenisLantai"],
-            jenisAtap: ["errorJenisAtap", "statusJenisAtap"],
-            jenisDinding: ["errorJenisDinding", "statusJenisDinding"],
-            sumberAirMinum: ["errorSumberAirMinum", "statusSumberAirMinum"],
-            sumberPenerangan: ["errorSumberPenerangan", "statusSumberPenerangan"],
-            bahanBakarMasak: ["errorBahanBakarMasak", "statusBahanBakarMasak"],
-            fasilitasBab: ["errorFasilitasBab", "statusFasilitasBab"],
-            jenisKloset: ["errorJenisKloset", "statusJenisKloset"],
-            pembuanganTinja: ["errorPembuanganTinja", "statusPembuanganTinja"]
-          };
-          if (mapErr[key]) {
-            tampilkanError(mapErr[key][0], mapErr[key][1], err.message);
-          }
-        }
-      }));
-
-      if (elGlobal) {
-        elGlobal.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> ${sukses}/${entries.length} CSV`;
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", muatSemuaGrafik);
+    renderStatusApproval(APPROVAL_STATE);
   </script>
 </body>
 </html>
