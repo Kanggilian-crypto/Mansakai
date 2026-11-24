@@ -253,15 +253,15 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 0.95rem;
-      padding: 0.2rem 0;
+      gap: 0.85rem;
+      padding: 0.15rem 0;
     }
 
     .approval-hero-box {
       background: rgba(255, 255, 255, 0.62);
       border: 1px solid rgba(255, 255, 255, 0.92);
       border-radius: 16px;
-      padding: 0.8rem 1rem;
+      padding: 0.75rem 0.95rem;
     }
 
     .approval-hero-top {
@@ -311,27 +311,34 @@
       background: rgba(255, 255, 255, 0.46);
       border: 1px solid rgba(255, 255, 255, 0.88);
       border-radius: 16px;
-      padding: 0.75rem 0.85rem;
+      padding: 0.7rem 0.75rem;
+      overflow: hidden;
     }
 
     .donat-approval-kecil {
-      width: 148px;
-      height: 148px;
+      width: 116px;
+      height: 116px;
+      margin: 0 auto;
+    }
+
+    .donat-approval-kecil .donat-tengah-label {
+      padding: 0 0.5rem;
     }
 
     .donat-approval-kecil .donat-tengah-angka {
-      font-size: 1.05rem;
-      padding: 0.08rem 0.38rem;
+      font-size: 0.98rem;
+      padding: 0.06rem 0.35rem;
     }
 
     .donat-approval-kecil .donat-tengah-ket {
-      font-size: 0.62rem;
+      font-size: 0.56rem;
+      margin-top: 0.1rem;
     }
 
     .ringkas-approval-dua-kolom {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.5rem;
+      gap: 0.45rem;
     }
 
     @media (max-width: 575.98px) {
@@ -341,12 +348,14 @@
     }
 
     .ringkas-approval-dua-kolom .item-rincian-pro {
-      padding: 0.42rem 0.58rem;
+      padding: 0.4rem 0.55rem;
+      min-width: 0;
     }
 
     .ringkas-approval-dua-kolom .item-rincian-top {
-      font-size: 0.74rem;
-      margin-bottom: 0.25rem;
+      font-size: 0.73rem;
+      margin-bottom: 0.24rem;
+      gap: 0.35rem;
     }
 
     .desil-glass-stage {
@@ -1464,7 +1473,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          cutout: "68%",
+          cutout: "66%",
           plugins: {
             legend: { display: false },
             tooltip: {
@@ -1507,7 +1516,7 @@
                   <span style="width:8px;height:8px;border-radius:50%;background:${warna};display:inline-block;flex-shrink:0;"></span>
                   <span class="text-truncate fw-medium">${d.label}</span>
                 </span>
-                <span class="fw-medium text-nowrap">${formatAngka(d.jumlah)} <span style="color: var(--teks-redup);">(${formatPersen(d.jumlah, total)})</span></span>
+                <span class="fw-medium text-nowrap">${formatAngka(d.jumlah)}</span>
               </div>
               <div class="item-rincian-track">
                 <div class="item-rincian-fill" style="width: ${lebarBar}%; background: ${warna};"></div>
@@ -1549,13 +1558,13 @@
       const htmlDonat = `
         <div class="approval-donat-panel">
           <div class="row align-items-center g-2">
-            <div class="col-sm-4">
+            <div class="col-md-4">
               <div class="donat-tengah-wrap donat-approval-kecil">
                 <canvas id="chartApprovalDonat"></canvas>
                 <div id="centerApprovalDonat" class="donat-tengah-label"></div>
               </div>
             </div>
-            <div class="col-sm-8">
+            <div class="col-md-8">
               <div id="ringkasApprovalDonat" class="ringkas-approval-dua-kolom small"></div>
             </div>
           </div>
