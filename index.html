@@ -253,7 +253,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 0.85rem;
+      gap: 0.8rem;
       padding: 0.15rem 0;
     }
 
@@ -261,7 +261,7 @@
       background: rgba(255, 255, 255, 0.62);
       border: 1px solid rgba(255, 255, 255, 0.92);
       border-radius: 16px;
-      padding: 0.75rem 0.95rem;
+      padding: 0.7rem 0.9rem;
     }
 
     .approval-hero-top {
@@ -269,18 +269,18 @@
       justify-content: space-between;
       align-items: baseline;
       gap: 0.5rem;
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.4rem;
     }
 
     .approval-hero-title {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 500;
       color: var(--teks-redup);
     }
 
     .approval-hero-pct {
       font-family: "Outfit", "DM Sans", sans-serif;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 600;
       color: var(--ungu-gelap);
       line-height: 1;
@@ -288,7 +288,7 @@
 
     .approval-track {
       width: 100%;
-      height: 9px;
+      height: 8px;
       border-radius: 999px;
       background: rgba(126, 34, 206, 0.12);
       overflow: hidden;
@@ -302,60 +302,81 @@
     }
 
     .approval-hero-sub {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--teks-redup);
-      margin-top: 0.4rem;
+      margin-top: 0.35rem;
     }
 
     .approval-donat-panel {
       background: rgba(255, 255, 255, 0.46);
       border: 1px solid rgba(255, 255, 255, 0.88);
       border-radius: 16px;
-      padding: 0.7rem 0.75rem;
+      padding: 0.65rem 0.75rem;
       overflow: hidden;
     }
 
+    .approval-donat-flex {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
     .donat-approval-kecil {
-      width: 116px;
-      height: 116px;
-      margin: 0 auto;
+      position: relative;
+      width: 92px !important;
+      height: 92px !important;
+      min-width: 92px;
+      flex-shrink: 0;
+    }
+
+    .donat-approval-kecil canvas {
+      width: 92px !important;
+      height: 92px !important;
     }
 
     .donat-approval-kecil .donat-tengah-label {
-      padding: 0 0.5rem;
+      padding: 0 0.25rem;
     }
 
     .donat-approval-kecil .donat-tengah-angka {
-      font-size: 0.98rem;
-      padding: 0.06rem 0.35rem;
+      font-size: 0.86rem;
+      padding: 0.04rem 0.28rem;
+      border-radius: 6px;
     }
 
     .donat-approval-kecil .donat-tengah-ket {
-      font-size: 0.56rem;
-      margin-top: 0.1rem;
+      font-size: 0.5rem;
+      margin-top: 0.05rem;
+      line-height: 1.05;
     }
 
     .ringkas-approval-dua-kolom {
+      flex: 1 1 auto;
+      min-width: 0;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.45rem;
+      gap: 0.4rem;
     }
 
     @media (max-width: 575.98px) {
+      .approval-donat-flex {
+        flex-direction: column;
+      }
       .ringkas-approval-dua-kolom {
+        width: 100%;
         grid-template-columns: 1fr;
       }
     }
 
     .ringkas-approval-dua-kolom .item-rincian-pro {
-      padding: 0.4rem 0.55rem;
+      padding: 0.36rem 0.5rem;
       min-width: 0;
     }
 
     .ringkas-approval-dua-kolom .item-rincian-top {
-      font-size: 0.73rem;
-      margin-bottom: 0.24rem;
-      gap: 0.35rem;
+      font-size: 0.7rem;
+      margin-bottom: 0.2rem;
+      gap: 0.3rem;
     }
 
     .desil-glass-stage {
@@ -1467,11 +1488,11 @@
             backgroundColor: palet,
             borderWidth: 2,
             borderColor: "#ffffff",
-            hoverOffset: 4
+            hoverOffset: 3
           }]
         },
         options: {
-          responsive: true,
+          responsive: false,
           maintainAspectRatio: false,
           cutout: "66%",
           plugins: {
@@ -1481,8 +1502,8 @@
               backgroundColor: "#18181b",
               titleColor: "#ffffff",
               bodyColor: "#f8fafc",
-              padding: 10,
-              cornerRadius: 10,
+              padding: 8,
+              cornerRadius: 8,
               callbacks: {
                 label: (ctx) => {
                   const val = ctx.parsed || 0;
@@ -1513,7 +1534,7 @@
             <div class="item-rincian-pro">
               <div class="item-rincian-top">
                 <span class="d-flex align-items-center gap-1 text-truncate" title="${d.label}">
-                  <span style="width:8px;height:8px;border-radius:50%;background:${warna};display:inline-block;flex-shrink:0;"></span>
+                  <span style="width:7px;height:7px;border-radius:50%;background:${warna};display:inline-block;flex-shrink:0;"></span>
                   <span class="text-truncate fw-medium">${d.label}</span>
                 </span>
                 <span class="fw-medium text-nowrap">${formatAngka(d.jumlah)}</span>
@@ -1557,16 +1578,12 @@
 
       const htmlDonat = `
         <div class="approval-donat-panel">
-          <div class="row align-items-center g-2">
-            <div class="col-md-4">
-              <div class="donat-tengah-wrap donat-approval-kecil">
-                <canvas id="chartApprovalDonat"></canvas>
-                <div id="centerApprovalDonat" class="donat-tengah-label"></div>
-              </div>
+          <div class="approval-donat-flex">
+            <div class="donat-approval-kecil">
+              <canvas id="chartApprovalDonat" width="92" height="92"></canvas>
+              <div id="centerApprovalDonat" class="donat-tengah-label"></div>
             </div>
-            <div class="col-md-8">
-              <div id="ringkasApprovalDonat" class="ringkas-approval-dua-kolom small"></div>
-            </div>
+            <div id="ringkasApprovalDonat" class="ringkas-approval-dua-kolom small"></div>
           </div>
         </div>
       `;
@@ -1898,7 +1915,7 @@
     document.querySelectorAll('#tabUtamaMansakai button[data-bs-toggle="pill"]').forEach((btn) => {
       btn.addEventListener("shown.bs.tab", () => {
         Object.values(chartInstances).forEach((inst) => {
-          if (inst && typeof inst.resize === "function") {
+          if (inst && typeof inst.resize === "function" && inst.canvas?.id !== "chartApprovalDonat") {
             inst.resize();
           }
         });
