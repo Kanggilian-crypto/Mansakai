@@ -253,15 +253,15 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 1rem;
-      padding: 0.25rem 0;
+      gap: 0.95rem;
+      padding: 0.2rem 0;
     }
 
     .approval-hero-box {
       background: rgba(255, 255, 255, 0.62);
       border: 1px solid rgba(255, 255, 255, 0.92);
       border-radius: 16px;
-      padding: 0.85rem 1rem;
+      padding: 0.8rem 1rem;
     }
 
     .approval-hero-top {
@@ -269,7 +269,7 @@
       justify-content: space-between;
       align-items: baseline;
       gap: 0.5rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
     }
 
     .approval-hero-title {
@@ -304,66 +304,14 @@
     .approval-hero-sub {
       font-size: 0.72rem;
       color: var(--teks-redup);
-      margin-top: 0.45rem;
+      margin-top: 0.4rem;
     }
 
-    .approval-empat-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.6rem;
-    }
-
-    @media (max-width: 767.98px) {
-      .approval-empat-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 420px) {
-      .approval-empat-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .approval-stat-mini {
-      background: rgba(255, 255, 255, 0.68);
-      border: 1px solid rgba(255, 255, 255, 0.92);
+    .approval-donat-panel {
+      background: rgba(255, 255, 255, 0.46);
+      border: 1px solid rgba(255, 255, 255, 0.88);
       border-radius: 16px;
-      padding: 0.75rem 0.55rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.3rem;
-    }
-
-    .approval-mini-angka {
-      font-family: "Outfit", "DM Sans", sans-serif;
-      font-size: 1.4rem;
-      font-weight: 500;
-      color: var(--teks-utama);
-      line-height: 1.1;
-    }
-
-    .approval-mini-pct {
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: var(--teks-redup);
-    }
-
-    .approval-mini-bar {
-      width: 40px;
-      height: 4px;
-      border-radius: 999px;
-      margin: 0.1rem 0;
-    }
-
-    .approval-mini-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      color: var(--teks-utama);
-      line-height: 1.25;
+      padding: 0.8rem 0.9rem;
     }
 
     .desil-glass-stage {
@@ -443,8 +391,8 @@
 
     .donat-tengah-wrap {
       position: relative;
-      width: 188px;
-      height: 188px;
+      width: 176px;
+      height: 176px;
       margin: 0 auto;
     }
 
@@ -457,13 +405,13 @@
       justify-content: center;
       pointer-events: none;
       text-align: center;
-      padding: 0 1.35rem;
+      padding: 0 1.25rem;
       z-index: 2;
     }
 
     .donat-tengah-angka {
       font-family: "Outfit", "DM Sans", sans-serif;
-      font-size: 1.2rem;
+      font-size: 1.18rem;
       font-weight: 600;
       color: var(--teks-utama);
       line-height: 1.15;
@@ -483,7 +431,7 @@
       background: rgba(255, 255, 255, 0.72);
       border: 1px solid rgba(233, 213, 255, 0.75);
       border-radius: 12px;
-      padding: 0.5rem 0.7rem;
+      padding: 0.45rem 0.68rem;
     }
 
     .item-rincian-top {
@@ -491,7 +439,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 0.5rem;
-      margin-bottom: 0.32rem;
+      margin-bottom: 0.28rem;
     }
 
     .item-rincian-track {
@@ -1326,6 +1274,18 @@
     let totalDisetujuiApproval = 0;
     let itemApprovalTerakhir = [];
 
+    function normalisasiLabelApproval(label) {
+      const bersih = String(label || "").trim();
+      const rendah = bersih.toLowerCase().replace(/\s+/g, " ");
+      if (rendah === "dikembalikan / revisi" || rendah === "dikembalikan/revisi") {
+        return "Revisi";
+      }
+      if (rendah === "menunggu approval") {
+        return "Menunggu";
+      }
+      return bersih;
+    }
+
     function pecahBarisCSV(baris) {
       const hasil = [];
       let saatIni = "";
@@ -1451,6 +1411,78 @@
       return itemDisetujui ? Number(itemDisetujui.jumlah || 0) : 0;
     }
 
+    function renderDonatApproval(items, total) {
+      const palet = items.map((_, i) => tentukanWarnaStatusApproval(i));
+
+      buatAtauPerbaruiChart("chartApprovalDonat", {
+        type: "doughnut",
+        data: {
+          labels: items.map((d) => d.label),
+          datasets: [{
+            data: items.map((d) => d.jumlah),
+            backgroundColor: palet,
+            borderWidth: 2,
+            borderColor: "#ffffff",
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "68%",
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              enabled: true,
+              backgroundColor: "#18181b",
+              titleColor: "#ffffff",
+              bodyColor: "#f8fafc",
+              padding: 10,
+              cornerRadius: 10,
+              callbacks: {
+                label: (ctx) => {
+                  const val = ctx.parsed || 0;
+                  return ` ${ctx.label}: ${formatAngka(val)} (${formatPersen(val, total)})`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      const elCenter = document.getElementById("centerApprovalDonat");
+      if (elCenter) {
+        elCenter.innerHTML = `
+          <span class="donat-tengah-angka">${formatAngka(total)}</span>
+          <span class="donat-tengah-ket">Total Approval</span>
+        `;
+      }
+
+      const elRingkas = document.getElementById("ringkasApprovalDonat");
+      if (elRingkas) {
+        elRingkas.innerHTML = items.map((d, i) => {
+          const warna = palet[i % palet.length];
+          const pctAngka = total > 0 ? Math.min(100, (d.jumlah / total) * 100) : 0;
+          const lebarBar = d.jumlah > 0 ? Math.max(3, pctAngka) : 0;
+
+          return `
+            <div class="item-rincian-pro">
+              <div class="item-rincian-top">
+                <span class="d-flex align-items-center gap-2 text-truncate">
+                  <span style="width:9px;height:9px;border-radius:50%;background:${warna};display:inline-block;flex-shrink:0;"></span>
+                  <span class="text-truncate fw-medium">${d.label}</span>
+                </span>
+                <span class="fw-medium text-nowrap">${formatAngka(d.jumlah)} <span style="color: var(--teks-redup);">(${formatPersen(d.jumlah, total)})</span></span>
+              </div>
+              <div class="item-rincian-track">
+                <div class="item-rincian-fill" style="width: ${lebarBar}%; background: ${warna};"></div>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+    }
+
     function renderKlasterApproval() {
       const elGrid = document.getElementById("gridApprovalItems");
       if (!elGrid) return;
@@ -1458,7 +1490,6 @@
       const pctAngka = totalDataDesil > 0 ? Math.min(100, (totalDisetujuiApproval / totalDataDesil) * 100) : 0;
       const pctLabel = `${pctAngka.toFixed(1).replace(".", ",")}%`;
       const lebarBarPct = totalDisetujuiApproval > 0 ? Math.max(3, pctAngka) : 0;
-      const empatStatus = itemApprovalTerakhir.slice(0, 4);
 
       const htmlHero = `
         <div class="approval-hero-box">
@@ -1475,22 +1506,29 @@
         </div>
       `;
 
-      const htmlEmpatKartu = empatStatus.length
-        ? `<div class="approval-empat-grid">${empatStatus.map((item, idx) => {
-            const warna = tentukanWarnaStatusApproval(idx);
-            const pctStatus = formatPersen(item.jumlah, totalDataApproval);
-            return `
-              <div class="approval-stat-mini">
-                <div class="approval-mini-angka" style="color: ${warna};">${formatAngka(item.jumlah)}</div>
-                <div class="approval-mini-pct">${pctStatus} dari approval</div>
-                <div class="approval-mini-bar" style="background: ${warna};"></div>
-                <div class="approval-mini-label">${item.label}</div>
-              </div>
-            `;
-          }).join("")}</div>`
-        : `<div class="small text-muted text-center py-3">Menunggu data status approval...</div>`;
+      if (!itemApprovalTerakhir.length) {
+        elGrid.innerHTML = htmlHero + `<div class="small text-muted text-center py-3">Menunggu data status approval...</div>`;
+        return;
+      }
 
-      elGrid.innerHTML = htmlHero + htmlEmpatKartu;
+      const htmlDonat = `
+        <div class="approval-donat-panel">
+          <div class="row align-items-center g-3">
+            <div class="col-sm-5">
+              <div class="donat-tengah-wrap">
+                <canvas id="chartApprovalDonat"></canvas>
+                <div id="centerApprovalDonat" class="donat-tengah-label"></div>
+              </div>
+            </div>
+            <div class="col-sm-7">
+              <div id="ringkasApprovalDonat" class="d-flex flex-column gap-2 small"></div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      elGrid.innerHTML = htmlHero + htmlDonat;
+      renderDonatApproval(itemApprovalTerakhir, totalDataApproval);
     }
 
     function perbaruiRingkasanKPI() {
@@ -1612,7 +1650,12 @@
         return;
       }
 
-      const sorted = [...items].sort((a, b) => b.jumlah - a.jumlah);
+      const normalizedItems = items.map((item) => ({
+        ...item,
+        label: normalisasiLabelApproval(item.label)
+      }));
+
+      const sorted = [...normalizedItems].sort((a, b) => b.jumlah - a.jumlah);
       itemApprovalTerakhir = sorted;
       totalDataApproval = sorted.reduce((acc, cur) => acc + cur.jumlah, 0);
       totalDisetujuiApproval = hitungJumlahDisetujui(sorted);
