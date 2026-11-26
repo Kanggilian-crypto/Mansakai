@@ -369,14 +369,14 @@
     }
 
     .ringkas-approval-dua-kolom .item-rincian-pro {
-      padding: 0.36rem 0.5rem;
+      padding: 0.34rem 0.45rem;
       min-width: 0;
     }
 
     .ringkas-approval-dua-kolom .item-rincian-top {
-      font-size: 0.7rem;
+      font-size: 0.66rem;
       margin-bottom: 0.2rem;
-      gap: 0.3rem;
+      gap: 0.25rem;
     }
 
     .desil-glass-stage {
@@ -1529,7 +1529,7 @@
                   <span style="width:7px;height:7px;border-radius:50%;background:${warna};display:inline-block;flex-shrink:0;"></span>
                   <span class="text-truncate fw-medium">${d.label}</span>
                 </span>
-                <span class="fw-medium text-nowrap">${formatAngka(d.jumlah)}</span>
+                <span class="fw-medium text-nowrap">${formatAngka(d.jumlah)} <span style="color: var(--teks-redup); font-weight: 400;">(${formatPersen(d.jumlah, total)})</span></span>
               </div>
               <div class="item-rincian-track">
                 <div class="item-rincian-fill" style="width: ${lebarBar}%; background: ${warna};"></div>
