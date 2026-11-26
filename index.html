@@ -664,7 +664,7 @@
             <div class="col-lg-5">
               <h1 class="fs-2 mb-1">Sandung Isulan Mansakai</h1>
               <p class="small mb-0" style="color: var(--teks-redup);">
-                Persentase disetujui mengacu pada <strong>Total Data</strong> keseluruhan menurut Desil.
+                Persentase total approval mengacu pada <strong>Total Data</strong> keseluruhan menurut Desil.
               </p>
             </div>
 
@@ -679,7 +679,7 @@
                   <div id="kpiTotalApproval" class="stat-big kpi-nilai-seragam">...</div>
                 </div>
                 <div class="col-6 col-sm-3 kpi-kolom-item">
-                  <div class="kpi-label-seragam">% Disetujui / Total</div>
+                  <div class="kpi-label-seragam">% Approval / Total</div>
                   <div id="kpiPersenApprovalTotal" class="stat-big kpi-nilai-seragam" style="color: var(--ungu-utama);">...</div>
                 </div>
                 <div class="col-6 col-sm-3 kpi-kolom-item">
@@ -1336,7 +1336,6 @@
     const chartInstances = {};
     let totalDataDesil = 0;
     let totalDataApproval = 0;
-    let totalDisetujuiApproval = 0;
     let itemApprovalTerakhir = [];
 
     function normalisasiLabelApproval(label) {
@@ -1469,13 +1468,6 @@
       return palet[index % palet.length];
     }
 
-    function hitungJumlahDisetujui(items) {
-      const itemDisetujui = items.find(
-        (item) => String(item.label || "").trim().toLowerCase() === "disetujui"
-      );
-      return itemDisetujui ? Number(itemDisetujui.jumlah || 0) : 0;
-    }
-
     function renderDonatApproval(items, total) {
       const palet = items.map((_, i) => tentukanWarnaStatusApproval(i));
 
@@ -1552,21 +1544,21 @@
       const elGrid = document.getElementById("gridApprovalItems");
       if (!elGrid) return;
 
-      const pctAngka = totalDataDesil > 0 ? Math.min(100, (totalDisetujuiApproval / totalDataDesil) * 100) : 0;
+      const pctAngka = totalDataDesil > 0 ? Math.min(100, (totalDataApproval / totalDataDesil) * 100) : 0;
       const pctLabel = `${pctAngka.toFixed(1).replace(".", ",")}%`;
-      const lebarBarPct = totalDisetujuiApproval > 0 ? Math.max(3, pctAngka) : 0;
+      const lebarBarPct = totalDataApproval > 0 ? Math.max(3, pctAngka) : 0;
 
       const htmlHero = `
         <div class="approval-hero-box">
           <div class="approval-hero-top">
-            <span class="approval-hero-title">Persentase Jumlah Disetujui Terhadap Total Data</span>
+            <span class="approval-hero-title">Persentase Total Approval Terhadap Total Data</span>
             <span class="approval-hero-pct">${pctLabel}</span>
           </div>
           <div class="approval-track">
             <div class="approval-track-fill" style="width: ${lebarBarPct}%;"></div>
           </div>
           <div class="approval-hero-sub">
-            <strong>${formatAngka(totalDisetujuiApproval)}</strong> disetujui dari <strong>${formatAngka(totalDataDesil)}</strong> total data desil
+            <strong>${formatAngka(totalDataApproval)}</strong> total approval dari <strong>${formatAngka(totalDataDesil)}</strong> total data desil
           </div>
         </div>
       `;
@@ -1600,7 +1592,7 @@
       if (elTotalData) elTotalData.textContent = formatAngka(totalDataDesil);
       if (elTotalApproval) elTotalApproval.textContent = formatAngka(totalDataApproval);
 
-      const pctAngka = totalDataDesil > 0 ? Math.min(100, (totalDisetujuiApproval / totalDataDesil) * 100) : 0;
+      const pctAngka = totalDataDesil > 0 ? Math.min(100, (totalDataApproval / totalDataDesil) * 100) : 0;
       const pctLabel = `${pctAngka.toFixed(1).replace(".", ",")}%`;
       if (elPersen) elPersen.textContent = pctLabel;
 
@@ -1719,7 +1711,6 @@
       const sorted = [...normalizedItems].sort((a, b) => b.jumlah - a.jumlah);
       itemApprovalTerakhir = sorted;
       totalDataApproval = sorted.reduce((acc, cur) => acc + cur.jumlah, 0);
-      totalDisetujuiApproval = hitungJumlahDisetujui(sorted);
 
       if (elStatus) elStatus.textContent = "Terhubung";
       if (elBadgeTotal) elBadgeTotal.textContent = `${formatAngka(totalDataApproval)} Data`;
